@@ -1,42 +1,61 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt_br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Em Construção</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            text-align: center;
-        }
-        h1 {
-            font-size: 3rem;
-            color: #333;
-        }
-        p {
-            font-size: 1.2rem;
-            color: #555;
-        }
-        .icon {
-            font-size: 5rem;
-            color: #ff9800;
-            margin-bottom: 20px;
-        }
-    </style>
+    <meta name="description" content="Bloco de notas online gratuito e super simples, que permite salvar seu texto. Ideal para anotações rápidas.">
+    <title>Bloco de Notas Online</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
 </head>
 <body>
     <div class="container">
-        <div class="icon">🚧</div>
-        <h1>Em Construção</h1>
-        <p>Estamos trabalhando para melhorar esta página. Volte em breve!</p>
+
+        <div class="elements">
+            <div id="barra-up">
+                <h1 id="h1" class="light">Bloco de Notas Online</h1>
+                <div class="menu">
+                    <div class="button blight" id="toggle-theme"><i class="lar la-moon"></i>Noite</div>
+                    <div class="button blight" id="copy-text"><i class="lar la-copy"></i>Copiar</div>
+                    <div class="button blight" id="save-storage"><i class="lar la-save"></i>Salvar</div>
+                    <div class="button blight" id="delete-storage"><i class="lar la-trash-alt"></i>Deletar</div>
+                    <div class="button blight" id="toggle-size"><i class="las la-text-height"></i>Tamanho: <span id="tamanho"></span></div>
+                    <div class="button blight" id="clear-editor"><i class="las la-remove-format"></i>Apagar</div>
+                </div>
+            </div>
+            <textarea id="text-editor" class="light" placeholder="Digite ou cole seu texto aqui"></textarea>
+        </div>
+        <div class="counters">Caracteres: <span id="char_count">0</span> • Palavras: <span id="word_count">0</span></div>
+        <h2 id="h2" class="light">Bloco de Notas Online - Ajuda</h2>
+        <br />
+        <div class="help light"><i class="lar la-moon" style="font-size: 24px"></i>Muda o bloco de notas para o modo de leitura noturna, modo escuro (dark mode).</div>
+        <div class="help light"><i class="lar la-sun" style="font-size: 24px"></i> Muda o bloco de notas para o modo de leitura de dia, modo claro (light mode).</div>
+        <div class="help light"><i class="lar la-copy" style="font-size: 24px"></i> Copia todo o texto contido no bloco de notas e deixa disponível na área de trabalho (clipboard) para colar onde desejar.</div>
+        <div class="help light"><i class="lar la-save" style="font-size: 24px"></i> Salva todo o conteúdo do bloco de notas no seu navegador local, de modo que quando atualizar a página ou desligar o computador o texto continuará no bloco de notas. Além disso, salva sua preferência de modo dia/noite e o tamanho da fonte.</div>
+        <div class="help light"><i class="lar la-trash-alt" style="font-size: 24px"></i> Exclui o texto do armazenamento local, porém o texto ainda continua disponível no bloco de notas (se atualizar a página ou fechar o navegador, o texto não será carregado).</div>
+        <div class="help light"><i class="las la-text-height" style="font-size: 24px"></i> Fonte P (pequena), M (média) ou G (grande).</div>
+        <div class="help light"><i class="las la-remove-format" style="font-size: 24px"></i> Limpa todo o texto dentro do bloco de notas (mas não apaga do armazenamento local, se carregar a página o texto salvo será carregado no bloco de notas).</div>
+
+        <br /><br />
+
+        <h2 id="h2-2" class="light">Bloco de Notas Online - Sobre</h2>
+        <br />
+        <div class="about light">Bem-vindo ao nosso site, onde oferecemos uma ferramenta simples e eficaz para você fazer anotações diretamente do seu navegador. Nosso <b>bloco de notas online</b> é ideal para quem precisa de uma solução rápida e acessível para guardar ideias, criar listas ou escrever rascunhos.</div>
+        <div class="about light">Desenvolvemos este bloco de notas pensando em praticidade e facilidade de uso. Não é necessário criar uma conta ou instalar aplicativos; basta acessar o site e começar a escrever. As funcionalidades incluem copiar, salvar e apagar textos, ajustar o tamanho da fonte, ativar o modo noturno para uma leitura mais confortável, e um contador de palavras e caracteres em tempo real.</div>    
+        <div class="about light">Se você precisa de uma maneira prática de organizar suas anotações, nosso bloco de notas é a escolha perfeita. Ele é leve, rápido e está sempre disponível, não importa onde você esteja. Além disso, o conteúdo pode ser salvo no armazenamento local do navegador, garantindo que suas anotações estarão seguras, mesmo que você feche o navegador ou desligue o computador.</div>    
+        <div class="about light">Nossa ferramenta é completamente gratuita e foi projetada para ser útil em diferentes situações, seja para estudos, trabalho ou uso pessoal. Com um design limpo e uma interface intuitiva, o bloco de notas permite que você se concentre no que realmente importa: suas anotações.</div>    
+        <div class="about light">Experimente agora e veja como é fácil manter suas ideias organizadas. O bloco de notas online é compatível com todos os dispositivos e navegadores, garantindo que você possa acessá-lo a qualquer hora e de qualquer lugar.</div>    
+        <div class="about light">Queremos que sua experiência seja a melhor possível, por isso oferecemos um ambiente sem distrações e focado na produtividade. Aproveite a simplicidade e a eficiência desta ferramenta para otimizar seu dia a dia.</div>    
+        <div class="about light">Se você está em busca de uma maneira prática e acessível de fazer anotações, o bloco de notas online é a solução ideal. Fácil de usar, seguro e sempre disponível, ele é o companheiro perfeito para suas necessidades de escrita e organização. Além disso, com o contador de palavras e caracteres, você pode monitorar facilmente o progresso de suas anotações, garantindo que suas ideias estejam sempre sob controle.</div>
+        <br /><br /><br />
+        <div id="privacidade" class="privacidade light"><a href="privacidade" style="text-decoration: none;">Política de Privacidade</a></div>    
+    
     </div>
+    <script src="app.js"></script>
 </body>
 </html>
