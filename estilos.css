@@ -82,6 +82,10 @@ p {
     line-height: 1.6;
 }
 
+#text-editor::placeholder {
+    color: #CCC;
+}
+
 #text-editor:focus::placeholder {
     color: transparent;
 }
