@@ -50,10 +50,11 @@ p {
 }
 
 .container {
-    width: 1180px;
+    max-width: 1180px;
     margin: 0 auto;
     margin-top: 60px;
     margin-bottom: 20px;
+    padding: 0 30px;
 }
 
 .elements {
@@ -290,4 +291,18 @@ p {
 
 @keyframes mymove {
     from {top: -30px;} to {top: 50px;}
+}
+
+@media screen and (max-width: 920px) {
+    h1 {
+        display: none;
+    }
+    
+    h2 {
+        font-size: 14px;
+    }
+
+    .help, .about {
+        font-size: 13px;
+    }
 }
