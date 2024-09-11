@@ -25,20 +25,20 @@
     </script>
 </head>
 <body>
+    <div id="barra-up">
+        <h1 id="h1" class="light">Bloco de Notas Online</h1>
+        <div class="menu">
+            <div class="button blight" id="toggle-theme"><i class="lar la-moon"></i>Noite</div>
+            <div class="button blight" id="copy-text"><i class="lar la-copy"></i>Copiar</div>
+            <div class="button blight" id="save-storage"><i class="lar la-save"></i>Salvar</div>
+            <div class="button blight" id="delete-storage"><i class="lar la-trash-alt"></i>Deletar</div>
+            <div class="button blight" id="toggle-size"><i class="las la-text-height"></i>Tamanho: <span id="tamanho"></span></div>
+            <div class="button blight" id="clear-editor"><i class="las la-remove-format"></i>Apagar</div>
+        </div>
+    </div>
     <div class="container">
 
         <div class="elements">
-            <div id="barra-up">
-                <h1 id="h1" class="light">Bloco de Notas Online</h1>
-                <div class="menu">
-                    <div class="button blight" id="toggle-theme"><i class="lar la-moon"></i>Noite</div>
-                    <div class="button blight" id="copy-text"><i class="lar la-copy"></i>Copiar</div>
-                    <div class="button blight" id="save-storage"><i class="lar la-save"></i>Salvar</div>
-                    <div class="button blight" id="delete-storage"><i class="lar la-trash-alt"></i>Deletar</div>
-                    <div class="button blight" id="toggle-size"><i class="las la-text-height"></i>Tamanho: <span id="tamanho"></span></div>
-                    <div class="button blight" id="clear-editor"><i class="las la-remove-format"></i>Apagar</div>
-                </div>
-            </div>
             <textarea id="text-editor" class="light" placeholder="Digite ou cole seu texto aqui"></textarea>
         </div>
         <div class="counters">Caracteres: <span id="char_count">0</span> • Palavras: <span id="word_count">0</span></div>

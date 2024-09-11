@@ -52,7 +52,7 @@ p {
 .container {
     max-width: 1180px;
     margin: 0 auto;
-    margin-top: 60px;
+    margin-top: 100px;
     margin-bottom: 20px;
     padding: 0 30px;
 }
@@ -69,9 +69,7 @@ p {
     padding: 20px;
     box-sizing: border-box;
     border: 1px solid #DDD;
-    border-top: none;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
+    border-radius: 3px;
     resize: vertical;
     font-size: 16px;
     background-color: #ffffff;
@@ -136,22 +134,19 @@ p {
     width: 100%;
     padding: 5px 20px;
     box-sizing: border-box;
-    border: 1px solid #DDD;
-    background-color: #F5F5F5;
-    border-bottom: none;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-    z-index: 999;
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    box-shadow: 0px 5px 14px -4px rgba(0,0,0,0.09);
 }
 
 #barra-up.light {
     border-color: #DDD;
-    background-color: #F5F5F5;
+    background-color: #fff;
     color:#000;
 }
 
 #barra-up.dark {
-    border-color: #404040;
     background-color: #111;
     color:#AAA;
 }
@@ -170,7 +165,6 @@ p {
     gap: 3px;
     font-size: 13px;
     padding: 7px 10px;
-    color: #555;
     border-radius: 3px;
     cursor: pointer;
     font-family: "Open Sans", sans-serif;
@@ -179,12 +173,12 @@ p {
 }
 
 .button.blight {
-    background-color: #F5F5F5;
+    background-color: #ffff;
     color:#555
 }
 
 .button.blight:hover {
-    background-color: #E5E5E5;
+    background-color: #f0f0f0;
 }
 
 .button.bdark {
