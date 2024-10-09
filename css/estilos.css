@@ -291,6 +291,7 @@ p {
 @media screen and (max-width: 865px) {
     h1 {
         font-size: 15px;
+        line-height: 1;
     }
     
     h2 {
