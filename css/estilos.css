@@ -238,7 +238,7 @@ p {
 }
 
 .counters {
-    width: 1280px;
+    max-width: 1280px;
     font-size: 13px;
     margin-top: 15px;
     margin-bottom: 60px;
