@@ -41,8 +41,9 @@ h2.dark {
 
 h2 {
     margin: 0;
+    margin-bottom: 15px;
     padding: 0;
-    line-height: 0;
+    line-height: 1;
     font-size: 17px;
 }
 
@@ -51,7 +52,7 @@ p {
 }
 
 .container {
-    max-width: 80%;
+    width: 50%;
     margin: 0 auto;
     margin-top: 40px;
     margin-bottom: 20px;
@@ -59,26 +60,31 @@ p {
 }
 
 .elements {
+    width: 100%;
+    min-height: 753px;
     display: flex;
     flex-direction: column;
+    resize: both;
+    overflow: hidden;
 }
 
 #text-editor {
     display: block;
     width: 100%;
     max-width: 100%;
-    height: 660px;
+    height: auto;
+    min-height: 660px;
     padding: 20px;
     box-sizing: border-box;
     border: 1px solid #DDD;
     border-radius: 3px;
-    resize: both;
     outline: none !important;
     font-family: "Open Sans", sans-serif;
     font-weight: 400;
     font-style: normal;
     line-height: 1.6;
     cursor: auto;
+    resize: none;
 }
 
 #text-editor.light::placeholder {
@@ -146,7 +152,7 @@ p {
 .menu {
     display: flex;
     flex-direction: row;
-    gap: 16px;
+    gap: 10px;
 }
 
 .button {
@@ -155,7 +161,7 @@ p {
     align-items: center;
     justify-content: center;
     gap: 3px;
-    padding: 7px 10px;
+    padding: 5px;
     border-radius: 3px;
     cursor: pointer;
     font-family: "Open Sans", sans-serif;
@@ -202,6 +208,7 @@ p {
 .about {
     margin-bottom: 15px;
     font-size: 14px;
+    text-align: justify;
 }
 
 .about.light {
@@ -229,7 +236,7 @@ p {
 .counters {
     font-size: 13px;
     margin-top: 15px;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
     color: #777;
     text-align: right;
 }
@@ -243,15 +250,15 @@ p {
     z-index: 9999999 !important;
     display: block;
     font-size: 18px;
-    visibility: hidden;  /* Oculta inicialmente */
-    opacity: 0;  /* Oculta inicialmente */
-    transition: opacity 0.3s, visibility 0.3s; /* Transições para suavizar a entrada */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
     animation: mymove 1s;
 }
 
 @keyframes mymove {
-    from {transform: translateY(10px); opacity: 0;} /* Começa de 15px acima e invisível */
-    to {transform: translateY(0); opacity: 1;} /* Vai para a posição normal e visível */
+    from {transform: translateY(10px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
 }
 
 @media screen and (max-width: 865px) {

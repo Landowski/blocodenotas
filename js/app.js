@@ -18,6 +18,7 @@ const button = document.querySelectorAll('.button')
 const tamanhoSpan = document.getElementById('tamanho');
 const helpElements = document.querySelectorAll('.help');
 const aboutElements = document.querySelectorAll('.about');
+const elements = document.querySelector('.elements');
 
 function toggleTheme() {
     if (darkMode === 1) {
@@ -173,7 +174,6 @@ textEditor.addEventListener("input", () => {
     wordCount.textContent = txt.split(/\s+/).filter((item) => item).length;
 });
 
-// Função para modo light
 function buttonLight() {
     for (var i = 0; i < button.length; ++i) {
         button[i].classList.remove('bdark');
@@ -181,10 +181,22 @@ function buttonLight() {
     }
 }
 
-// Função para modo dark
 function buttonDark() {
     for (var i = 0; i < button.length; ++i) {
         button[i].classList.remove('blight');
         button[i].classList.add('bdark');
     }
 }
+
+// Função para ajustar a altura da textarea
+function adjustTextareaHeight() {
+    // Define a altura da textarea como a altura disponível na div
+    textEditor.style.height = `${elements.clientHeight - textEditor.offsetTop}px`;
+}
+
+// Ouça o evento de redimensionamento
+const resizeObserver = new ResizeObserver(adjustTextareaHeight);
+resizeObserver.observe(elements);
+
+// Ajuste a altura inicialmente apenas se necessário
+adjustTextareaHeight();
