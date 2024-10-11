@@ -8,7 +8,7 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #FFF;
+    background-color: #f5f5f5;
     font-family: "Open Sans", sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -51,11 +51,11 @@ p {
 }
 
 .container {
-    max-width: 1180px;
+    max-width: 80%;
     margin: 0 auto;
-    margin-top: 100px;
+    margin-top: 40px;
     margin-bottom: 20px;
-    padding: 0 30px;
+    padding: 15px;
 }
 
 .elements {
@@ -66,12 +66,13 @@ p {
 #text-editor {
     display: block;
     width: 100%;
+    max-width: 100%;
     height: 660px;
     padding: 20px;
     box-sizing: border-box;
     border: 1px solid #DDD;
     border-radius: 3px;
-    resize: vertical;
+    resize: both;
     font-size: 16px;
     background-color: #ffffff;
     color: #000000;
@@ -80,6 +81,7 @@ p {
     font-weight: 400;
     font-style: normal;
     line-height: 1.6;
+    cursor: auto;
 }
 
 #text-editor.light::placeholder {
@@ -107,7 +109,7 @@ p {
 }
 
 #text-editor::-webkit-scrollbar {
-    width: 5px;
+    width: 13px;
 }
 
 #text-editor.light::-webkit-scrollbar-track {
@@ -115,7 +117,7 @@ p {
 }
 
 #text-editor.light::-webkit-scrollbar-thumb {
-    background-color: #999;
+    background-color: #CCC;
 }
 
 #text-editor.dark::-webkit-scrollbar-track {
@@ -133,22 +135,14 @@ p {
     justify-content: space-between;
     gap: 15px;
     width: 100%;
-    padding: 5px 20px;
-    box-sizing: border-box;
-    z-index: 9999;
-    position: fixed;
-    top: 0;
-    box-shadow: 0px 5px 14px -4px rgba(0,0,0,0.09);
+    margin-bottom: 15px;
 }
 
 #barra-up.light {
-    border-color: #DDD;
-    background-color: #fff;
     color:#000;
 }
 
 #barra-up.dark {
-    background-color: #111;
     color:#AAA;
 }
 
@@ -164,7 +158,6 @@ p {
     align-items: center;
     justify-content: center;
     gap: 3px;
-    font-size: 13px;
     padding: 7px 10px;
     border-radius: 3px;
     cursor: pointer;
@@ -174,25 +167,23 @@ p {
 }
 
 .button.blight {
-    background-color: #ffff;
-    color:#555
+    color:#666;
 }
 
 .button.blight:hover {
-    background-color: #f0f0f0;
+    color: #000;
 }
 
 .button.bdark {
-    background-color: #111;
     color: #AAA;
 }
 
 .button.bdark:hover {
-    background-color: #333;
+    color: #DDD;
 }
 
-.lar, .las {
-    font-size: 17px;
+.lar, .las, .fa-regular, .fa-solid {
+    font-size: 18px;
 }
 
 .help {
@@ -239,53 +230,31 @@ p {
 }
 
 .counters {
-    max-width: 1280px;
     font-size: 13px;
     margin-top: 15px;
     margin-bottom: 60px;
-    color: #555;
+    color: #777;
+    text-align: right;
 }
 
 #noti {
-    visibility: hidden;
-    max-width: 320px;
-    text-align: center;
-    border-radius: 4px;
-    padding: 12px 15px;
+    width: fit-content;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     position: fixed;
     z-index: 9999999 !important;
-    font-family: "Open Sans", sans-serif;
-    display: inline-flex;
-    line-height: 14px;
-    font-size: 14px;
-    top: 50px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    animation: mymove .6s;
-}
-
-#noti.show-light {
-    background-color: #222;
-    color: #FFF;
-    box-shadow: rgb(0 0 0 / 15%) 0px 4px 6px 0px;
-    visibility: visible;
-    opacity: 1
-}
-
-#noti.show-dark {
-    background-color: #F0F0F0;
-    color: #222;
-    box-shadow: rgba(255, 255, 255, 0.15) 0px 4px 6px 0px;
-    visibility: visible;
-    opacity: 1
+    display: block;
+    font-size: 18px;
+    visibility: hidden;  /* Oculta inicialmente */
+    opacity: 0;  /* Oculta inicialmente */
+    transition: opacity 0.3s, visibility 0.3s; /* Transições para suavizar a entrada */
+    animation: mymove 1s;
 }
 
 @keyframes mymove {
-    from {top: -30px;} to {top: 50px;}
+    from {transform: translateY(10px); opacity: 0;} /* Começa de 15px acima e invisível */
+    to {transform: translateY(0); opacity: 1;} /* Vai para a posição normal e visível */
 }
 
 @media screen and (max-width: 865px) {
@@ -305,11 +274,5 @@ p {
 
     .help, .about {
         font-size: 13px;
-    }
-}
-
-@media screen and (max-width: 495px) {
-    .container {
-        margin-top: 150px;
     }
 }
