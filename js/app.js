@@ -1,5 +1,5 @@
 let darkMode = 0;
-let currentSize = "M"; // Tamanho padrão: Médio (M)
+let currentSize = "M";
 let characterCounter = document.getElementById("char_count");
 let wordCount = document.getElementById("word_count");
 const body = document.body;
@@ -7,7 +7,6 @@ const barra = document.getElementById("barra-up");
 const toggleThemeButton = document.getElementById('toggle-theme');
 const copyButton = document.getElementById('copy-text');
 const saveStorage = document.getElementById('save-storage');
-const deleteStorage = document.getElementById('delete-storage');
 const clearEditorButton = document.getElementById('clear-editor');
 const toggleSizeButton = document.getElementById('toggle-size');
 const textEditor = document.getElementById('text-editor');
@@ -20,7 +19,6 @@ const tamanhoSpan = document.getElementById('tamanho');
 const helpElements = document.querySelectorAll('.help');
 const aboutElements = document.querySelectorAll('.about');
 
-// Função para alternar o tema
 function toggleTheme() {
     if (darkMode === 1) {
         body.style.backgroundColor = "#f5f5f5"
@@ -75,7 +73,6 @@ function toggleTheme() {
     }
 }
 
-// Função para aplicar o tema salvo
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
@@ -84,11 +81,10 @@ function applySavedTheme() {
         } else {
             darkMode = 1;
         }
-        toggleTheme(); // Chama a função para aplicar o tema salvo
+        toggleTheme();
     }
 }
 
-// Função para alternar o tamanho do texto
 function toggleSize() {
     if (currentSize === "M") {
         currentSize = "G";
@@ -103,7 +99,6 @@ function toggleSize() {
     localStorage.setItem('textSize', currentSize);
 }
 
-// Função para aplicar o tamanho do texto salvo
 function applySavedSize() {
     const savedSize = localStorage.getItem('textSize');
     if (savedSize) {
@@ -118,7 +113,6 @@ function applySavedSize() {
     }
 }
 
-// Carregar configurações do localStorage ao carregar a página
 window.addEventListener('load', () => {
     const savedText = localStorage.getItem('textEditorContent');
 
@@ -133,38 +127,27 @@ window.addEventListener('load', () => {
     applySavedSize();
 });
 
-// Evento para alternar o tema
+clearEditorButton.addEventListener('click', clearTextArea);
+
 toggleThemeButton.addEventListener('click', toggleTheme);
 
-// Evento para alternar o tamanho do texto
 toggleSizeButton.addEventListener('click', toggleSize);
 
-// Função para notificação da cópia de texto
 function Notify(texto) {
     let div = document.createElement('div');
-    div.id = 'noti';  // Defina o id diretamente na div
-    div.innerHTML = texto;  // Coloque apenas o texto aqui
+    div.id = 'noti';
+    div.innerHTML = texto;
     document.body.appendChild(div);
-
-    // Agora que o div foi adicionado ao DOM, podemos calcular a posição
     const copyButtonRect = copyButton.getBoundingClientRect();
-    
-    // Define a posição da notificação
-    div.style.top = `${copyButtonRect.top - div.offsetHeight - 10}px`; // 10px acima do botão
-    div.style.left = `${copyButtonRect.left + (copyButtonRect.width / 2) - (div.offsetWidth / 2)}px`; // Centralizado em relação ao botão
-
-    // Aplica a visibilidade e a animação
+    div.style.top = `${copyButtonRect.top - div.offsetHeight - 10}px`;
+    div.style.left = `${copyButtonRect.left + (copyButtonRect.width / 2) - (div.offsetWidth / 2)}px`;
     div.style.visibility = 'visible';
     div.style.opacity = 1;
-
-    // Remove a notificação após um tempo
     setTimeout(function() {
         document.body.removeChild(div);
     }, 2500);
 }
 
-
-// Evento para copiar o texto
 copyButton.addEventListener('click', () => {
     textEditor.select();
     textEditor.setSelectionRange(0, 99999);
@@ -172,13 +155,18 @@ copyButton.addEventListener('click', () => {
     Notify('👍');
 });
 
-// Evento para salvar no localStorage
 textEditor.addEventListener("blur", () => {
     const text = textEditor.value;
     localStorage.setItem('textEditorContent', text);
 });
 
-// Evento para contar os caracteres
+function clearTextArea() {
+    textEditor.value = "";
+    localStorage.removeItem('textEditorContent');
+    characterCounter.textContent = 0;
+    wordCount.textContent = 0;
+}
+
 textEditor.addEventListener("input", () => {
     characterCounter.textContent = textEditor.value.length;
     let txt = textEditor.value.trim();
