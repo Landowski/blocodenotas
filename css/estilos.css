@@ -197,26 +197,10 @@ p {
     font-size: 13px;
 }
 
-.help.light {
-    color: #555;
-}
-
-.help.dark {
-    color: #888;
-}
-
 .about {
     margin-bottom: 15px;
     font-size: 13px;
     text-align: justify;
-}
-
-.about.light {
-    color: #555;
-}
-
-.about.dark {
-    color: #888;
 }
 
 .privacidade {
@@ -307,4 +291,6 @@ p {
     border-radius: 4px;
     background-color: #111;
     color: white;
+    align-self: center;
+    margin-top: 20px;
 }
