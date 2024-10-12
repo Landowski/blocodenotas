@@ -38,14 +38,6 @@ function toggleTheme() {
         h1.classList.add('light');
         h2.classList.add('light');
         h2_2.classList.add('light');
-        helpElements.forEach(el => {
-            el.classList.remove('dark');
-            el.classList.add('light');
-        });
-        aboutElements.forEach(el => {
-            el.classList.remove('dark');
-            el.classList.add('light');
-        });
         buttonLight();
         darkMode = 0;
         localStorage.setItem('theme', 'light');
@@ -63,14 +55,6 @@ function toggleTheme() {
         h1.classList.add('dark');
         h2.classList.add('dark');
         h2_2.classList.add('dark');
-        helpElements.forEach(el => {
-            el.classList.remove('light');
-            el.classList.add('dark');
-        });
-        aboutElements.forEach(el => {
-            el.classList.remove('light');
-            el.classList.add('dark');
-        });
         buttonDark();
         darkMode = 1;
         localStorage.setItem('theme', 'dark');
