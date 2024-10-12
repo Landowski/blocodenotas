@@ -291,6 +291,10 @@ p {
     color: #111;
 }
 
+.popup a {
+    color: lightblue;
+}
+
 #okPopup {
     width: 80%;
     display: flex;
@@ -301,4 +305,6 @@ p {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px;
     font-size: 13px;
     color: #111;
+    align-self: center;
+    margin-top: 20px;
 }
