@@ -44,7 +44,7 @@ p {
 }
 
 .elements {
-    width: 50%;
+    width: 100%;
     min-height: 753px;
     display: flex;
     flex-direction: column;
