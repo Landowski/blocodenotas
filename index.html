@@ -34,33 +34,40 @@
                     <div class="button blight" id="toggle-size"><i class="fa-solid fa-text-height"></i></div>
                     <div class="button blight" id="clear-editor"><i class="fa-regular fa-trash-can"></i></div>
                     <div class="button blight" id="toggle-theme"><i class="fa-solid fa-circle-half-stroke"></i></div>
+                    <div class="button blight" id="ajuda"><i class="fa-regular fa-circle-question"></i></div>
                 </div>
             </div>
             <textarea id="text-editor" class="light" placeholder="Digite ou cole seu texto aqui"></textarea>
             <div class="counters" id="counter">Caracteres: <span id="char_count">0</span> • Palavras: <span id="word_count">0</span></div>
         </div>
-        <br />
-        <h2 id="h2" class="light">Ajuda</h2>
-        <div class="help light"><i class="fa-regular fa-clipboard"></i> Copia todo o texto contido no bloco de notas e deixa disponível na área de trabalho (clipboard) para colar onde desejar.</div>
-        <div class="help light"><i class="fa-solid fa-text-height"></i> Alterna entre o tamanho da fonte (pequena, média e grande).</div>
-        <div class="help light"><i class="fa-regular fa-trash-can"></i> Limpa o bloco de notas e apaga o texto salvo.</div>
-        <div class="help light"><i class="fa-solid fa-circle-half-stroke"></i> Alterna o bloco de notas para o modo de leitura noturna (modo escuro / "dark mode") ou diurno.</div>
-        <div class="help light"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> Nos 2 risquinhos (abaixo do contador de carcteres e palavras), você pode aumentar ou diminuir o tamanho do bloco de notas na vertical ou horizontal.</div>
-        <div class="help light"><i class="fa-regular fa-floppy-disk"></i> O salvamento do texto é automático, feito no navegador que estiver utilizando.</div>
-        <br />
-
-        <h2 id="h2-2" class="light">Sobre</h2>
-        <div class="about light">Bem-vindo ao nosso site, onde oferecemos uma ferramenta simples e eficaz para você fazer anotações diretamente do seu navegador. Nosso <b>bloco de notas online</b> é ideal para quem precisa de uma solução rápida e acessível para guardar ideias, criar listas ou escrever rascunhos.</div>
-        <div class="about light">Desenvolvemos este bloco de notas pensando em praticidade e facilidade de uso. Não é necessário criar uma conta ou instalar aplicativos; basta acessar o site e começar a escrever. As funcionalidades incluem salvamento automático do texto, copiar, ajustar o tamanho da fonte e ativar o modo noturno para uma leitura mais confortável. Tem também um contador de palavras e caracteres em tempo real.</div>    
-        <div class="about light">Se você precisa de uma maneira prática de organizar suas anotações, nosso bloco de notas é a escolha perfeita. Ele é leve, rápido e está sempre disponível, não importa onde você esteja. Além disso, o conteúdo pode ser salvo no armazenamento local do navegador, garantindo que suas anotações estarão seguras, mesmo que você feche o navegador ou desligue o computador.</div>    
-        <div class="about light">Nossa ferramenta é completamente gratuita e foi projetada para ser útil em diferentes situações, seja para estudos, trabalho ou uso pessoal. Com um design limpo e uma interface intuitiva, o bloco de notas permite que você se concentre no que realmente importa: suas anotações.</div>    
-        <div class="about light">Experimente agora e veja como é fácil manter suas ideias organizadas. O bloco de notas online é compatível com todos os dispositivos e navegadores, garantindo que você possa acessá-lo a qualquer hora e de qualquer lugar.</div>    
-        <div class="about light">Queremos que sua experiência seja a melhor possível, por isso oferecemos um ambiente sem distrações e focado na produtividade. Aproveite a simplicidade e a eficiência desta ferramenta para otimizar seu dia a dia.</div>    
-        <div class="about light">Se você está em busca de uma maneira prática e acessível de fazer anotações, o bloco de notas online é a solução ideal. Fácil de usar, seguro e sempre disponível, ele é o companheiro perfeito para suas necessidades de escrita e organização. Além disso, com o contador de palavras e caracteres, você pode monitorar facilmente o progresso de suas anotações, garantindo que suas ideias estejam sempre sob controle.</div>
-        <br /><br /><br />
-        <div id="privacidade" class="privacidade light"><a href="privacidade" target="_blank" style="text-decoration: none;">Política de Privacidade</a></div>    
-    
     </div>
+
+    <div id="overlay">
+        <div class="popup">
+          <h2 id="h2" class="light">Ajuda</h2>
+            <div class="help light"><i class="fa-regular fa-clipboard"></i> Copia todo o texto contido no bloco de notas e deixa disponível na área de trabalho (clipboard) para colar onde desejar.</div>
+            <div class="help light"><i class="fa-solid fa-text-height"></i> Alterna entre o tamanho da fonte (pequena, média e grande).</div>
+            <div class="help light"><i class="fa-regular fa-trash-can"></i> Limpa o bloco de notas e apaga o texto salvo.</div>
+            <div class="help light"><i class="fa-solid fa-circle-half-stroke"></i> Alterna o bloco de notas para o modo de leitura noturna (modo escuro / "dark mode") ou diurno.</div>
+            <div class="help light"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> Nos 2 risquinhos (abaixo do contador de carcteres e palavras), você pode aumentar ou diminuir o tamanho do bloco de notas na vertical ou horizontal.</div>
+            <div class="help light"><i class="fa-regular fa-floppy-disk"></i> O salvamento do texto é automático, feito no navegador que estiver utilizando.</div>
+            <br />
+
+            <h2 id="h2-2" class="light">Sobre</h2>
+            <div class="about light">Bem-vindo ao nosso site, onde oferecemos uma ferramenta simples e eficaz para você fazer anotações diretamente do seu navegador. Nosso <b>bloco de notas online</b> é ideal para quem precisa de uma solução rápida e acessível para guardar ideias, criar listas ou escrever rascunhos.</div>
+            <div class="about light">Desenvolvemos este bloco de notas pensando em praticidade e facilidade de uso. Não é necessário criar uma conta ou instalar aplicativos; basta acessar o site e começar a escrever. As funcionalidades incluem salvamento automático do texto, copiar, ajustar o tamanho da fonte e ativar o modo noturno para uma leitura mais confortável. Tem também um contador de palavras e caracteres em tempo real.</div>    
+            <div class="about light">Se você precisa de uma maneira prática de organizar suas anotações, nosso bloco de notas é a escolha perfeita. Ele é leve, rápido e está sempre disponível, não importa onde você esteja. Além disso, o conteúdo pode ser salvo no armazenamento local do navegador, garantindo que suas anotações estarão seguras, mesmo que você feche o navegador ou desligue o computador.</div>    
+            <div class="about light">Nossa ferramenta é completamente gratuita e foi projetada para ser útil em diferentes situações, seja para estudos, trabalho ou uso pessoal. Com um design limpo e uma interface intuitiva, o bloco de notas permite que você se concentre no que realmente importa: suas anotações.</div>    
+            <div class="about light">Experimente agora e veja como é fácil manter suas ideias organizadas. O bloco de notas online é compatível com todos os dispositivos e navegadores, garantindo que você possa acessá-lo a qualquer hora e de qualquer lugar.</div>    
+            <div class="about light">Queremos que sua experiência seja a melhor possível, por isso oferecemos um ambiente sem distrações e focado na produtividade. Aproveite a simplicidade e a eficiência desta ferramenta para otimizar seu dia a dia.</div>    
+            <div class="about light">Se você está em busca de uma maneira prática e acessível de fazer anotações, o bloco de notas online é a solução ideal. Fácil de usar, seguro e sempre disponível, ele é o companheiro perfeito para suas necessidades de escrita e organização. Além disso, com o contador de palavras e caracteres, você pode monitorar facilmente o progresso de suas anotações, garantindo que suas ideias estejam sempre sob controle.</div>
+            <br /><br /><br />
+            <div id="privacidade" class="privacidade light"><a href="privacidade" target="_blank" style="text-decoration: none;">Política de Privacidade</a></div>  
+
+            <button id="okPopup">OK</button>
+        </div>
+    </div>
+    
     <script src="js/app.js"></script>
 </body>
 </html>
