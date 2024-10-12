@@ -280,22 +280,6 @@ p {
 }
 
 .popup {
-    width: 700px;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 4px;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px;
-    font-size: 13px;
-    color: #111;
-}
-
-.popup a {
-    color: lightblue;
-}
-
-#okPopup {
     width: 80%;
     display: flex;
     flex-direction: column;
@@ -307,4 +291,20 @@ p {
     color: #111;
     align-self: center;
     margin-top: 20px;
+}
+
+.popup a {
+    color: lightblue;
+}
+
+#okPopup {
+     width: fit-content;
+    padding: 6px 20px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #111;
+    color: white;
 }
