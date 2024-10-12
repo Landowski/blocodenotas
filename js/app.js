@@ -19,6 +19,9 @@ const tamanhoSpan = document.getElementById('tamanho');
 const helpElements = document.querySelectorAll('.help');
 const aboutElements = document.querySelectorAll('.about');
 const elements = document.querySelector('.elements');
+const help = document.getElementById('ajuda');
+const overlay = document.getElementById('overlay');
+const okPopup = document.getElementById('okPopup');
 
 function toggleTheme() {
     if (darkMode === 1) {
@@ -188,15 +191,25 @@ function buttonDark() {
     }
 }
 
-// Função para ajustar a altura da textarea
 function adjustTextareaHeight() {
     // Define a altura da textarea como a altura disponível na div
     textEditor.style.height = `${elements.clientHeight - textEditor.offsetTop}px`;
 }
-
-// Ouça o evento de redimensionamento
 const resizeObserver = new ResizeObserver(adjustTextareaHeight);
 resizeObserver.observe(elements);
-
-// Ajuste a altura inicialmente apenas se necessário
 adjustTextareaHeight();
+
+help.addEventListener('click', popup);
+    overlay.addEventListener('click', function(event) {
+        if (event.target === overlay) {
+            popup();
+        }
+});
+okPopup.addEventListener('click', function(event) {
+    event.stopPropagation();
+    popup();
+});
+
+function popup() {
+    overlay.classList.toggle('active');
+}
