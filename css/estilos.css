@@ -36,13 +36,13 @@ p {
 }
 
 .container {
-    width: 100%;
+    width: 50%;
     margin: 0 auto;
     padding: 25px;
 }
 
 .elements {
-    width: 100%;
+    width: 50%;
     min-height: 753px;
     display: flex;
     flex-direction: column;
