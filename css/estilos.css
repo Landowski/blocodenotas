@@ -209,14 +209,6 @@ p {
     font-size: 13px;
 }
 
-.privacidade.light a {
-    color: #555 !important;
-}
-
-.privacidade.dark a {
-    color: #888 !important;
-}
-
 .counters {
     font-size: 13px;
     margin-top: 15px;
