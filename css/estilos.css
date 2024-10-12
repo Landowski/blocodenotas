@@ -23,22 +23,6 @@ h1 {
     cursor: default;
 }
 
-h1.light {
-    color: #444;
-}
-
-h1.dark {
-    color: #888;
-}
-
-h2.light {
-    color: #444;
-}
-
-h2.dark {
-    color: #888;
-}
-
 h2 {
     margin: 0;
     margin-bottom: 15px;
