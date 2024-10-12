@@ -3,21 +3,14 @@ let currentSize = "M";
 let characterCounter = document.getElementById("char_count");
 let wordCount = document.getElementById("word_count");
 const body = document.body;
-const barra = document.getElementById("barra-up");
 const toggleThemeButton = document.getElementById('toggle-theme');
 const copyButton = document.getElementById('copy-text');
 const saveStorage = document.getElementById('save-storage');
 const clearEditorButton = document.getElementById('clear-editor');
 const toggleSizeButton = document.getElementById('toggle-size');
 const textEditor = document.getElementById('text-editor');
-const h1 = document.getElementById('h1');
-const h2 = document.getElementById('h2');
-const h2_2 = document.getElementById('h2-2');
-const privacidade = document.getElementById('privacidade');
 const button = document.querySelectorAll('.button')
 const tamanhoSpan = document.getElementById('tamanho');
-const helpElements = document.querySelectorAll('.help');
-const aboutElements = document.querySelectorAll('.about');
 const elements = document.querySelector('.elements');
 const help = document.getElementById('ajuda');
 const overlay = document.getElementById('overlay');
@@ -28,16 +21,6 @@ function toggleTheme() {
         body.style.backgroundColor = "#f5f5f5"
         textEditor.classList.remove('dark');
         textEditor.classList.add('light');
-        barra.classList.remove('dark');
-        privacidade.classList.remove('dark');
-        barra.classList.add('light');
-        privacidade.classList.add('light');
-        h1.classList.remove('dark');
-        h2.classList.remove('dark');
-        h2_2.classList.remove('dark');
-        h1.classList.add('light');
-        h2.classList.add('light');
-        h2_2.classList.add('light');
         buttonLight();
         darkMode = 0;
         localStorage.setItem('theme', 'light');
@@ -45,16 +28,6 @@ function toggleTheme() {
         body.style.backgroundColor = "#111"
         textEditor.classList.remove('light');
         textEditor.classList.add('dark');
-        barra.classList.remove('light');
-        privacidade.classList.remove('light');
-        barra.classList.add('dark');
-        privacidade.classList.add('dark');
-        h1.classList.remove('light');
-        h2.classList.remove('light');
-        h2_2.classList.remove('light');
-        h1.classList.add('dark');
-        h2.classList.add('dark');
-        h2_2.classList.add('dark');
         buttonDark();
         darkMode = 1;
         localStorage.setItem('theme', 'dark');
