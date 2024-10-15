@@ -502,6 +502,7 @@ h3 {
     cursor: auto;
     resize: none;
     margin-bottom: 50px;
+    resize: vertical;
 }
 
 #text-editor.light-mode {
