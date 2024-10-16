@@ -289,21 +289,15 @@ function applyLightMode() {
 
 function renderNotesList() {
     notesList.innerHTML = "";
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-
-    // Ordena as notas alfabeticamente pelo título
     const sortedNotes = notes.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
 
-    // Renderiza cada nota
     sortedNotes.forEach(note => {
       const li = document.createElement("li");
       li.innerHTML = note.title || "Bloco de notas";
       li.dataset.id = note.id;
 
-      // Adiciona evento de clique para selecionar a nota
       li.addEventListener("click", () => selectNote(note.id));
 
-      // Destaca a nota selecionada
       if (note.id === currentNoteId) {
         li.classList.add("selected-note");
       }
@@ -311,7 +305,6 @@ function renderNotesList() {
       notesList.appendChild(li);
     });
 
-    // Aplica os temas (light-mode ou dark-mode)
     const items = document.querySelectorAll('#sidebar ul li');
     if (document.body.classList.contains('light-mode')) {
       items.forEach(item => {
@@ -326,7 +319,6 @@ function renderNotesList() {
 
 function selectNote(id) {
     currentNoteId = id;
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
     const note = notes.find(n => n.id === id);
     if (note) {
         noteTitle.value = note.title || '';
