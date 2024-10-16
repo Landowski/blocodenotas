@@ -104,7 +104,6 @@ function loadTodos() {
         const todoId = this.getAttribute("data-id");
         checkTodo(todoId);
       });
-    });
   
     new Sortable(todoList, {
       handle: '.dragIcon',
