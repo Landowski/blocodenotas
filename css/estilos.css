@@ -514,7 +514,7 @@ h3 {
     color: #CCC;
 }
 
-#texte-ditor:focus::placeholder {
+#texte-editor:focus::placeholder {
     color: transparent;
 }
 
