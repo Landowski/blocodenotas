@@ -5,7 +5,7 @@ const loadingMessage = document.getElementById("loading-message");
 const addNoteButton = document.getElementById("logo");
 const noteDetails = document.getElementById("note-details");
 const noteTitle = document.getElementById("note-title");
-const noteBody = document.getElementById("note-body");
+const noteBody = document.getElementById("note-body");A
 const deleteNoteButton = document.getElementById("delete-note");
 const togglePinButton = document.getElementById("toggle-pin");
 const deleteConfirmation = document.getElementById("delete-confirmation");
@@ -87,11 +87,9 @@ function loadTodos() {
         const todoElement = document.createElement("div");
         todoElement.className = "to-do " + (document.body.classList.contains("light-mode") ? "light-mode" : "dark-mode");
         todoElement.dataset.id = todoItem.id;
-
-        // Adiciona o estilo riscado e a cor verde se o to-do estiver marcado como feito (done)
         const textDecoration = todoItem.done ? "text-decoration: line-through;" : "";
         const checkColor = todoItem.done ? "color: limegreen;" : "color: inherit;";
-
+        
         todoElement.innerHTML = `
             <i class="las la-grip-lines dragIcon"></i>
             <span style="width: 100%; ${textDecoration}">${todoItem.item}</span>
@@ -102,14 +100,12 @@ function loadTodos() {
         `;
 
         todoList.appendChild(todoElement);
-
-        // Evento para deletar o to-do
+        
         todoElement.querySelector(".deleteToDo").addEventListener("click", function() {
             const todoId = this.getAttribute("data-id");
             deleteTodo(todoId);
         });
 
-        // Evento para marcar/desmarcar o to-do como feito
         todoElement.querySelector(".checkToDo").addEventListener("click", function() {
             const todoId = this.getAttribute("data-id");
             checkTodo(todoId);
@@ -288,7 +284,7 @@ function renderNotesList() {
     const unpinnedNotes = notes.filter(note => !note.pinned).sort((a, b) => (a.title || "").localeCompare(b.title || ""));
     [...pinnedNotes, ...unpinnedNotes].forEach(note => {
       const li = document.createElement("li");
-      li.innerHTML = (note.pinned ? "<i class='las la-thumbtack' style='font-size: 20px; color: #F44336;'></i>" : "") + (note.title || "Novo bloco");
+      li.innerHTML = (note.pinned ? "<i class='las la-thumbtack' style='font-size: 20px; color: #F44336;'></i>" : "") + (note.title || "Bloco de notas");
       li.dataset.id = note.id;
       li.addEventListener("click", () => selectNote(note.id));
       if (note.id === currentNoteId) {
@@ -469,8 +465,7 @@ addNoteButton.addEventListener("click", () => {
       id: Date.now().toString(),
       title: "",
       body: "",
-      pinned: false,
-      userId: 'localUser'
+      pinned: false
     };
     let notes = JSON.parse(localStorage.getItem('notes')) || [];
     notes.push(newNote);
