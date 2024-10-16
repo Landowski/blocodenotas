@@ -342,21 +342,8 @@ function saveNote() {
     renderNotesList();
 }
 
-noteTitle.addEventListener("blur", () => {
-    const note = notes.find(n => n.id === currentNoteId);
-    if (note) {
-        note.title = noteTitle.value;
-        saveNote(note);
-    }
-});
-
-noteBody.addEventListener("blur", () => {
-    const note = notes.find(n => n.id === currentNoteId);
-    if (note) {
-        note.body = noteBody.innerHTML;
-        saveNote(note);
-    }
-});
+noteTitle.addEventListener("blur", saveNote);
+noteBody.addEventListener("blur", saveNote);
 
 function addNote() {
     const newNote = {
