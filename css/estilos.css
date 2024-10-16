@@ -410,6 +410,10 @@ h3 {
     padding: 5px;
 }
 
+.insertToDo input::placeholder {
+    color: #d0d0d0;
+}
+
 .insertToDo.light-mode input:focus, .insertToDo.dark-mode input:focus {
     border-color: #2D6AFF;
 }
