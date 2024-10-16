@@ -84,45 +84,53 @@ function loadTodos() {
     todoList.innerHTML = "";
     const todos = JSON.parse(localStorage.getItem('todos')) || [];
     todos.sort((a, b) => a.ordem - b.ordem).forEach((todoItem) => {
-      const todoElement = document.createElement("div");
-      todoElement.className = "to-do " + (document.body.classList.contains("light-mode") ? "light-mode" : "dark-mode");
-      todoElement.dataset.id = todoItem.id;
-      todoElement.innerHTML = `
-        <i class="las la-grip-lines dragIcon"></i>
-        <span style="width: 100%;">${todoItem.item}</span>
-        <i class="las la-check-circle checkToDo" style="font-size: 20px;" data-id="${todoItem.id}"></i> <i class="las la-trash-alt deleteToDo" style="font-size: 20px;" data-id="${todoItem.id}"></i>
-      `;
-      todoList.appendChild(todoElement);
-  
-      todoElement.querySelector(".deleteToDo").addEventListener("click", function() {
-        const todoId = this.getAttribute("data-id");
-        deleteTodo(todoId);
-      });
+        const todoElement = document.createElement("div");
+        todoElement.className = "to-do " + (document.body.classList.contains("light-mode") ? "light-mode" : "dark-mode");
+        todoElement.dataset.id = todoItem.id;
+
+        // Adiciona o estilo riscado e a cor verde se o to-do estiver marcado como feito (done)
+        const textDecoration = todoItem.done ? "text-decoration: line-through;" : "";
+        const checkColor = todoItem.done ? "color: green;" : "color: inherit;";
+
+        todoElement.innerHTML = `
+            <i class="las la-check-circle checkToDo" style="font-size: 20px; ${checkColor}" data-id="${todoItem.id}"></i>
+            <span style="width: 100%; ${textDecoration}">${todoItem.item}</span>
+            <i class="las la-trash-alt deleteToDo" style="font-size: 20px;" data-id="${todoItem.id}"></i>
+        `;
+
+        todoList.appendChild(todoElement);
+
+        // Evento para deletar o to-do
+        todoElement.querySelector(".deleteToDo").addEventListener("click", function() {
+            const todoId = this.getAttribute("data-id");
+            deleteTodo(todoId);
+        });
+
+        // Evento para marcar/desmarcar o to-do como feito
+        todoElement.querySelector(".checkToDo").addEventListener("click", function() {
+            const todoId = this.getAttribute("data-id");
+            checkTodo(todoId);
+        });
     });
 
-    todoElement.querySelector(".checkToDo").addEventListener("click", function() {
-        const todoId = this.getAttribute("data-id");
-        checkTodo(todoId);
-      });
-  
     new Sortable(todoList, {
-      handle: '.dragIcon',
-      animation: 150,
-      onStart: function(evt) {
-        const todos = todoList.querySelectorAll('.to-do');
-        todos.forEach((todo, index) => {
-          if (index !== evt.oldIndex) {
-            todo.classList.add('faded');
-          }
-        });
-      },
-      onEnd: function(evt) {
-        const todos = todoList.querySelectorAll('.to-do');
-        todos.forEach((todo) => {
-          todo.classList.remove('faded');
-        });
-        updateTodoOrder();
-      }
+        handle: '.dragIcon',
+        animation: 150,
+        onStart: function(evt) {
+            const todos = todoList.querySelectorAll('.to-do');
+            todos.forEach((todo, index) => {
+                if (index !== evt.oldIndex) {
+                    todo.classList.add('faded');
+                }
+            });
+        },
+        onEnd: function(evt) {
+            const todos = todoList.querySelectorAll('.to-do');
+            todos.forEach((todo) => {
+                todo.classList.remove('faded');
+            });
+            updateTodoOrder();
+        }
     });
 }
 
