@@ -90,13 +90,19 @@ function loadTodos() {
       todoElement.innerHTML = `
         <i class="las la-grip-lines dragIcon"></i>
         <span style="width: 100%;">${todoItem.item}</span>
-        <i class="las la-check-circle marcaToDo" style="font-size: 20px;" data-id="${todoItem.id}"></i> <i class="las la-trash-alt deleteToDo" style="font-size: 20px;" data-id="${todoItem.id}"></i>
+        <i class="las la-check-circle checkToDo" style="font-size: 20px;" data-id="${todoItem.id}"></i> <i class="las la-trash-alt deleteToDo" style="font-size: 20px;" data-id="${todoItem.id}"></i>
       `;
       todoList.appendChild(todoElement);
   
       todoElement.querySelector(".deleteToDo").addEventListener("click", function() {
         const todoId = this.getAttribute("data-id");
         deleteTodo(todoId);
+      });
+    });
+
+    todoElement.querySelector(".checkToDo").addEventListener("click", function() {
+        const todoId = this.getAttribute("data-id");
+        checkTodo(todoId);
       });
     });
   
@@ -139,24 +145,23 @@ function deleteTodo(todoId) {
     todos = todos.filter(todo => todo.id !== todoId);
     localStorage.setItem('todos', JSON.stringify(todos));
     loadTodos();
-    toggleMarcarTodos();
+    toggleApagarTodos();
 }
 
 document.getElementById("apagar-todos").addEventListener("click", function() {
     localStorage.setItem('todos', JSON.stringify([]));
     loadTodos();
-    toggleMarcarTodos();
+    toggleApagarTodos();
 });
 
-function toggleMarcarTodos() {
+function toggleApagarTodos() {
     const todos = JSON.parse(localStorage.getItem('todos')) || [];
-    const marcarTodosBtn = document.getElementById("apagar-todos");
-    const h32 = document.getElementById("h3-2");
+    const apagarTodosBtn = document.getElementById("apagar-todos");
     if (todos.length > 1) {
-        marcarTodosBtn.style.display = "flex";
+        apagarTodosBtn.style.display = "flex";
 
     } else {
-        marcarTodosBtn.style.display = "none";
+        apagarTodosBtn.style.display = "none";
     }
 }
 
@@ -169,7 +174,7 @@ function applyDarkMode() {
     const h32 = document.getElementById('h3-2');
     const sidebar = document.getElementById('sidebar');
     const insertToDo = document.querySelector(".insertToDo");
-    const marcarTodos = document.getElementById('apagar-todos');
+    const apagarTodos = document.getElementById('apagar-todos');
     const notebody = document.getElementById('note-body');
     const textEditor = document.getElementById('text-editor');
     
@@ -179,8 +184,8 @@ function applyDarkMode() {
     notebody.classList.add('dark-mode');
     insertToDo.classList.remove('light-mode');
     insertToDo.classList.add('dark-mode');
-    marcarTodos.classList.remove('light-mode');
-    marcarTodos.classList.add('dark-mode');
+    apagarTodos.classList.remove('light-mode');
+    apagarTodos.classList.add('dark-mode');
     textEditor.classList.remove('light-mode');
     textEditor.classList.add('dark-mode');
     sidebar.classList.remove('light-mode');
@@ -216,7 +221,7 @@ function applyLightMode() {
     const h32 = document.getElementById('h3-2');
     const sidebar = document.getElementById('sidebar');
     const insertToDo = document.querySelector(".insertToDo");
-    const marcarTodos = document.getElementById('apagar-todos');
+    const apagarTodos = document.getElementById('apagar-todos');
     const notebody = document.getElementById('note-body');
     const textEditor = document.getElementById('text-editor');
     
@@ -226,8 +231,8 @@ function applyLightMode() {
     notebody.classList.add('light-mode');
     insertToDo.classList.remove('dark-mode');
     insertToDo.classList.add('light-mode');
-    marcarTodos.classList.remove('dark-mode');
-    marcarTodos.classList.add('light-mode');
+    apagarTodos.classList.remove('dark-mode');
+    apagarTodos.classList.add('light-mode');
     textEditor.classList.remove('dark-mode');
     textEditor.classList.add('light-mode');
     sidebar.classList.remove('dark-mode');
@@ -522,5 +527,5 @@ function toggleSidebar(){
 initializeLocalStorage();
 renderNotesList();
 loadTodos();
-toggleMarcarTodos();
+toggleApagarTodos();
 loadingMessage.style.display = "none";
