@@ -477,7 +477,7 @@ h3 {
 }
 
 .checkToDo:hover {
-    color: limegreen;
+    color: limegreen !important;
 }
 
 #apagar-todos {
