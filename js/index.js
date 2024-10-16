@@ -93,6 +93,7 @@ function loadTodos() {
         const checkColor = todoItem.done ? "color: limegreen;" : "color: inherit;";
 
         todoElement.innerHTML = `
+            <i class="las la-grip-lines dragIcon"></i>
             <span style="width: 100%; ${textDecoration}">${todoItem.item}</span>
             <div>
             <i class="las la-check-circle checkToDo" style="font-size: 20px; ${checkColor}" data-id="${todoItem.id}"></i>
