@@ -511,10 +511,10 @@ h3 {
 }
 
 #text-editor::placeholder {
-    color: #CCC;
+    color: #C0C0C0;
 }
 
-#texte-editor:focus::placeholder {
+#text-editor:focus::placeholder {
     color: transparent;
 }
 
