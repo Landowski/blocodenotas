@@ -18,6 +18,7 @@ const overlay = document.getElementById("overlay");
 const todoInput = document.getElementById("input-to-do");
 const todoList = document.getElementById("to-do");
 let notes = JSON.parse(localStorage.getItem('notes')) || [];
+let notes = [];
 let currentNoteId = null;
 
 function initializeLocalStorage() {
@@ -27,7 +28,16 @@ function initializeLocalStorage() {
     if (!localStorage.getItem('todos')) {
       localStorage.setItem('todos', JSON.stringify([]));
     }
-  }
+    syncNotes();
+}
+
+function syncNotes() {
+    notes = JSON.parse(localStorage.getItem('notes')) || [];
+}
+
+function saveNotes() {
+    localStorage.setItem('notes', JSON.stringify(notes));
+}
 
 function applyStoredTheme() {
     const storedMode = localStorage.getItem('theme');
@@ -314,7 +324,6 @@ function renderNotesList() {
     }
 }
 
-
 function selectNote(id) {
     currentNoteId = id;
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
@@ -349,7 +358,7 @@ function saveNote() {
     } else {
         notes.push(note);
     }
-    localStorage.setItem('notes', JSON.stringify(notes));
+    saveNotes();
     renderNotesList();
 }
 
@@ -358,21 +367,20 @@ noteBody.addEventListener("blur", saveNote);
 
 function addNote() {
     const newNote = {
-        id: Date.now().toString(), // Gera um ID único com base na data
+        id: Date.now().toString(),
         title: "Novo bloco",
         body: ""
     };
     notes.push(newNote);
-    currentNoteId = newNote.id; // Define a nova nota como a atual
-    localStorage.setItem('notes', JSON.stringify(notes));
+    currentNoteId = newNote.id;
+    saveNotes();
     renderNotesList();
-    selectNote(newNote.id); // Seleciona e exibe a nova nota para edição
+    selectNote(newNote.id);
 }
 
 addNoteButton.addEventListener("click", addNote);
 
 deleteNoteButton.addEventListener("click", () => {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
     const note = notes.find(n => n.id === currentNoteId);
     if (note) {
       noteToDeleteSpan.textContent = note.title || "Novo bloco";
@@ -381,15 +389,14 @@ deleteNoteButton.addEventListener("click", () => {
 });
 
 confirmDeleteButton.addEventListener("click", () => {
-    let notes = JSON.parse(localStorage.getItem('notes')) || [];
     notes = notes.filter(note => note.id !== currentNoteId);
-    localStorage.setItem('notes', JSON.stringify(notes));
+    saveNotes();
     currentNoteId = null;
     deleteConfirmation.classList.add("hidden");
     noteDetails.classList.add("hidden");
     home.classList.remove("hidden");
     renderNotesList();
-  });
+});
 
 cancelDeleteButton.addEventListener("click", () => {
     deleteConfirmation.classList.add("hidden");
