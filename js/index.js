@@ -93,9 +93,11 @@ function loadTodos() {
         const checkColor = todoItem.done ? "color: green;" : "color: inherit;";
 
         todoElement.innerHTML = `
-            <i class="las la-check-circle checkToDo" style="font-size: 20px; ${checkColor}" data-id="${todoItem.id}"></i>
             <span style="width: 100%; ${textDecoration}">${todoItem.item}</span>
+            <div>
+            <i class="las la-check-circle checkToDo" style="font-size: 20px; ${checkColor}" data-id="${todoItem.id}"></i>
             <i class="las la-trash-alt deleteToDo" style="font-size: 20px;" data-id="${todoItem.id}"></i>
+            </div>
         `;
 
         todoList.appendChild(todoElement);
