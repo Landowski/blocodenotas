@@ -468,12 +468,16 @@ h3 {
     opacity: 0.5;
 }
 
-.deleteToDo {
+.deleteToDo, .checkToDo {
     cursor: pointer;
 }
 
 .deleteToDo:hover {
     color: #F44336;
+}
+
+.checkToDo:hover {
+    color: limegreen;
 }
 
 #apagar-todos {
