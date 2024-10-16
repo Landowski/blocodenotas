@@ -70,7 +70,6 @@ function addTodo(text) {
     const newOrder = todos.length > 0 ? Math.max(...todos.map(t => t.ordem)) + 1 : 0;
     const newTodo = {
       id: Date.now().toString(),
-      userId: 'localUser',
       item: text,
       ordem: newOrder
     };
