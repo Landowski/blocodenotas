@@ -308,24 +308,30 @@ function selectNote(id) {
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
     const note = notes.find(n => n.id === id);
     if (note) {
-      noteTitle.value = note.title || '';
-      noteBody.innerHTML = note.body || '';
-      home.classList.add("hidden");
-      noteDetails.classList.remove("hidden");
-  
-      const selectedNote = notesList.querySelector(".selected-note");
-      if (selectedNote) {
-        selectedNote.classList.remove("selected-note");
-      }
-  
-      const li = notesList.querySelector(`li[data-id="${id}"]`);
-      if (li) {
-        li.classList.add("selected-note");
-      }
+        noteTitle.value = note.title || '';
+        noteBody.innerHTML = note.body || '';
+        home.classList.add("hidden");
+        noteDetails.classList.remove("hidden");
+
+        const selectedNote = notesList.querySelector(".selected-note");
+        if (selectedNote) {
+            selectedNote.classList.remove("selected-note");
+        }
+
+        const li = notesList.querySelector(`li[data-id="${id}"]`);
+        if (li) {
+            li.classList.add("selected-note");
+        }
     }
 }
 
-function saveNote(note) {
+function saveNote() {
+    const note = {
+        id: currentNoteId,
+        title: noteTitle.value,
+        body: noteBody.innerHTML,
+        pinned: notes.find(n => n.id === currentNoteId)?.pinned || false, // Mantém o estado de pinned
+    };
     const index = notes.findIndex(n => n.id === note.id);
     if (index !== -1) {
         notes[index] = note;
@@ -352,20 +358,21 @@ noteBody.addEventListener("blur", () => {
     }
 });
 
-addNoteButton.addEventListener("click", () => {
+function addNote() {
     const newNote = {
-      id: Date.now().toString(),
-      title: "",
-      body: "",
-      pinned: false
+        id: Date.now().toString(), // Gera um ID único com base na data
+        title: "Novo bloco",
+        body: "",
+        pinned: false,
     };
-    let notes = JSON.parse(localStorage.getItem('notes')) || [];
     notes.push(newNote);
-    currentNoteId = newNote.id;
+    currentNoteId = newNote.id; // Define a nova nota como a atual
     localStorage.setItem('notes', JSON.stringify(notes));
     renderNotesList();
-    selectNote(newNote.id);
-});
+    selectNote(newNote.id); // Seleciona e exibe a nova nota para edição
+}
+
+addNoteButton.addEventListener("click", addNote);
 
 deleteNoteButton.addEventListener("click", () => {
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
