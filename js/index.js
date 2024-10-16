@@ -292,7 +292,7 @@ function renderNotesList() {
 
     sortedNotes.forEach(note => {
       const li = document.createElement("li");
-      li.innerHTML = `<i class="las la-grip-lines dragBloco"></i> ${note.title || "Bloco de notas"}`;
+      li.innerHTML = `<img src="https://icongr.am/material/drag.svg?size=24&color=#000000" /> ${note.title || "Bloco de notas"}`;
       li.dataset.id = note.id;
 
       li.addEventListener("click", () => selectNote(note.id));
