@@ -142,7 +142,7 @@ function deleteTodo(todoId) {
     toggleMarcarTodos();
 }
 
-document.getElementById("marcar-todos").addEventListener("click", function() {
+document.getElementById("apagar-todos").addEventListener("click", function() {
     localStorage.setItem('todos', JSON.stringify([]));
     loadTodos();
     toggleMarcarTodos();
@@ -150,7 +150,7 @@ document.getElementById("marcar-todos").addEventListener("click", function() {
 
 function toggleMarcarTodos() {
     const todos = JSON.parse(localStorage.getItem('todos')) || [];
-    const marcarTodosBtn = document.getElementById("marcar-todos");
+    const marcarTodosBtn = document.getElementById("apagar-todos");
     const h32 = document.getElementById("h3-2");
     if (todos.length > 1) {
         marcarTodosBtn.style.display = "flex";
@@ -171,7 +171,7 @@ function applyDarkMode() {
     const h32 = document.getElementById('h3-2');
     const sidebar = document.getElementById('sidebar');
     const insertToDo = document.querySelector(".insertToDo");
-    const marcarTodos = document.getElementById('marcar-todos');
+    const marcarTodos = document.getElementById('apagar-todos');
     const notebody = document.getElementById('note-body');
     const textEditor = document.getElementById('text-editor');
     
@@ -218,7 +218,7 @@ function applyLightMode() {
     const h32 = document.getElementById('h3-2');
     const sidebar = document.getElementById('sidebar');
     const insertToDo = document.querySelector(".insertToDo");
-    const marcarTodos = document.getElementById('marcar-todos');
+    const marcarTodos = document.getElementById('apagar-todos');
     const notebody = document.getElementById('note-body');
     const textEditor = document.getElementById('text-editor');
     
