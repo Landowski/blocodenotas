@@ -6,6 +6,10 @@ const addNoteButton = document.getElementById("add");
 const noteDetails = document.getElementById("note-details");
 const noteTitle = document.getElementById("note-title");
 const noteBody = document.getElementById("note-body");
+const formatacao = document.getElementById('formatacao');
+const boldBtn = document.getElementById('boldBtn');
+const italicBtn = document.getElementById('italicBtn');
+const underlineBtn = document.getElementById('underlineBtn');
 const deleteNoteButton = document.getElementById("delete-note");
 const deleteConfirmation = document.getElementById("delete-confirmation");
 const confirmDeleteButton = document.getElementById("confirm-delete");
@@ -97,14 +101,14 @@ function loadTodos() {
         todoElement.className = "to-do " + (document.body.classList.contains("light-mode") ? "light-mode" : "dark-mode");
         todoElement.dataset.id = todoItem.id;
         const textDecoration = todoItem.done ? "text-decoration: line-through;" : "";
-        const checkColor = todoItem.done ? "color: limegreen;" : "color: inherit;";
+        const checkIcon = todoItem.done ? `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-check-circle" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" class="checkToDo checked" data-id="${todoItem.id}"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"/></svg>` : `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-circle-outline" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" class="checkToDo notChecked" data-id="${todoItem.id}"><path d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg>`; 
         
         todoElement.innerHTML = `
-            <i class="las la-grip-lines dragIcon"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-drag" width="21" height="21" viewBox="0 0 24 24" fill="currentColor" class="dragIcon"><path d="M7,19V17H9V19H7M11,19V17H13V19H11M15,19V17H17V19H15M7,15V13H9V15H7M11,15V13H13V15H11M15,15V13H17V15H15M7,11V9H9V11H7M11,11V9H13V11H11M15,11V9H17V11H15M7,7V5H9V7H7M11,7V5H13V7H11M15,7V5H17V7H15Z"/></svg>
             <span style="width: 100%; ${textDecoration}">${todoItem.item}</span>
-            <div style="display: flex;">
-            <i class="las la-check-circle checkToDo" style="font-size: 20px; ${checkColor}" data-id="${todoItem.id}"></i>
-            <i class="las la-trash-alt deleteToDo" style="font-size: 20px;" data-id="${todoItem.id}"></i>
+            <div class="toDoButtons">
+            ${checkIcon}
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-trash-can-outline" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" class="deleteToDo" data-id="${todoItem.id}"><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"/></svg>
             </div>
         `;
 
@@ -167,12 +171,12 @@ function checkTodo(todoId) {
     let todos = JSON.parse(localStorage.getItem('todos')) || [];
     todos = todos.map(todo => {
         if (todo.id === todoId) {
-            todo.done = !todo.done; // Alterna o estado de "done"
+            todo.done = !todo.done;
         }
         return todo;
     });
-    localStorage.setItem('todos', JSON.stringify(todos)); // Salva a alteração no localStorage
-    loadTodos(); // Recarrega os to-dos para refletir as mudanças
+    localStorage.setItem('todos', JSON.stringify(todos));
+    loadTodos();
 }
 
 document.getElementById("apagar-todos").addEventListener("click", function() {
@@ -288,32 +292,86 @@ function applyLightMode() {
 
 function renderNotesList() {
     notesList.innerHTML = "";
-    const sortedNotes = notes.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+    
+    notes.forEach(note => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+        <div class="dragAndSpan">
+            <div class="dragNote">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-drag" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7,19V17H9V19H7M11,19V17H13V19H11M15,19V17H17V19H15M7,15V13H9V15H7M11,15V13H13V15H11M15,15V13H17V15H15M7,11V9H9V11H7M11,11V9H13V11H11M15,11V9H17V11H15M7,7V5H9V7H7M11,7V5H13V7H11M15,7V5H17V7H15Z" /></svg>
+            </div>
+                <span>${note.title || "Bloco de notas"}</span>
+        </div>
+        <div class="note-actions">
+            <button class="delete-note light-mode" title="Excluir nota"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-trash-can-outline" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"/></svg></button>
+        </div>`;
+        li.dataset.id = note.id;
 
-    sortedNotes.forEach(note => {
-      const li = document.createElement("li");
-      li.innerHTML = `<img src="https://icongr.am/material/drag.svg?size=24&color=#000000" /> ${note.title || "Bloco de notas"}`;
-      li.dataset.id = note.id;
+        const deleteButton = li.querySelector('.delete-note');
+        deleteButton.addEventListener("click", (event) => {
+            event.stopPropagation(); // Previne que o evento de clique se propague para o li
+            deleteNote(note.id);
+        });
 
-      li.addEventListener("click", () => selectNote(note.id));
+        li.addEventListener("click", () => selectNote(note.id));
 
-      if (note.id === currentNoteId) {
-        li.classList.add("selected-note");
-      }
+        if (note.id === currentNoteId) {
+            li.classList.add("selected-note");
+        }
 
-      notesList.appendChild(li);
+        notesList.appendChild(li);
     });
 
     const items = document.querySelectorAll('#sidebar ul li');
     if (document.body.classList.contains('light-mode')) {
-      items.forEach(item => {
-        item.classList.add('light-mode');
-      });
+        items.forEach(item => {
+            item.classList.add('light-mode');
+        });
     } else {
-      items.forEach(item => {
-        item.classList.add('dark-mode');
-      });
+        items.forEach(item => {
+            item.classList.add('dark-mode');
+        });
     }
+
+    initializeSidebarSortable();
+}
+
+function deleteNote(id) {
+    const note = notes.find(n => n.id === id);
+    if (note) {
+        noteToDeleteSpan.textContent = note.title || "Novo bloco";
+        deleteConfirmation.classList.remove("hidden");
+        currentNoteId = id;
+    }
+}
+
+function initializeSidebarSortable() {
+    new Sortable(notesList, {
+        animation: 150,
+        handle: 'svg',
+        ghostClass: 'sortable-ghost',
+        onStart: function(evt) {
+            const notes = notesList.querySelectorAll('li');
+            notes.forEach((note, index) => {
+                if (index !== evt.oldIndex) {
+                    note.classList.add('faded');
+                }
+            });
+        },
+        onEnd: function(evt) {
+            const notes = notesList.querySelectorAll('li');
+            notes.forEach((note) => {
+                note.classList.remove('faded');
+            });
+            updateNotesOrder();
+        }
+    });
+}
+
+function updateNotesOrder() {
+    const noteElements = notesList.querySelectorAll('li');
+    notes = Array.from(noteElements).map(el => notes.find(note => note.id === el.dataset.id));
+    saveNotes();
 }
 
 function selectNote(id) {
@@ -371,14 +429,6 @@ function addNote() {
 
 addNoteButton.addEventListener("click", addNote);
 
-deleteNoteButton.addEventListener("click", () => {
-    const note = notes.find(n => n.id === currentNoteId);
-    if (note) {
-      noteToDeleteSpan.textContent = note.title || "Novo bloco";
-      deleteConfirmation.classList.remove("hidden");
-    }
-});
-
 confirmDeleteButton.addEventListener("click", () => {
     notes = notes.filter(note => note.id !== currentNoteId);
     saveNotes();
@@ -393,139 +443,50 @@ cancelDeleteButton.addEventListener("click", () => {
     deleteConfirmation.classList.add("hidden");
 });
 
-function getSelection() {
-    return window.getSelection();
-}
-
-function saveSelection() {
-    const selection = getSelection();
-    if (selection.rangeCount > 0) {
-        return selection.getRangeAt(0);
-    }
-    return null;
-}
-
-function restoreSelection(range) {
-    if (range) {
-        const selection = getSelection();
+noteBody.addEventListener('mouseup', function(event) {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0 && selection.toString().length > 0) {
+        savedSelection = selection.getRangeAt(0);
+        const range = savedSelection.cloneRange();
+        range.collapse(false);
+        const span = document.createElement('span');
+        range.insertNode(span);
+        const rect = span.getBoundingClientRect();
+        span.parentNode.removeChild(span);
         selection.removeAllRanges();
-        selection.addRange(range);
+        selection.addRange(savedSelection);
+        formatacao.style.left = `${rect.left + window.scrollX}px`;
+        formatacao.style.top = `${rect.top - 30 + window.scrollY - formatacao.offsetHeight}px`;
+        formatacao.style.display = 'flex';
+    } else {
+        formatacao.style.display = 'none';
     }
-}
+});
 
-function toggleLink() {
+document.addEventListener('click', function(event) {
+    if (!noteBody.contains(event.target) && !formatacao.contains(event.target)) {
+        formatacao.style.display = 'none';
+    }
+});
+
+function restoreSelectionAndApplyCommand(command) {
     const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        const selectedText = range.toString();
-        const url = prompt('Insira o link', 'https://');
-        if (url) {
-            const link = document.createElement('a');
-            link.href = url;
-            link.target = '_blank';
-            link.textContent = selectedText || url;
-            range.deleteContents();
-            range.insertNode(link);
-            selection.removeAllRanges();
-        }
-    }
+    selection.removeAllRanges();
+    selection.addRange(savedSelection);
+    document.execCommand(command, false, null);
+    formatacao.style.display = 'none';
 }
 
-function toggleLink() {
-    const range = saveSelection();
-    const url = prompt('Insira o link', 'https://');
-    if (url) {
-        noteBody.focus();
-        restoreSelection(range);
-        
-        document.execCommand('createLink', false, url);
-        
-        const selection = window.getSelection();
-        if (selection.rangeCount > 0) {
-            const linkElement = selection.anchorNode.parentElement;
-            if (linkElement.tagName === 'A') {
-                linkElement.setAttribute('contenteditable', 'false');
-                linkElement.setAttribute('target', '_blank');
-            }
-        }
-    }
-}
+boldBtn.addEventListener('click', function() {
+    restoreSelectionAndApplyCommand('bold');
+});
 
-function toggleImage() {
-    const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        const url = prompt('Insira o link da imagem');
-        if (url) {
-            const img = document.createElement('img');
-            img.src = url;
-            img.alt = 'Imagem inserida';
-            range.deleteContents();
-            range.insertNode(img);
-            selection.removeAllRanges();
-        }
-    }
-}
+italicBtn.addEventListener('click', function() {
+    restoreSelectionAndApplyCommand('italic');
+});
 
-function toggleHeading() {
-    const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        let container = range.commonAncestorContainer;
-        
-        // Encontra o elemento pai mais próximo
-        while (container.nodeType !== Node.ELEMENT_NODE) {
-            container = container.parentNode;
-        }
-        
-        if (container.tagName === 'H3') {
-            // Se já é um H3, converte para um parágrafo
-            const p = document.createElement('p');
-            p.innerHTML = container.innerHTML;
-            container.parentNode.replaceChild(p, container);
-        } else {
-            // Se não é um H3, converte para H3
-            const h3 = document.createElement('h3');
-            h3.innerHTML = container.innerHTML;
-            container.parentNode.replaceChild(h3, container);
-        }
-    }
-}
-
-function toggleUnorderedList() {
-    document.execCommand('insertUnorderedList');
-}
-
-function toggleRemoveFormat() {
-    document.execCommand('removeFormat', false, null);
-}
-
-document.addEventListener("keydown", (event) => {
-    // Verifica se o elemento ativo é o noteBody
-    if (event.ctrlKey && document.activeElement === noteBody) {
-        switch (event.key) {
-            case 'l':
-                event.preventDefault();
-                toggleUnorderedList();
-                break;
-            case 'h':
-                event.preventDefault();
-                toggleHeading();
-                break;
-            case 'k':
-                event.preventDefault();
-                toggleLink();
-                break;
-            case 'm':
-                event.preventDefault();
-                toggleImage();
-                break;
-            case 'e':
-                event.preventDefault();
-                toggleRemoveFormat();
-                break;
-        }
-    }
+underlineBtn.addEventListener('click', function() {
+    restoreSelectionAndApplyCommand('underline');
 });
 
 function toggleSidebar(){
@@ -538,4 +499,5 @@ initializeLocalStorage();
 renderNotesList();
 loadTodos();
 toggleApagarTodos();
+initializeSidebarSortable();
 loadingMessage.style.display = "none";

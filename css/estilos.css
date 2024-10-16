@@ -1,19 +1,22 @@
 :root {
     --font: "Roboto", sans-serif;
+    --blue: #2D6AFF;
+    --black: #111;
+    --green: #66BB6A;
+    --red: #EF5350;
 }
 
 * {
     box-sizing: border-box;
-    transition: all .2s ease;
 }
 
 ::selection {
-    background: #2D6AFF;
+    background: var(--blue);
     color: #fff;
 }
   
   ::-moz-selection {
-    background: #2D6AFF;
+    background: var(--blue);
     color: #fff;
 }
 
@@ -29,7 +32,7 @@ body {
 
 body.light-mode {
     background-color: #fff;
-    color: #111;
+    color: var(--black);
     color-scheme: light;
 }
 
@@ -40,12 +43,12 @@ body.dark-mode {
 }
 
 a {
-    color: #2D6AFF;
+    color: var(--blue);
 }
 
 h2 {
     margin-top: 0px;
-    color: #111;
+    color: var(--black);
 }
 
 h3 {
@@ -95,11 +98,18 @@ h3 {
     display: flex;
     width: fit-content;
     align-items: center;
-    font-weight: 500;
-    font-size: 16px;
+    font-weight: 600;
+    font-size: 17px;
     gap: 3px;
-    color: #2D6AFF;
     cursor: pointer;
+}
+
+.logo:hover {
+    color: var(--blue);
+}
+
+.logo.light-mode {
+    color: var(--black);
 }
 
 #add {
@@ -109,7 +119,14 @@ h3 {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: #2D6AFF;
+}
+
+#add.light-mode {
+    color: var(--black);
+}
+
+#add:hover {
+    color: var(--blue);
 }
 
 #notes-list {
@@ -121,7 +138,6 @@ h3 {
     padding: 0;
     margin: 0;
     font-size: 14px;
-    color: #111;
     overflow-y: hidden;
     overflow-x: hidden;
 }
@@ -163,17 +179,32 @@ h3 {
 #sidebar li {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 5px;
-    padding: 10px 0;
+    padding: 5px 0;
     margin-right: 20px;
     cursor: pointer;
     border-radius: 4px;
-    border: 1px solid transparent;
+}
+
+.dragAndSpan {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.dragNote {
+    cursor: grab;
+    margin-top: 3px;
+}
+
+.dragNote span {
+    word-break: break-word;
 }
 
 #sidebar li.light-mode {
     background-color: #fff;
-    color: #111;
+    color: var(--black);
 }
 
 #sidebar li.dark-mode {
@@ -181,30 +212,25 @@ h3 {
     color: #DBDBDB;
 }
 
-#sidebar li:hover {
-    padding-left: 10px;
-}
-
 #sidebar li.light-mode:hover {
-    border-color: #d5d5d5;
+    background-color: #f5f5f5;
 }
 
 #sidebar li.dark-mode:hover {
-    border-color: #555;
+    background-color: #383838;
 }
 
 .selected-note {
     font-weight: bold;
     border-radius: 4px;
-    padding-left: 10px !important;
-    border-left: 4px solid #2D6AFF !important;
+    border-left: 4px solid var(--blue) !important;
     background-color: #f5f5f5;
-    color: #111;
+    color: var(--black);
 }
 
 .selected-note.light-mode {
     background-color: #f5f5f5 !important;
-    color: #111;
+    color: var(--black);
 }
 
 .selected-note.dark-mode {
@@ -234,7 +260,7 @@ h3 {
 }
 
 #note-details.light-mode input {
-    color: #111;
+    color: var(--black);
     background-color: #fff;
 }
 
@@ -293,65 +319,74 @@ h3 {
     display: flex;
     justify-content: flex-end;
     height: fit-content;
+    opacity: 0;
+}
+
+#sidebar ul li:hover .note-actions {
+    opacity: 1;
 }
 
 .note-actions button {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px;
     border: 0;
     cursor: pointer;
-    border-radius: 360px;
+    background-color: transparent;
 }
 
 .note-actions button.light-mode {
-    background-color: #fff;
-    color: #555;
-}
-
-.note-actions button.dark-mode {
-    background-color: transparent;
     color: #999;
 }
 
-.note-actions button.light-mode:hover {
-    background-color: #ebebeb;
+.note-actions button.dark-mode {
+    color: #555;
 }
 
-.note-actions button.dark-mode:hover {
-    background-color: #383838;
+.note-actions button:hover {
+    color: var(--red)
+}
+
+#formatacao {
+    position: absolute;
+    display: none;
+    box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.3);
+    border: 1px solid #000;
+    background: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    gap: 10px;
+}
+
+#formatacao button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    cursor: pointer;
+    background-color: transparent;
+    outline: 0;
+    color: var(--black)
 }
 
 #menu {
     display: none;
     justify-content: center;
     align-items: center;
-    padding: 5px;
     border: 0;
     cursor: pointer;
-    border-radius: 360px;
     position: absolute;
     top: 15px;
     right: 50px;
+    background-color: transparent;
 }
 
 #menu.light-mode {
-    color: #555;
-    background-color: #fff;
+    color: #111;
 }
 
 #menu.dark-mode {
     color: #999;
-    background-color: transparent;
-}
-
-#menu.light-mode:hover {
-    background-color: #ebebeb;
-}
-
-#menu.dark-mode:hover {
-    background-color: #383838;
 }
 
 #dark-mode {
@@ -368,7 +403,7 @@ h3 {
 }
 
 #dark-mode.light-mode {
-    color: #555;
+    color: var(--black);
     background-color: #fff;
 }
 
@@ -389,7 +424,7 @@ h3 {
     display: flex;
     flex-direction: column;
     font-size: 15px;
-    color: #111;
+    color: var(--black);
 }
 
 .insertToDo {
@@ -414,8 +449,12 @@ h3 {
     color: #d0d0d0;
 }
 
-.insertToDo.light-mode input:focus, .insertToDo.dark-mode input:focus {
-    border-color: #2D6AFF;
+.insertToDo.light-mode input:focus {
+    border-color: var(--black);
+}
+
+.insertToDo.dark-mode input:focus {
+    border-color: #fff;
 }
 
 .insertToDo.light-mode input:focus::placeholder, .insertToDo.dark-mode input:focus::placeholder {
@@ -453,7 +492,7 @@ h3 {
 }
 
 .to-do.dark-mode {
-    background-color:  #383838;
+    background-color: #383838;
     color: #ccc;
 }
 
@@ -472,16 +511,30 @@ h3 {
     opacity: 0.5;
 }
 
+.toDoButtons {
+    display: flex;
+    gap: 5px;
+    color: #999 !important;
+}
+
 .deleteToDo, .checkToDo {
     cursor: pointer;
 }
 
 .deleteToDo:hover {
-    color: #F44336;
+    color: var(--red);
 }
 
 .checkToDo:hover {
-    color: limegreen !important;
+    color: var(--green) !important;
+}
+
+.notChecked {
+    color: inherit !important;
+}
+
+.checked {
+    color: var(--green) !important;
 }
 
 #apagar-todos {
@@ -489,7 +542,7 @@ h3 {
     width: fit-content;
     font-size: 13px;
     margin-bottom: 10px;
-    color: #F44336;
+    color: var(--red);
     align-self: flex-end;
     cursor: pointer;
 }
@@ -556,7 +609,7 @@ h3 {
     font-family: var(--font);
     font-size: 15px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    color: #111;
+    color: var(--black);
 }
 
 .popup-content button {
@@ -568,13 +621,13 @@ h3 {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 7px 15px;
     color: #555;
     background-color: #fff;
 }
 
 .popup-content .confirma {
-    background-color: #F44336;
+    background-color: var(--red);
     color: #fff;
 }
 
@@ -591,7 +644,7 @@ h3 {
 }
 
 .popup-content .inserir {
-    background-color: #2D6AFF;
+    background-color: var(--blue);
     color: #fff;
     margin-right: 10px;
 }
@@ -634,11 +687,6 @@ h3 {
 
     #sidebar ul {
         overflow-y: auto;
-    }
-
-    #dark-mode {
-    top: 15px;
-    right: 20px;
     }
     
     #menu {
