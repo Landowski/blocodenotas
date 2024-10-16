@@ -595,12 +595,12 @@ h3 {
 .popup:not(.hidden) {
     visibility: visible;
 }
-  
-[contenteditable=true]:empty:before {
+
+[contentEditable=true]:empty:not(:focus):before{
     content: attr(placeholder);
     pointer-events: none;
-    color: #CCC;
-    display: block; /* For Firefox */
+    color: #C0C0C0;
+    display: block;
 }
 
 @media screen and (max-width: 1260px) {
