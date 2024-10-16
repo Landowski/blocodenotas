@@ -154,11 +154,9 @@ function toggleMarcarTodos() {
     const h32 = document.getElementById("h3-2");
     if (todos.length > 1) {
         marcarTodosBtn.style.display = "flex";
-        h32.style.marginTop = '0px';
 
     } else {
         marcarTodosBtn.style.display = "none";
-        h32.style.marginTop = '50px';
     }
 }
 
