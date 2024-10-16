@@ -476,7 +476,7 @@ h3 {
     color: #13CE66;
 }
 
-#marcar-todos {
+#apagar-todos {
     display: none;
     width: fit-content;
     font-size: 13px;
@@ -486,7 +486,7 @@ h3 {
     cursor: pointer;
 }
 
-#marcar-todos.dark-mode {
+#apagar-todos.dark-mode {
     filter: brightness(0.6);
 }
 
