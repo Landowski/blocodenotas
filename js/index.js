@@ -148,6 +148,18 @@ function deleteTodo(todoId) {
     toggleApagarTodos();
 }
 
+function checkTodo(todoId) {
+    let todos = JSON.parse(localStorage.getItem('todos')) || [];
+    todos = todos.map(todo => {
+        if (todo.id === todoId) {
+            todo.done = !todo.done; // Alterna o estado de "done"
+        }
+        return todo;
+    });
+    localStorage.setItem('todos', JSON.stringify(todos)); // Salva a alteração no localStorage
+    loadTodos(); // Recarrega os to-dos para refletir as mudanças
+}
+
 document.getElementById("apagar-todos").addEventListener("click", function() {
     localStorage.setItem('todos', JSON.stringify([]));
     loadTodos();
