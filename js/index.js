@@ -17,7 +17,6 @@ const menu = document.getElementById("menu");
 const overlay = document.getElementById("overlay");
 const todoInput = document.getElementById("input-to-do");
 const todoList = document.getElementById("to-do");
-let notes = JSON.parse(localStorage.getItem('notes')) || [];
 let notes = [];
 let currentNoteId = null;
 
