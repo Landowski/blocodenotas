@@ -29,11 +29,13 @@ function initializeLocalStorage() {
     }
   }
 
-const storedMode = localStorage.getItem('theme');
-if (storedMode === 'dark-mode') {
-    applyDarkMode();
-} else {
-    applyLightMode();
+function applyStoredTheme() {
+    const storedMode = localStorage.getItem('theme');
+    if (storedMode === 'dark-mode') {
+        applyDarkMode();
+    } else {
+        applyLightMode();
+    }
 }
 
 todoInput.addEventListener("keypress", function(event) {
@@ -533,6 +535,7 @@ function toggleSidebar(){
     document.getElementById("overlay").classList.toggle('active');
 }
 
+applyStoredTheme();
 initializeLocalStorage();
 renderNotesList();
 loadTodos();
