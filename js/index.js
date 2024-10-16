@@ -7,7 +7,6 @@ const noteDetails = document.getElementById("note-details");
 const noteTitle = document.getElementById("note-title");
 const noteBody = document.getElementById("note-body");
 const deleteNoteButton = document.getElementById("delete-note");
-const togglePinButton = document.getElementById("toggle-pin");
 const deleteConfirmation = document.getElementById("delete-confirmation");
 const confirmDeleteButton = document.getElementById("confirm-delete");
 const cancelDeleteButton = document.getElementById("cancel-delete");
@@ -279,18 +278,28 @@ function applyLightMode() {
 function renderNotesList() {
     notesList.innerHTML = "";
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    const pinnedNotes = notes.filter(note => note.pinned).sort((a, b) => (a.title || "").localeCompare(b.title || ""));
-    const unpinnedNotes = notes.filter(note => !note.pinned).sort((a, b) => (a.title || "").localeCompare(b.title || ""));
-    [...pinnedNotes, ...unpinnedNotes].forEach(note => {
+
+    // Ordena as notas alfabeticamente pelo título
+    const sortedNotes = notes.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+
+    // Renderiza cada nota
+    sortedNotes.forEach(note => {
       const li = document.createElement("li");
-      li.innerHTML = (note.pinned ? "<i class='las la-thumbtack' style='font-size: 20px; color: #F44336;'></i>" : "") + (note.title || "Bloco de notas");
+      li.innerHTML = note.title || "Bloco de notas";
       li.dataset.id = note.id;
+
+      // Adiciona evento de clique para selecionar a nota
       li.addEventListener("click", () => selectNote(note.id));
+
+      // Destaca a nota selecionada
       if (note.id === currentNoteId) {
         li.classList.add("selected-note");
       }
+
       notesList.appendChild(li);
     });
+
+    // Aplica os temas (light-mode ou dark-mode)
     const items = document.querySelectorAll('#sidebar ul li');
     if (document.body.classList.contains('light-mode')) {
       items.forEach(item => {
@@ -301,7 +310,8 @@ function renderNotesList() {
         item.classList.add('dark-mode');
       });
     }
-  }
+}
+
 
 function selectNote(id) {
     currentNoteId = id;
@@ -329,8 +339,7 @@ function saveNote() {
     const note = {
         id: currentNoteId,
         title: noteTitle.value,
-        body: noteBody.innerHTML,
-        pinned: notes.find(n => n.id === currentNoteId)?.pinned || false, // Mantém o estado de pinned
+        body: noteBody.innerHTML
     };
     const index = notes.findIndex(n => n.id === note.id);
     if (index !== -1) {
@@ -349,8 +358,7 @@ function addNote() {
     const newNote = {
         id: Date.now().toString(), // Gera um ID único com base na data
         title: "Novo bloco",
-        body: "",
-        pinned: false,
+        body: ""
     };
     notes.push(newNote);
     currentNoteId = newNote.id; // Define a nova nota como a atual
@@ -384,16 +392,6 @@ confirmDeleteButton.addEventListener("click", () => {
 cancelDeleteButton.addEventListener("click", () => {
     deleteConfirmation.classList.add("hidden");
 });
-
-togglePinButton.addEventListener("click", () => {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    const note = notes.find(n => n.id === currentNoteId);
-    if (note) {
-      note.pinned = !note.pinned;
-      saveNote(note);
-      renderNotesList();
-    }
-  });
 
 function getSelection() {
     return window.getSelection();
