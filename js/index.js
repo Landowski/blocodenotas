@@ -77,7 +77,7 @@ function addTodo(text) {
     todos.push(newTodo);
     localStorage.setItem('todos', JSON.stringify(todos));
     loadTodos();
-    toggleMarcarTodos();
+    toggleApagarTodos();
 }           
 
 function loadTodos() {
