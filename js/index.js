@@ -90,7 +90,7 @@ function loadTodos() {
       todoElement.innerHTML = `
         <i class="las la-grip-lines dragIcon"></i>
         <span style="width: 100%;">${todoItem.item}</span>
-        <i class="las la-check-circle deleteToDo" style="font-size: 20px;" data-id="${todoItem.id}"></i>
+        <i class="las la-check-circle marcaToDo" style="font-size: 20px;" data-id="${todoItem.id}"></i> <i class="las la-trash-alt deleteTodo" style="font-size: 20px;" data-id="${todoItem.id}"></i>
       `;
       todoList.appendChild(todoElement);
   
