@@ -336,6 +336,71 @@ function saveNote(note) {
     renderNotesList();
 }
 
+noteTitle.addEventListener("blur", () => {
+    const note = notes.find(n => n.id === currentNoteId);
+    if (note) {
+        note.title = noteTitle.value;
+        saveNote(note);
+    }
+});
+
+noteBody.addEventListener("blur", () => {
+    const note = notes.find(n => n.id === currentNoteId);
+    if (note) {
+        note.body = noteBody.innerHTML;
+        saveNote(note);
+    }
+});
+
+addNoteButton.addEventListener("click", () => {
+    const newNote = {
+      id: Date.now().toString(),
+      title: "",
+      body: "",
+      pinned: false
+    };
+    let notes = JSON.parse(localStorage.getItem('notes')) || [];
+    notes.push(newNote);
+    currentNoteId = newNote.id;
+    localStorage.setItem('notes', JSON.stringify(notes));
+    renderNotesList();
+    selectNote(newNote.id);
+});
+
+deleteNoteButton.addEventListener("click", () => {
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const note = notes.find(n => n.id === currentNoteId);
+    if (note) {
+      noteToDeleteSpan.textContent = note.title || "Novo bloco";
+      deleteConfirmation.classList.remove("hidden");
+    }
+});
+
+confirmDeleteButton.addEventListener("click", () => {
+    let notes = JSON.parse(localStorage.getItem('notes')) || [];
+    notes = notes.filter(note => note.id !== currentNoteId);
+    localStorage.setItem('notes', JSON.stringify(notes));
+    currentNoteId = null;
+    deleteConfirmation.classList.add("hidden");
+    noteDetails.classList.add("hidden");
+    home.classList.remove("hidden");
+    renderNotesList();
+  });
+
+cancelDeleteButton.addEventListener("click", () => {
+    deleteConfirmation.classList.add("hidden");
+});
+
+togglePinButton.addEventListener("click", () => {
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const note = notes.find(n => n.id === currentNoteId);
+    if (note) {
+      note.pinned = !note.pinned;
+      saveNote(note);
+      renderNotesList();
+    }
+  });
+
 function getSelection() {
     return window.getSelection();
 }
@@ -442,70 +507,6 @@ function toggleUnorderedList() {
 function toggleRemoveFormat() {
     document.execCommand('removeFormat', false, null);
 }
-
-noteTitle.addEventListener("blur", () => {
-    const note = notes.find(n => n.id === currentNoteId);
-    if (note) {
-        note.title = noteTitle.value;
-        saveNote(note);
-    }
-});
-
-noteBody.addEventListener("blur", () => {
-    const note = notes.find(n => n.id === currentNoteId);
-    if (note) {
-        note.body = noteBody.innerHTML;
-        saveNote(note);
-    }
-});
-
-addNoteButton.addEventListener("click", () => {
-    const newNote = {
-      id: Date.now().toString(),
-      title: "",
-      body: "",
-      pinned: false
-    };
-    let notes = JSON.parse(localStorage.getItem('notes')) || [];
-    notes.push(newNote);
-    localStorage.setItem('notes', JSON.stringify(notes));
-    renderNotesList();
-    selectNote(newNote.id);
-});
-
-deleteNoteButton.addEventListener("click", () => {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    const note = notes.find(n => n.id === currentNoteId);
-    if (note) {
-      noteToDeleteSpan.textContent = note.title || "Novo bloco";
-      deleteConfirmation.classList.remove("hidden");
-    }
-});
-
-confirmDeleteButton.addEventListener("click", () => {
-    let notes = JSON.parse(localStorage.getItem('notes')) || [];
-    notes = notes.filter(note => note.id !== currentNoteId);
-    localStorage.setItem('notes', JSON.stringify(notes));
-    currentNoteId = null;
-    deleteConfirmation.classList.add("hidden");
-    noteDetails.classList.add("hidden");
-    home.classList.remove("hidden");
-    renderNotesList();
-  });
-
-cancelDeleteButton.addEventListener("click", () => {
-    deleteConfirmation.classList.add("hidden");
-});
-
-togglePinButton.addEventListener("click", () => {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    const note = notes.find(n => n.id === currentNoteId);
-    if (note) {
-      note.pinned = !note.pinned;
-      saveNote(note);
-      renderNotesList();
-    }
-  });
 
 document.addEventListener("keydown", (event) => {
     // Verifica se o elemento ativo é o noteBody
