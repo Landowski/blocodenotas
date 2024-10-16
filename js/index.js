@@ -95,7 +95,7 @@ function loadTodos() {
         todoElement.innerHTML = `
             <i class="las la-grip-lines dragIcon"></i>
             <span style="width: 100%; ${textDecoration}">${todoItem.item}</span>
-            <div>
+            <div style="display: flex;">
             <i class="las la-check-circle checkToDo" style="font-size: 20px; ${checkColor}" data-id="${todoItem.id}"></i>
             <i class="las la-trash-alt deleteToDo" style="font-size: 20px;" data-id="${todoItem.id}"></i>
             </div>
