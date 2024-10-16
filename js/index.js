@@ -90,7 +90,7 @@ function loadTodos() {
 
         // Adiciona o estilo riscado e a cor verde se o to-do estiver marcado como feito (done)
         const textDecoration = todoItem.done ? "text-decoration: line-through;" : "";
-        const checkColor = todoItem.done ? "color: green;" : "color: inherit;";
+        const checkColor = todoItem.done ? "color: limegreen;" : "color: inherit;";
 
         todoElement.innerHTML = `
             <span style="width: 100%; ${textDecoration}">${todoItem.item}</span>
