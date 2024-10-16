@@ -506,6 +506,10 @@ h3 {
     resize: vertical;
 }
 
+#text-editor::placeholder {
+    color: #D5D5D5;
+}
+
 #text-editor.light-mode {
     border: 1px solid #d5d5d5;
     background-color: #fff;
