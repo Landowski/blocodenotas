@@ -46,6 +46,10 @@ a {
     color: var(--blue);
 }
 
+h1 {
+    font-size: 22px;
+}
+
 h2 {
     margin-top: 0px;
     color: var(--black);
@@ -435,6 +439,25 @@ h3 {
     color: var(--black);
 }
 
+#home p {
+    margin: 0;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+#home strong {
+    margin-bottom: 5px;
+}
+
+#home a {
+    display: flex;
+    width: fit-content;
+    align-self: center;
+    margin-bottom: 20px;
+    color: var(--blue);
+}
+
 .insertToDo {
     width: 100%;
     display: flex;
@@ -717,5 +740,13 @@ h3 {
 
     #note-details input {
     font-size: 18px;
+    }
+
+    h1 {
+        font-size: 18px;
+    }
+
+    #home p {
+        font-size: 13px;
     }
 }
