@@ -100,7 +100,6 @@ function addTodo(text) {
     todos.push(newTodo);
     localStorage.setItem('todos', JSON.stringify(todos));
     loadTodos();
-    toggleApagarTodos();
 }           
 
 function loadTodos() {
@@ -174,7 +173,6 @@ function deleteTodo(todoId) {
     todos = todos.filter(todo => todo.id !== todoId);
     localStorage.setItem('todos', JSON.stringify(todos));
     loadTodos();
-    toggleApagarTodos();
 }
 
 function checkTodo(todoId) {
@@ -209,8 +207,6 @@ function applyDarkMode() {
     notebody.classList.add('dark-mode');
     insertToDo.classList.remove('light-mode');
     insertToDo.classList.add('dark-mode');
-    apagarTodos.classList.remove('light-mode');
-    apagarTodos.classList.add('dark-mode');
     textEditor.classList.remove('light-mode');
     textEditor.classList.add('dark-mode');
     sidebar.classList.remove('light-mode');
@@ -258,8 +254,6 @@ function applyLightMode() {
     notebody.classList.add('light-mode');
     insertToDo.classList.remove('dark-mode');
     insertToDo.classList.add('light-mode');
-    apagarTodos.classList.remove('dark-mode');
-    apagarTodos.classList.add('light-mode');
     textEditor.classList.remove('dark-mode');
     textEditor.classList.add('light-mode');
     sidebar.classList.remove('dark-mode');
@@ -558,6 +552,5 @@ applyStoredTheme();
 initializeLocalStorage();
 renderNotesList();
 loadTodos();
-toggleApagarTodos();
 initializeSidebarSortable();
 loadingMessage.style.display = "none";
