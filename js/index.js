@@ -1,4 +1,5 @@
 
+// Declarações
 const logo = document.querySelector(".logo");
 const notesList = document.getElementById("notes-list");
 const loadingMessage = document.getElementById("loading-message");
@@ -10,6 +11,13 @@ const formatacao = document.getElementById('formatacao');
 const boldBtn = document.getElementById('boldBtn');
 const italicBtn = document.getElementById('italicBtn');
 const underlineBtn = document.getElementById('underlineBtn');
+const leftBtn = document.getElementById('leftBtn');
+const centerBtn = document.getElementById('centerBtn');
+const rightBtn = document.getElementById('rightBtn');
+const listBtn = document.getElementById('listBtn');
+const linkBtn = document.getElementById('linkBtn');
+const imageBtn = document.getElementById('imageBtn');
+const removeBtn = document.getElementById('removeBtn');
 const deleteNoteButton = document.getElementById("delete-note");
 const deleteConfirmation = document.getElementById("delete-confirmation");
 const confirmDeleteButton = document.getElementById("confirm-delete");
@@ -24,6 +32,35 @@ const todoList = document.getElementById("to-do");
 let notes = [];
 let currentNoteId = null;
 
+// Listeners iniciais
+menu.addEventListener('click', toggleSidebar);
+overlay.addEventListener('click', toggleSidebar);
+todoInput.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        const todoText = todoInput.value.trim();
+        if (todoText !== "") {
+            addTodo(todoText);
+            todoInput.value = "";
+        }
+    }
+});
+
+toggleDark.addEventListener("click", () => {
+    if (document.body.classList.contains('light-mode')) {
+        applyDarkMode();
+        localStorage.setItem('theme', 'dark-mode');
+    } else {
+        applyLightMode();
+        localStorage.setItem('theme', 'light-mode');
+    }
+});
+
+logo.addEventListener("click", () => {
+    location.reload();
+});
+
+// Início do local storage
 function initializeLocalStorage() {
     if (!localStorage.getItem('notes')) {
       localStorage.setItem('notes', JSON.stringify([]));
@@ -51,34 +88,7 @@ function applyStoredTheme() {
     }
 }
 
-todoInput.addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        const todoText = todoInput.value.trim();
-        if (todoText !== "") {
-            addTodo(todoText);
-            todoInput.value = "";
-        }
-    }
-});
-
-menu.addEventListener('click', toggleSidebar);
-overlay.addEventListener('click', toggleSidebar);
-
-toggleDark.addEventListener("click", () => {
-    if (document.body.classList.contains('light-mode')) {
-        applyDarkMode();
-        localStorage.setItem('theme', 'dark-mode');
-    } else {
-        applyLightMode();
-        localStorage.setItem('theme', 'light-mode');
-    }
-});
-
-logo.addEventListener("click", () => {
-    location.reload();
-});
-
+// Lista de tarefas
 function addTodo(text) {
     const todos = JSON.parse(localStorage.getItem('todos')) || [];
     const newOrder = todos.length > 0 ? Math.max(...todos.map(t => t.ordem)) + 1 : 0;
@@ -196,6 +206,7 @@ function toggleApagarTodos() {
     }
 }
 
+// Dark mode
 function applyDarkMode() {
     const items = document.querySelectorAll('#sidebar ul li');
     const botoes = document.querySelectorAll('.note-actions button');
@@ -290,6 +301,8 @@ function applyLightMode() {
     });
 }
 
+
+// CRUD das notas
 function renderNotesList() {
     notesList.innerHTML = "";
     
@@ -309,7 +322,7 @@ function renderNotesList() {
 
         const deleteButton = li.querySelector('.delete-note');
         deleteButton.addEventListener("click", (event) => {
-            event.stopPropagation(); // Previne que o evento de clique se propague para o li
+            event.stopPropagation();
             deleteNote(note.id);
         });
 
@@ -411,7 +424,7 @@ function saveNote() {
     renderNotesList();
 }
 
-noteTitle.addEventListener("blur", saveNote);
+noteTitle.addEventListener("input", saveNote);
 noteBody.addEventListener("blur", saveNote);
 
 function addNote() {
@@ -443,6 +456,8 @@ cancelDeleteButton.addEventListener("click", () => {
     deleteConfirmation.classList.add("hidden");
 });
 
+
+// Menu de seleção
 noteBody.addEventListener('mouseup', function(event) {
     const selection = window.getSelection();
     if (selection.rangeCount > 0 && selection.toString().length > 0) {
@@ -489,11 +504,69 @@ underlineBtn.addEventListener('click', function() {
     restoreSelectionAndApplyCommand('underline');
 });
 
+leftBtn.addEventListener('click', function() {
+    restoreSelectionAndApplyCommand('justifyLeft');
+});
+
+centerBtn.addEventListener('click', function() {
+    restoreSelectionAndApplyCommand('justifyCenter');
+});
+
+rightBtn.addEventListener('click', function() {
+    restoreSelectionAndApplyCommand('justifyRight');
+});
+
+listBtn.addEventListener('click', function() {
+    restoreSelectionAndApplyCommand('insertUnorderedList');
+});
+
+linkBtn.addEventListener('click', function() {
+    const range = saveSelection();
+    const url = prompt('Insira o link', 'https://');
+    if (url) {
+        noteBody.focus();
+        restoreSelection(range);
+        
+        document.execCommand('createLink', false, url);
+        
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            const linkElement = selection.anchorNode.parentElement;
+            if (linkElement.tagName === 'A') {
+                linkElement.setAttribute('contenteditable', 'false');
+                linkElement.setAttribute('target', '_blank');
+            }
+        }
+    }
+});
+
+function saveSelection() {
+    const selection = getSelection();
+    if (selection.rangeCount > 0) {
+        return selection.getRangeAt(0);
+    }
+    return null;
+}
+
+function restoreSelection(range) {
+    if (range) {
+        const selection = getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+}
+
+removeBtn.addEventListener('click', function() {
+    restoreSelectionAndApplyCommand('removeFormat');
+});
+
+// Menu lateral
 function toggleSidebar(){
     document.getElementById("sidebar").classList.toggle('active');
     document.getElementById("overlay").classList.toggle('active');
 }
 
+// Inicialização
 applyStoredTheme();
 initializeLocalStorage();
 renderNotesList();
