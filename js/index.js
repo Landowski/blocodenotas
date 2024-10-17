@@ -219,6 +219,7 @@ function applyDarkMode() {
     const apagarTodos = document.getElementById('apagar-todos');
     const notebody = document.getElementById('note-body');
     const textEditor = document.getElementById('text-editor');
+    const sobre = document.getElementById('sobre');
     
     document.body.classList.remove('light-mode');
     document.body.classList.add('dark-mode');
@@ -238,6 +239,8 @@ function applyDarkMode() {
     botaoDark.classList.add('dark-mode');
     menu.classList.remove('light-mode');
     menu.classList.add('dark-mode');
+   sobre.classList.remove('light-mode');
+   sobre.classList.add('dark-mode');
     h3.style.color = "#DBDBDB";
     h32.style.color = "#DBDBDB";
     items.forEach(item => {
@@ -266,6 +269,7 @@ function applyLightMode() {
     const apagarTodos = document.getElementById('apagar-todos');
     const notebody = document.getElementById('note-body');
     const textEditor = document.getElementById('text-editor');
+    const sobre = document.getElementById('sobre');
     
     document.body.classList.remove('dark-mode');
     document.body.classList.add('light-mode');
@@ -285,6 +289,8 @@ function applyLightMode() {
     botaoDark.classList.add('light-mode');
     menu.classList.remove('dark-mode');
     menu.classList.add('light-mode');
+   sobre.classList.remove('dark-mode');
+   sobre.classList.add('light-mode');
     h3.style.color = "#111";
     h32.style.color = "#111";
     items.forEach(item => {

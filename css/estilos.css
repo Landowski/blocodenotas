@@ -450,14 +450,6 @@ h3 {
     margin-bottom: 5px;
 }
 
-#home a {
-    display: flex;
-    width: fit-content;
-    align-self: center;
-    margin-bottom: 20px;
-    color: var(--blue);
-}
-
 .insertToDo {
     width: 100%;
     display: flex;
@@ -614,6 +606,29 @@ h3 {
 #text-editor.dark-mode {
     border: 1px solid #404040;
     background-color: transparent;
+}
+
+
+
+#sobre {
+    display: flex;
+    flex-direction: column;
+}
+    
+#sobre.light-mode {
+    color: var(--black);
+}
+
+#sobre.dark-mode {
+    color: #DBDBDB;
+}
+
+#sobre a {
+    display: flex;
+    width: fit-content;
+    align-self: center;
+    margin-bottom: 20px;
+    color: var(--blue);
 }
 
 .popup {
