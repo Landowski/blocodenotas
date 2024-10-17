@@ -189,23 +189,6 @@ function checkTodo(todoId) {
     loadTodos();
 }
 
-document.getElementById("apagar-todos").addEventListener("click", function() {
-    localStorage.setItem('todos', JSON.stringify([]));
-    loadTodos();
-    toggleApagarTodos();
-});
-
-function toggleApagarTodos() {
-    const todos = JSON.parse(localStorage.getItem('todos')) || [];
-    const apagarTodosBtn = document.getElementById("apagar-todos");
-    if (todos.length > 1) {
-        apagarTodosBtn.style.display = "flex";
-
-    } else {
-        apagarTodosBtn.style.display = "none";
-    }
-}
-
 // Dark mode
 function applyDarkMode() {
     const items = document.querySelectorAll('#sidebar ul li');
@@ -216,7 +199,6 @@ function applyDarkMode() {
     const h32 = document.getElementById('h3-2');
     const sidebar = document.getElementById('sidebar');
     const insertToDo = document.querySelector(".insertToDo");
-    const apagarTodos = document.getElementById('apagar-todos');
     const notebody = document.getElementById('note-body');
     const textEditor = document.getElementById('text-editor');
     const sobre = document.getElementById('sobre');
@@ -266,7 +248,6 @@ function applyLightMode() {
     const h32 = document.getElementById('h3-2');
     const sidebar = document.getElementById('sidebar');
     const insertToDo = document.querySelector(".insertToDo");
-    const apagarTodos = document.getElementById('apagar-todos');
     const notebody = document.getElementById('note-body');
     const textEditor = document.getElementById('text-editor');
     const sobre = document.getElementById('sobre');
