@@ -294,6 +294,7 @@ function applyLightMode() {
 
 // CRUD das notas
 function renderNotesList() {
+    notes.sort((a, b) => (a.order || 0) - (b.order || 0));
     notesList.innerHTML = "";
     
     notes.forEach(note => {
@@ -373,7 +374,10 @@ function initializeSidebarSortable() {
 
 function updateNotesOrder() {
     const noteElements = notesList.querySelectorAll('li');
-    notes = Array.from(noteElements).map(el => notes.find(note => note.id === el.dataset.id));
+    notes = Array.from(noteElements).map((el, index) => {
+        const note = notes.find(note => note.id === el.dataset.id);
+        return { ...note, order: index };
+    });
     saveNotes();
 }
 
@@ -426,7 +430,8 @@ function addNote() {
     const newNote = {
         id: Date.now().toString(),
         title: "Novo bloco",
-        body: ""
+        body: "",
+        order: notes.length
     };
     notes.push(newNote);
     currentNoteId = newNote.id;
