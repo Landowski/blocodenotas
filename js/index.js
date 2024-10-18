@@ -57,7 +57,16 @@ toggleDark.addEventListener("click", () => {
 });
 
 logo.addEventListener("click", () => {
-    location.reload();
+    if (currentNoteId) {
+        saveNote();
+    }
+    noteDetails.classList.add("hidden");
+    home.classList.remove("hidden");
+    const selectedNote = notesList.querySelector(".selected-note");
+    if (selectedNote) {
+        selectedNote.classList.remove("selected-note");
+    }
+    currentNoteId = null;
 });
 
 // Início do local storage
@@ -407,6 +416,11 @@ function saveNote() {
 
 noteTitle.addEventListener("input", saveNote);
 noteBody.addEventListener("blur", saveNote);
+noteBody.addEventListener('paste', function(e) {
+    e.preventDefault();
+    let text = (e.originalEvent || e).clipboardData.getData('text/plain');
+    document.execCommand('insertText', false, text);
+});
 
 function addNote() {
     const newNote = {
