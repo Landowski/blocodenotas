@@ -174,7 +174,7 @@ function updateTodoOrder() {
         todo.localToDoOrdem = index;
       }
     });
-    localStorage.setItem('localTodos', JSON.stringify(localTodos));
+    localStorage.setItem('localTodos', JSON.stringify(todos));
 }         
 
 function deleteTodo(todoId) {
