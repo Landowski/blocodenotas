@@ -72,16 +72,16 @@ logo.addEventListener("click", () => {
 // Início do local storage
 function initializeLocalStorage() {
     if (!localStorage.getItem('localNotes')) {
-      localStorage.setItem('localNotes', JSON.stringify([]));
+        localStorage.setItem('localNotes', JSON.stringify([]));
     }
     if (!localStorage.getItem('localTodos')) {
-      localStorage.setItem('localTodos', JSON.stringify([]));
+        localStorage.setItem('localTodos', JSON.stringify([]));
     }
     syncNotes();
 }
 
 function syncNotes() {
-    notes = JSON.parse(localStorage.getItem('localNotes')) || [];
+    localNotes = JSON.parse(localStorage.getItem('localNotes')) || [];
 }
 
 function saveNotes() {
@@ -313,7 +313,7 @@ function applyLightMode() {
 
 // CRUD das notas
 function renderNotesList() {
-    localNotes.sort((a, b) => (a.order || 0) - (b.order || 0));
+    localNotes.sort((a, b) => (a.localOrder || 0) - (b.localOrder || 0));
     notesList.innerHTML = "";
     
     localNotes.forEach(note => {
@@ -323,22 +323,22 @@ function renderNotesList() {
             <div class="dragNote">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-drag" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7,19V17H9V19H7M11,19V17H13V19H11M15,19V17H17V19H15M7,15V13H9V15H7M11,15V13H13V15H11M15,15V13H17V15H15M7,11V9H9V11H7M11,11V9H13V11H11M15,11V9H17V11H15M7,7V5H9V7H7M11,7V5H13V7H11M15,7V5H17V7H15Z" /></svg>
             </div>
-                <span>${note.title || "Bloco de notas"}</span>
+                <span>${note.localTitle || "Bloco de notas"}</span>
         </div>
         <div class="note-actions">
             <button class="delete-note light-mode" title="Excluir nota"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-trash-can-outline" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"/></svg></button>
         </div>`;
-        li.dataset.id = note.id;
+        li.dataset.id = note.localId;
 
         const deleteButton = li.querySelector('.delete-note');
         deleteButton.addEventListener("click", (event) => {
             event.stopPropagation();
-            deleteNote(note.id);
+            deleteNote(note.localId);
         });
 
-        li.addEventListener("click", () => selectNote(note.id));
+        li.addEventListener("click", () => selectNote(note.localId));
 
-        if (note.id === currentNoteId) {
+        if (note.localId === currentNoteId) {
             li.classList.add("selected-note");
         }
 
@@ -360,9 +360,9 @@ function renderNotesList() {
 }
 
 function deleteNote(id) {
-    const note = localNotes.find(n => n.id === id);
+    const note = localNotes.find(n => n.localId === id);
     if (note) {
-        noteToDeleteSpan.textContent = note.title || "Novo bloco";
+        noteToDeleteSpan.textContent = note.localTitle || "Novo bloco";
         deleteConfirmation.classList.remove("hidden");
         currentNoteId = id;
     }
@@ -393,19 +393,19 @@ function initializeSidebarSortable() {
 
 function updateNotesOrder() {
     const noteElements = notesList.querySelectorAll('li');
-    notes = Array.from(noteElements).map((el, index) => {
-        const note = notes.find(note => note.id === el.dataset.id);
-        return { ...note, order: index };
+    localNotes = Array.from(noteElements).map((el, index) => {
+        const note = localNotes.find(note => note.localId === el.dataset.id);
+        return { ...note, localOrder: index };
     });
     saveNotes();
 }
 
 function selectNote(id) {
     currentNoteId = id;
-    const note = localNotes.find(n => n.id === id);
+    const note = localNotes.find(n => n.localId === id);
     if (note) {
-        noteTitle.value = note.title || '';
-        noteBody.innerHTML = note.body || '';
+        noteTitle.value = note.localTitle || '';
+        noteBody.innerHTML = note.localBody || '';
         home.classList.add("hidden");
         noteDetails.classList.remove("hidden");
 
@@ -422,16 +422,19 @@ function selectNote(id) {
 }
 
 function saveNote() {
-    const note = {
-        localId: currentNoteId,
-        localTitle: noteTitle.value,
-        localBody: noteBody.innerHTML
-    };
-    const index = localNotes.findIndex(n => n.id === note.id);
-    if (index !== -1) {
-        localNotes[index] = note;
+    if (!currentNoteId) return;
+    
+    const note = localNotes.find(n => n.localId === currentNoteId);
+    if (note) {
+        note.localTitle = noteTitle.value;
+        note.localBody = noteBody.innerHTML;
     } else {
-        localNotes.push(note);
+        localNotes.push({
+            localId: currentNoteId,
+            localTitle: noteTitle.value,
+            localBody: noteBody.innerHTML,
+            localOrder: localNotes.length
+        });
     }
     saveNotes();
     renderNotesList();
@@ -453,16 +456,16 @@ function addNote() {
         localOrder: localNotes.length
     };
     localNotes.push(newNote);
-    currentNoteId = newNote.id;
+    currentNoteId = newNote.localId;
     saveNotes();
     renderNotesList();
-    selectNote(newNote.id);
+    selectNote(newNote.localId);
 }
 
 addNoteButton.addEventListener("click", addNote);
 
 confirmDeleteButton.addEventListener("click", () => {
-    notes = localNotes.filter(note => note.id !== currentNoteId);
+    localNotes = localNotes.filter(note => note.localId !== currentNoteId);
     saveNotes();
     currentNoteId = null;
     deleteConfirmation.classList.add("hidden");
