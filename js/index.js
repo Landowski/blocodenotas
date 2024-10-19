@@ -74,8 +74,8 @@ function initializeLocalStorage() {
     if (!localStorage.getItem('localNotes')) {
       localStorage.setItem('localNotes', JSON.stringify([]));
     }
-    if (!localStorage.getItem('todos')) {
-      localStorage.setItem('todos', JSON.stringify([]));
+    if (!localStorage.getItem('localTodos')) {
+      localStorage.setItem('localTodos', JSON.stringify([]));
     }
     syncNotes();
 }
@@ -99,21 +99,21 @@ function applyStoredTheme() {
 
 // Lista de tarefas
 function addTodo(text) {
-    const todos = JSON.parse(localStorage.getItem('todos')) || [];
-    const newOrder = todos.length > 0 ? Math.max(...todos.map(t => t.ordem)) + 1 : 0;
+    const todos = JSON.parse(localStorage.getItem('localTodos')) || [];
+    const newOrder = localTodos.length > 0 ? Math.max(...localTodos.map(t => t.ordem)) + 1 : 0;
     const newTodo = {
       id: Date.now().toString(),
       item: text,
       ordem: newOrder
     };
     todos.push(newTodo);
-    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem('localTodos', JSON.stringify(localTodos));
     loadTodos();
 }           
 
 function loadTodos() {
     todoList.innerHTML = "";
-    const todos = JSON.parse(localStorage.getItem('todos')) || [];
+    const todos = JSON.parse(localStorage.getItem('localTodos')) || [];
     todos.sort((a, b) => a.ordem - b.ordem).forEach((todoItem) => {
         const todoElement = document.createElement("div");
         todoElement.className = "to-do " + (document.body.classList.contains("light-mode") ? "light-mode" : "dark-mode");
@@ -166,33 +166,33 @@ function loadTodos() {
 
 function updateTodoOrder() {
     const todoElements = todoList.querySelectorAll('.to-do');
-    const todos = JSON.parse(localStorage.getItem('todos')) || [];
+    const todos = JSON.parse(localStorage.getItem('localTodos')) || [];
     todoElements.forEach((todoElement, index) => {
       const todoId = todoElement.dataset.id;
-      const todo = todos.find(t => t.id === todoId);
+      const todo = localTodos.find(t => t.id === todoId);
       if (todo) {
         todo.ordem = index;
       }
     });
-    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem('localTodos', JSON.stringify(localTodos));
 }         
 
 function deleteTodo(todoId) {
-    let todos = JSON.parse(localStorage.getItem('todos')) || [];
+    let todos = JSON.parse(localStorage.getItem('localTodos')) || [];
     todos = todos.filter(todo => todo.id !== todoId);
-    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem('localTodos', JSON.stringify(localTodos));
     loadTodos();
 }
 
 function checkTodo(todoId) {
-    let todos = JSON.parse(localStorage.getItem('todos')) || [];
+    let todos = JSON.parse(localStorage.getItem('localTodos')) || [];
     todos = todos.map(todo => {
         if (todo.id === todoId) {
             todo.done = !todo.done;
         }
         return todo;
     });
-    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem('localTodos', JSON.stringify(localTodos));
     loadTodos();
 }
 
