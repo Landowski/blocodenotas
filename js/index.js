@@ -100,7 +100,7 @@ function applyStoredTheme() {
 // Lista de tarefas
 function addTodo(text) {
     const todos = JSON.parse(localStorage.getItem('localTodos')) || [];
-    const newOrder = localTodos.length > 0 ? Math.max(...localTodos.map(t => t.ordem)) + 1 : 0;
+    const newOrder = todos.length > 0 ? Math.max(...todos.map(t => t.ordem)) + 1 : 0;
     const newTodo = {
       id: Date.now().toString(),
       item: text,
