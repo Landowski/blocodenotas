@@ -29,7 +29,7 @@ const menu = document.getElementById("menu");
 const overlay = document.getElementById("overlay");
 const todoInput = document.getElementById("input-to-do");
 const todoList = document.getElementById("to-do");
-let notes = [];
+let localNotes = [];
 let currentNoteId = null;
 
 // Listeners iniciais
@@ -71,8 +71,8 @@ logo.addEventListener("click", () => {
 
 // Início do local storage
 function initializeLocalStorage() {
-    if (!localStorage.getItem('notes')) {
-      localStorage.setItem('notes', JSON.stringify([]));
+    if (!localStorage.getItem('localNotes')) {
+      localStorage.setItem('localNotes', JSON.stringify([]));
     }
     if (!localStorage.getItem('todos')) {
       localStorage.setItem('todos', JSON.stringify([]));
@@ -81,11 +81,11 @@ function initializeLocalStorage() {
 }
 
 function syncNotes() {
-    notes = JSON.parse(localStorage.getItem('notes')) || [];
+    notes = JSON.parse(localStorage.getItem('localNotes')) || [];
 }
 
 function saveNotes() {
-    localStorage.setItem('notes', JSON.stringify(notes));
+    localStorage.setItem('localNotes', JSON.stringify(locaNotes));
 }
 
 function applyStoredTheme() {
@@ -294,10 +294,10 @@ function applyLightMode() {
 
 // CRUD das notas
 function renderNotesList() {
-    notes.sort((a, b) => (a.order || 0) - (b.order || 0));
+    localNotes.sort((a, b) => (a.order || 0) - (b.order || 0));
     notesList.innerHTML = "";
     
-    notes.forEach(note => {
+    localNotes.forEach(note => {
         const li = document.createElement("li");
         li.innerHTML = `
         <div class="dragAndSpan">
@@ -341,7 +341,7 @@ function renderNotesList() {
 }
 
 function deleteNote(id) {
-    const note = notes.find(n => n.id === id);
+    const note = localNotes.find(n => n.id === id);
     if (note) {
         noteToDeleteSpan.textContent = note.title || "Novo bloco";
         deleteConfirmation.classList.remove("hidden");
@@ -383,7 +383,7 @@ function updateNotesOrder() {
 
 function selectNote(id) {
     currentNoteId = id;
-    const note = notes.find(n => n.id === id);
+    const note = localNotes.find(n => n.id === id);
     if (note) {
         noteTitle.value = note.title || '';
         noteBody.innerHTML = note.body || '';
@@ -404,15 +404,15 @@ function selectNote(id) {
 
 function saveNote() {
     const note = {
-        id: currentNoteId,
-        title: noteTitle.value,
-        body: noteBody.innerHTML
+        localId: currentNoteId,
+        localTitle: noteTitle.value,
+        localBody: noteBody.innerHTML
     };
-    const index = notes.findIndex(n => n.id === note.id);
+    const index = localNotes.findIndex(n => n.id === note.id);
     if (index !== -1) {
-        notes[index] = note;
+        localNotes[index] = note;
     } else {
-        notes.push(note);
+        localNotes.push(note);
     }
     saveNotes();
     renderNotesList();
@@ -428,12 +428,12 @@ noteBody.addEventListener('paste', function(e) {
 
 function addNote() {
     const newNote = {
-        id: Date.now().toString(),
-        title: "Novo bloco",
-        body: "",
-        order: notes.length
+        localId: Date.now().toString(),
+        localTitle: "Novo bloco",
+        localBody: "",
+        localOrder: localNotes.length
     };
-    notes.push(newNote);
+    localNotes.push(newNote);
     currentNoteId = newNote.id;
     saveNotes();
     renderNotesList();
@@ -443,7 +443,7 @@ function addNote() {
 addNoteButton.addEventListener("click", addNote);
 
 confirmDeleteButton.addEventListener("click", () => {
-    notes = notes.filter(note => note.id !== currentNoteId);
+    notes = localNotes.filter(note => note.id !== currentNoteId);
     saveNotes();
     currentNoteId = null;
     deleteConfirmation.classList.add("hidden");
