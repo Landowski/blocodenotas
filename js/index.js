@@ -180,7 +180,7 @@ function updateTodoOrder() {
 function deleteTodo(todoId) {
     let todos = JSON.parse(localStorage.getItem('localTodos')) || [];
     todos = todos.filter(todo => todo.localToDoId !== todoId);
-    localStorage.setItem('localTodos', JSON.stringify(localTodos));
+    localStorage.setItem('localTodos', JSON.stringify(todos));
     loadTodos();
 }
 
