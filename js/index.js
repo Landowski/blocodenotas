@@ -192,7 +192,7 @@ function checkTodo(todoId) {
         }
         return todo;
     });
-    localStorage.setItem('localTodos', JSON.stringify(localTodos));
+    localStorage.setItem('localTodos', JSON.stringify(todos));
     loadTodos();
 }
 
