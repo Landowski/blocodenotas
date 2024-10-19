@@ -169,7 +169,7 @@ function updateTodoOrder() {
     const todos = JSON.parse(localStorage.getItem('localTodos')) || [];
     todoElements.forEach((todoElement, index) => {
       const todoId = todoElement.dataset.localToDoId;
-      const todo = localTodos.find(t => t.todos === todoId);
+      const todo = todos.find(t => t.todos === todoId);
       if (todo) {
         todo.localToDoOrdem = index;
       }
