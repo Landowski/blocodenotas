@@ -85,7 +85,7 @@ function syncNotes() {
 }
 
 function saveNotes() {
-    localStorage.setItem('localNotes', JSON.stringify(locaNotes));
+    localStorage.setItem('localNotes', JSON.stringify(localNotes));
 }
 
 function applyStoredTheme() {
