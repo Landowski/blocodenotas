@@ -107,7 +107,7 @@ function addTodo(text) {
       localToDoOrdem: newOrder
     };
     todos.push(newTodo);
-    localStorage.setItem('localTodos', JSON.stringify(localTodos));
+    localStorage.setItem('localTodos', JSON.stringify(todos));
     loadTodos();
 }           
 
