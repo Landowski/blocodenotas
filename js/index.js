@@ -167,15 +167,34 @@ function loadTodos() {
 function updateTodoOrder() {
     const todoElements = todoList.querySelectorAll('.to-do');
     const todos = JSON.parse(localStorage.getItem('localTodos')) || [];
+    const updatedTodos = [];
+
     todoElements.forEach((todoElement, index) => {
-      const todoId = todoElement.dataset.localToDoId;
-      const todo = todos.find(t => t.todos === todoId);
-      if (todo) {
-        todo.localToDoOrdem = index;
-      }
+        const todoId = todoElement.dataset.localToDoId;
+        const todo = todos.find(t => t.localToDoId === todoId);
+        if (todo) {
+            todo.localToDoOrdem = index;
+            updatedTodos.push(todo);
+        }
     });
+
+    localStorage.setItem('localTodos', JSON.stringify(updatedTodos));
+}
+
+function initializeTodoOrder() {
+    const todoElements = todoList.querySelectorAll('.to-do');
+    const todos = JSON.parse(localStorage.getItem('localTodos')) || [];
+    
+    todoElements.forEach((todoElement, index) => {
+        const todoId = todoElement.dataset.localToDoId;
+        const todo = todos.find(t => t.localToDoId === todoId);
+        if (todo) {
+            todo.localToDoOrdem = index;
+        }
+    });
+
     localStorage.setItem('localTodos', JSON.stringify(todos));
-}         
+}
 
 function deleteTodo(todoId) {
     let todos = JSON.parse(localStorage.getItem('localTodos')) || [];
@@ -571,5 +590,6 @@ applyStoredTheme();
 initializeLocalStorage();
 renderNotesList();
 loadTodos();
+initializeTodoOrder();
 initializeSidebarSortable();
 loadingMessage.style.display = "none";
