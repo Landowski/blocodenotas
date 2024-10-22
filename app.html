@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bloco de Notas Online</title>
-    <meta name="description" content="Bloco de notas online e lista de tarefas salvos automaticamente no navegador. Simples, seguro e sem necessidade de cadastro. Acesse agora!" />
-    <meta name="keywords" content="bloco de notas, bloco de notas online, editor de texto, lista de tarefas, notas rápidas, organizador de notas, anotações online, tarefas" />
     <link rel="icon" href="imagens/favicon.svg" sizes="any" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +15,16 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
+
 <body class="light-mode">
+
+    <div id="barreira"></div>
+
     <div id="overlay-sidebar"></div>
+
         <button id="menu" class="light-mode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-menu" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/></svg></button>
         <button id="dark-mode" class="light-mode" title="Modo noturno/diurno"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-circle-half-full" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12A10 10 0 0 0 12 22A10 10 0 0 0 22 12A10 10 0 0 0 12 2M12 4A8 8 0 0 1 20 12A8 8 0 0 1 12 20V4Z"/></svg></button>
+
         <div id="sidebar" class="light-mode">
             <div style="display: flex; margin-bottom: 15px; margin-right: 20px; justify-content: space-between;">
                 <div class="logo" title="Início"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,8 +43,14 @@
             
             <ul id="notes-list"></ul>
 
-            <div id="loginBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-cloud-lock" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M22 17C22.5 17 23 17.5 23 18V22C23 22.5 22.5 23 22 23H17C16.5 23 16 22.5 16 22V18C16 17.5 16.5 17 17 17V15.5C17 14.1 18.1 13 19.5 13C20.9 13 22 14.1 22 15.5V17M21 17V15.5C21 14.7 20.3 14 19.5 14C18.7 14 18 14.7 18 15.5V17H21M19.36 9.03C21.95 9.22 24 11.36 24 14L23.94 14.77C23.59 12.63 21.74 11 19.5 11C17 11 15 13 15 15.5L15 15.76C14.39 16.31 14 17.11 14 18V19H6C2.69 19 0 16.31 0 13C0 9.9 2.34 7.36 5.35 7.04C6.6 4.64 9.11 3 12 3C15.64 3 18.67 5.59 19.36 9.03Z"/></svg>Salve na nuvem
+            <div class="config">
+                <button id="config" title="Configurações" class="light-mode">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-cog" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/></svg>
+                <span id="nome"></span>
+                </button>
+                <button id="sair" title="Sair" class="light-mode">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-logout" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z"/></svg>
+                </button>
             </div>
         </div>
 
@@ -87,49 +98,6 @@
                 <h3 id="h3-2" style="margin-bottom: 15px;">Bloco de notas rápido</h3>
                 <textarea id="text-editor" class="dark" placeholder="Digite ou cole seu texto aqui (não será salvo e não será formatado)"></textarea>
 
-                <div id="sobre" class="light-mode">
-                    <h1 style="margin-bottom: 15px;">Bloco de Notas Online: Suas Notas e Listas de Tarefas Sempre ao Seu Alcance</h1>
-                    <p>Bem-vindo ao Bloco de Notas Online, a solução perfeita para quem precisa organizar suas ideias, notas rápidas e listas de tarefas diretamente no navegador, sem a necessidade de criar contas ou baixar aplicativos. Nossa plataforma oferece a conveniência de blocos de notas digitais, com a vantagem de salvar automaticamente todos os dados no local storage, garantindo que suas informações estejam sempre acessíveis e seguras. Seja para o trabalho, estudos ou organização pessoal, o Bloco de Notas Online oferece tudo o que você precisa para gerenciar suas tarefas e anotações de maneira simples e eficiente.</p>
-
-                    <strong>Como Usar o Bloco de Notas Online</strong>
-                    <p>Usar o Bloco de Notas é extremamente simples:</p>
-
-                    <p>1. Crie e digite suas notas ou crie uma lista de tarefas a serem feitas.</p>
-                    <p>2. Escreve seu título diretamente no nome "Novo bloco".</p>
-                    <p>3. Todas as informações são automaticamente salvas no seu navegador. Você pode fechar a página e voltar quando quiser, sem perder nenhum dado.</p>
-                    <p>4. Edição de texto: após selecionar o texto do bloco, aparecerá um menu de formatação, contendo os botões: negrito, itálico, sublinhado, esquerda, centro, direita, justificar, marcador de texto, lista ordenada, lista comum, link e limpar formatação. Basta clicar no botão para aplicar a formatação desejada. Ao clicar para fora do texto selecionado o menu some. Ao clicar no texto já selecionado, ele reaparece.</p>
-                    <p>5. No ícone com vários pontinhos, quando você posiciona o mouse sobre ele, o cursor vira uma mão em forma de pegar; basta segurar o clique e arrastar verticalmente para cima ou para baixo para resposicionar a nota ou tarefa onde quiser na lista.</p>
-                    
-                    <strong>O que é o Bloco de Notas Online?</strong>
-                    <p>O Bloco de Notas Online é uma ferramenta intuitiva e fácil de usar, projetada para quem busca praticidade na hora de anotar ideias, pensamentos ou listas de afazeres. Ao acessar o site Bloco de Notas Online, você pode começar a escrever imediatamente, sem a necessidade de cadastro ou login. Todas as suas notas e listas de tarefas são armazenadas automaticamente no local storage do seu navegador, permitindo que você acesse e edite as informações a qualquer momento, mesmo sem conexão com a internet.</p>
-
-                    <strong>Vantagens de Usar o Bloco de Notas Online</strong>
-                    <p>1. Salvamento Automático: Cada nota ou lista de tarefas criada é salva automaticamente no local storage do navegador. Isso significa que você nunca perderá uma anotação importante, pois tudo fica armazenado de forma segura em seu próprio dispositivo.</p>
-
-                    <p>2. Facilidade de Acesso: Não importa onde você esteja, você pode acessar suas notas e listas de tarefas diretamente do navegador, sem a necessidade de baixar aplicativos ou sincronizar dispositivos.</p>
-
-                    <p>3. Organização Simples: A interface do Bloco de Notas Online é minimalista e intuitiva, facilitando a criação e organização de listas de tarefas e notas. Você pode criar quantas notas quiser, reordená-las e personalizá-las de acordo com suas necessidades.</p>
-
-                    <p>4. Privacidade: Todas as suas anotações e listas de tarefas ficam armazenadas no seu navegador, garantindo total privacidade e segurança. Como as informações não são armazenadas em servidores, você tem o controle total sobre seus dados.</p>
-
-                    <p>5. Sem Login ou Cadastro: Para garantir praticidade, não é necessário criar uma conta para começar a usar o Bloco de Notas Online. Basta acessar o site e começar a anotar.</p>
-
-                    <strong>Bloco de Notas Online para Uso Pessoal e Profissional</strong>
-                    <p>O Bloco de Notas Online é ideal tanto para uso pessoal quanto profissional. Se você é estudante, pode utilizá-lo para fazer anotações rápidas durante as aulas, criar resumos e listar atividades. Se trabalha em um ambiente corporativo, pode usar o Bloco de Notas Online para organizar reuniões, brainstorms ou criar uma lista de tarefas para o dia a dia no trabalho. Independentemente do seu objetivo, essa ferramenta proporciona a flexibilidade que você precisa.</p>
-
-                    <strong>Bloco de Notas Online para Organizar Sua Vida</strong>
-                    <p>Manter-se organizado pode ser um desafio, mas o Bloco de Notas Online torna essa tarefa muito mais fácil. Ao permitir que você crie e gerencie listas de tarefas de forma prática, essa ferramenta se torna sua aliada no dia a dia. Você pode, por exemplo, listar suas metas diárias, organizar atividades importantes e marcar os itens conforme os conclui. Essa funcionalidade garante que você tenha controle total sobre suas atividades e prioridades.</p>
-
-                    <strong>Por que Escolher o Bloco de Notas Online?</strong>
-                    <p>Com tantas opções de aplicativos e ferramentas disponíveis, o Bloco de Notas Online se destaca pela simplicidade, segurança e eficiência. Você pode confiar que suas notas e listas de tarefas estarão sempre disponíveis, diretamente no seu navegador, sem complicações. A privacidade é uma prioridade, já que tudo é armazenado localmente, sem necessidade de servidores externos ou processos de sincronização.</p>
-
-                    <strong>Conclusão</strong>
-                    <p>O Bloco de Notas Online é a escolha ideal para quem busca uma ferramenta de bloco de notas e lista de tarefas que seja simples, prática e totalmente gratuita. Com a vantagem de salvar automaticamente as informações no navegador, você tem a segurança de que suas anotações estarão sempre disponíveis, a qualquer momento. Comece a organizar suas notas e tarefas de maneira fácil e eficiente hoje mesmo.</p>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <a href="privacidade" target="_blank">Política de Privacidade</a>
-                </div>
             </div>
 
             <div id="delete-confirmation" class="popup hidden">
@@ -142,53 +110,13 @@
                 </div>
             </div>
 
-            <div id="login-popup" class="popup hidden" style="cursor: pointer;">
+            <div id="config-popup" class="popup hidden" style="cursor: pointer;">
                 <div class="popup-content">
-
-                    <div class="popup-login" id="popLogin">
-                        <div style="font-size: 20px; font-weight: 700; margin-bottom: 15px;">Entre na sua conta</div>
-                        <div class="login-container">
-                            <form id="login-form">
-                            <input class="input-login" type="email" id="login-email" placeholder="E-mail" required>
-                            <div class="pass-group">
-                                <input class="input-login" type="password" id="login-password" placeholder="Senha" required>
-                                <div id="btnToggleLogin" class="toggle-login"><i class="las la-eye"></i></div>
-                            </div>
-                            <button type="submit" id="botaoLogin">Entrar</button>
-                            </form>
-                            <p style="margin-top: 25px;">Ainda não tem uma conta? <span id="linkLogin"><b>Cadastre-se</b></span></p>
-                        </div>
-                    </div>
-        
-                    <div class="popup-login" id="popSignUp">
-                        <div style="font-size: 20px; font-weight: 700; margin-bottom: 10px;">Crie uma conta</div>
-                        <div style="display: flex; flex-direction:column; align-items: center; font-size: 14px; margin-bottom: 15px; color: #555;">Cadastre-se e acesse seus blocos de notas em qualquer dispositivo, de qualquer lugar.
-                            <div style="display: flex; align-items: center; margin-top: 10px; gap: 5px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-lock" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-top: -5px;"><path d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z"/></svg> Seus dados estarão seguros na nuvem!
-                            </div>
-                        </div>
-                        <div class="login-container">
-                            <form id="login-form-sign-up">
-                                <input class="input-login" type="text" id="signup-name" placeholder="Nome" required>
-                                <input class="input-login" type="email" id="signup-email" placeholder="E-mail" required>
-                                <div class="pass-group">
-                                    <input class="input-login" type="password" id="signup-password" placeholder="Senha" required>
-                                    <div id="btnToggleSignUp" class="toggle-login"><i class="las la-eye"></i></div>
-                                </div>
-                                <div class="pass-group">
-                                    <input class="input-login" type="password" id="signup-password-verify" placeholder="Repita a senha" required>
-                                    <div id="btnToggleVerify" class="toggle-login"><i class="las la-eye"></i></div>
-                                </div>
-                                <button type="submit" id="botaoCadastro">Cadastrar</button>
-                            </form>
-                            <p style="margin-top: 25px;">Já tem uma conta? <span id="linkSignUp"><b>Entre aqui</b></span></p>
-                        </div>
-                    </div>
 
                 </div>
             </div>
     
-    <script src="js/index.js"></script>
+    <script src="js/app.js"></script>
 
 </body>
 </html>

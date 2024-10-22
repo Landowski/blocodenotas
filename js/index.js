@@ -1,3 +1,15 @@
+// Configurações do app no Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyBO_nBQg70L-WOby_UDOJc6bt3Yg3I7-Qk",
+    authDomain: "bloco-de-notas-b94c4.firebaseapp.com",
+    projectId: "bloco-de-notas-b94c4",
+    storageBucket: "bloco-de-notas-b94c4.appspot.com",
+    messagingSenderId: "515098342854",
+    appId: "1:515098342854:web:4b91c903046400c7f96ec7"
+  };
+
+// Inicia o Firebase
+firebase.initializeApp(firebaseConfig);
 
 // Declarações
 const logo = document.querySelector(".logo");
@@ -19,9 +31,7 @@ const markerBtn = document.getElementById('markerBtn');
 const listOrderBtn = document.getElementById('listOrderBtn');
 const listBtn = document.getElementById('listBtn');
 const linkBtn = document.getElementById('linkBtn');
-const imageBtn = document.getElementById('imageBtn');
 const removeBtn = document.getElementById('removeBtn');
-const deleteNoteButton = document.getElementById("delete-note");
 const deleteConfirmation = document.getElementById("delete-confirmation");
 const confirmDeleteButton = document.getElementById("confirm-delete");
 const cancelDeleteButton = document.getElementById("cancel-delete");
@@ -29,15 +39,51 @@ const noteToDeleteSpan = document.getElementById("note-to-delete");
 const home = document.getElementById("home");
 const toggleDark = document.getElementById("dark-mode");
 const menu = document.getElementById("menu");
-const overlay = document.getElementById("overlay");
+const overlaySidebar = document.getElementById("overlay-sidebar");
 const todoInput = document.getElementById("input-to-do");
 const todoList = document.getElementById("to-do");
+const loginBtn = document.getElementById("loginBtn");
+const loginPopup = document.getElementById("login-popup");
+const popLogin = document.getElementById('popLogin');
+const popSignUp = document.getElementById('popSignUp');
+const loginLink = document.querySelector('#linkLogin');
+const signupLink = document.querySelector('#linkSignUp');
+const toggleLogin = document.getElementById('btnToggleLogin');
+const toggleSignUp = document.getElementById('btnToggleSignUp');
+const toggleVerify = document.getElementById('btnToggleVerify');
 let notes = [];
 let currentNoteId = null;
 
 // Listeners iniciais
 menu.addEventListener('click', toggleSidebar);
-overlay.addEventListener('click', toggleSidebar);
+signupLink.addEventListener('click', showLogin);
+loginLink.addEventListener('click', showSignUp);
+toggleLogin.addEventListener('click', passwordLogin);
+toggleSignUp.addEventListener('click', passwordSignUp);
+toggleVerify.addEventListener('click', passwordVerify);
+overlaySidebar.addEventListener('click', toggleSidebar);
+loginPopup.addEventListener('click', function(event) {
+    if (event.target === loginPopup) {
+        popupLogin();
+    }
+});
+
+let loginBtnClicked = false;
+loginBtn.addEventListener('click', function() {
+    loginBtnClicked = true;
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user && loginBtnClicked) { 
+            window.location.href = 'app.html';
+        } else if (!user) {
+            loginPopup.classList.toggle('hidden');
+            document.getElementById('login-form').reset();
+            document.getElementById('login-form-sign-up').reset();
+            showLogin();
+        }
+        loginBtnClicked = false;
+    });
+});
+
 todoInput.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
         event.preventDefault();
@@ -575,11 +621,147 @@ function restoreSelection(range) {
     }
 }
 
-// Menu lateral
+// Menu lateral e fundo de popup
 function toggleSidebar(){
     document.getElementById("sidebar").classList.toggle('active');
-    document.getElementById("overlay").classList.toggle('active');
+    overlaySidebar.classList.toggle('active');
 }
+
+// Login e Cadastro
+function popupLogin() {
+    firebase.auth().onAuthStateChanged((user) => {
+            loginPopup.classList.toggle('hidden');
+            document.getElementById('login-form').reset();
+            document.getElementById('login-form-sign-up').reset();
+            showLogin();
+    });
+}
+
+function showSignUp() {
+    popSignUp.style.display = 'flex';
+    popLogin.style.display = 'none';
+    toggleSignUp.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-eye-outline" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C15.76,17.5 19.17,15.36 20.82,12C19.17,8.64 15.76,6.5 12,6.5C8.24,6.5 4.83,8.64 3.18,12Z"/></svg>`;
+    toggleVerify.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-eye-outline" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C15.76,17.5 19.17,15.36 20.82,12C19.17,8.64 15.76,6.5 12,6.5C8.24,6.5 4.83,8.64 3.18,12Z"/></svg>`;
+}
+
+function showLogin() {
+    popSignUp.style.display = 'none';
+    popLogin.style.display = 'flex';
+    toggleLogin.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-eye-outline" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C15.76,17.5 19.17,15.36 20.82,12C19.17,8.64 15.76,6.5 12,6.5C8.24,6.5 4.83,8.64 3.18,12Z"/></svg>`;
+}
+
+function passwordLogin() {
+  let passLogin = document.getElementById("login-password");
+    if (passLogin.type === "password") {
+        passLogin.type = "text";
+        toggleLogin.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-eye-off-outline" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M2,5.27L3.28,4L20,20.72L18.73,22L15.65,18.92C14.5,19.3 13.28,19.5 12,19.5C7,19.5 2.73,16.39 1,12C1.69,10.24 2.79,8.69 4.19,7.46L2,5.27M12,9A3,3 0 0,1 15,12C15,12.35 14.94,12.69 14.83,13L11,9.17C11.31,9.06 11.65,9 12,9M12,4.5C17,4.5 21.27,7.61 23,12C22.18,14.08 20.79,15.88 19,17.19L17.58,15.76C18.94,14.82 20.06,13.54 20.82,12C19.17,8.64 15.76,6.5 12,6.5C10.91,6.5 9.84,6.68 8.84,7L7.3,5.47C8.74,4.85 10.33,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C12.69,17.5 13.37,17.43 14,17.29L11.72,15C10.29,14.85 9.15,13.71 9,12.28L5.6,8.87C4.61,9.72 3.78,10.78 3.18,12Z"/></svg>`;
+    } else {
+        passLogin.type = "password";
+        toggleLogin.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-eye-outline" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C15.76,17.5 19.17,15.36 20.82,12C19.17,8.64 15.76,6.5 12,6.5C8.24,6.5 4.83,8.64 3.18,12Z"/></svg>`;
+    }
+}
+
+function passwordSignUp() {
+  let passSignUp = document.getElementById("signup-password");
+    if (passSignUp.type === "password") {
+        passSignUp.type = "text";
+        toggleSignUp.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-eye-off-outline" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M2,5.27L3.28,4L20,20.72L18.73,22L15.65,18.92C14.5,19.3 13.28,19.5 12,19.5C7,19.5 2.73,16.39 1,12C1.69,10.24 2.79,8.69 4.19,7.46L2,5.27M12,9A3,3 0 0,1 15,12C15,12.35 14.94,12.69 14.83,13L11,9.17C11.31,9.06 11.65,9 12,9M12,4.5C17,4.5 21.27,7.61 23,12C22.18,14.08 20.79,15.88 19,17.19L17.58,15.76C18.94,14.82 20.06,13.54 20.82,12C19.17,8.64 15.76,6.5 12,6.5C10.91,6.5 9.84,6.68 8.84,7L7.3,5.47C8.74,4.85 10.33,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C12.69,17.5 13.37,17.43 14,17.29L11.72,15C10.29,14.85 9.15,13.71 9,12.28L5.6,8.87C4.61,9.72 3.78,10.78 3.18,12Z"/></svg>`;
+    } else {
+        passSignUp.type = "password";
+        toggleSignUp.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-eye-outline" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C15.76,17.5 19.17,15.36 20.82,12C19.17,8.64 15.76,6.5 12,6.5C8.24,6.5 4.83,8.64 3.18,12Z"/></svg>`;
+    }
+}
+
+function passwordVerify() {
+  let passVerify = document.getElementById("signup-password-verify");
+    if (passVerify.type === "password") {
+      passVerify.type = "text";
+      toggleVerify.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-eye-off-outline" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M2,5.27L3.28,4L20,20.72L18.73,22L15.65,18.92C14.5,19.3 13.28,19.5 12,19.5C7,19.5 2.73,16.39 1,12C1.69,10.24 2.79,8.69 4.19,7.46L2,5.27M12,9A3,3 0 0,1 15,12C15,12.35 14.94,12.69 14.83,13L11,9.17C11.31,9.06 11.65,9 12,9M12,4.5C17,4.5 21.27,7.61 23,12C22.18,14.08 20.79,15.88 19,17.19L17.58,15.76C18.94,14.82 20.06,13.54 20.82,12C19.17,8.64 15.76,6.5 12,6.5C10.91,6.5 9.84,6.68 8.84,7L7.3,5.47C8.74,4.85 10.33,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C12.69,17.5 13.37,17.43 14,17.29L11.72,15C10.29,14.85 9.15,13.71 9,12.28L5.6,8.87C4.61,9.72 3.78,10.78 3.18,12Z"/></svg>`;
+    } else {
+      passVerify.type = "password";
+      toggleVerify.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-eye-outline" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C15.76,17.5 19.17,15.36 20.82,12C19.17,8.64 15.76,6.5 12,6.5C8.24,6.5 4.83,8.64 3.18,12Z"/></svg>`;
+    }
+}
+
+document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            const botaoLogin = document.getElementById('botaoLogin');
+            botaoLogin.disabled = 'true';
+            botaoLogin.style.opacity = '0.5';
+            const userId = userCredential.user.uid;
+            return firebase.firestore().collection('usuario').doc(userId).update({
+                ultimo_login: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        })
+        .then(() => {
+            window.location.href = 'app.html';
+        })
+        .catch((error) => {
+        switch (error.code) {
+            case "auth/internal-error":
+            alert("E-mail ou senha inválidos.");
+            break;
+        }
+    });
+});
+
+document.getElementById('login-form-sign-up').addEventListener('submit', function(event) {
+event.preventDefault();
+var email = document.getElementById('signup-email').value;
+var password = document.getElementById('signup-password').value;
+var confirmPassword = document.getElementById('signup-password-verify').value;
+
+if (password !== confirmPassword) {
+    alert('As senhas não são iguais.');
+    return;
+}
+
+if (password.length < 8) {
+    alert('A senha precisa ter 8 caracteres no mínimo.');
+    return;
+}
+
+const db = firebase.firestore();
+
+firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+        const botaoCadastro = document.getElementById('botaoCadastro');
+        botaoCadastro.disabled = 'true';
+        botaoCadastro.style.opacity = '0.5';
+        const user = userCredential.user;
+
+        const userData = {
+            assinante: false,
+            email: user.email,
+            id_unico: user.uid,
+            registro: firebase.firestore.FieldValue.serverTimestamp(),
+            ultimo_login: firebase.firestore.FieldValue.serverTimestamp(),
+            modo_escuro: false,
+            nome: document.getElementById('signup-name').value
+        };
+
+        return db.collection('usuario').doc(user.uid).set(userData);
+    })
+    .then(() => {
+        window.location.href = 'app.html';
+    })
+    .catch((error) => {
+        if (error.code) {
+            console.error("Auth error:", error);
+            switch (error.code) {
+                case "auth/email-already-in-use":
+                    alert("Este e-mail já está registrado.");
+                    break;
+                default:
+                    alert("Erro de registro: " + error.message);
+            }
+        }
+    });
+});
 
 // Inicialização
 applyStoredTheme();
