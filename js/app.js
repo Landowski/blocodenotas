@@ -744,7 +744,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             });
 
         } else {
-            window.location.href = 'index.html';
+            window.location.href = 'index';
         }
     });
 });

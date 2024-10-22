@@ -73,7 +73,7 @@ loginBtn.addEventListener('click', function() {
     loginBtnClicked = true;
     firebase.auth().onAuthStateChanged((user) => {
         if (user && loginBtnClicked) { 
-            window.location.href = 'app.html';
+            window.location.href = 'app';
         } else if (!user) {
             loginPopup.classList.toggle('hidden');
             document.getElementById('login-form').reset();
@@ -698,7 +698,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
             });
         })
         .then(() => {
-            window.location.href = 'app.html';
+            window.location.href = 'app';
         })
         .catch((error) => {
         switch (error.code) {
@@ -747,7 +747,7 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
         return db.collection('usuario').doc(user.uid).set(userData);
     })
     .then(() => {
-        window.location.href = 'app.html';
+        window.location.href = 'app';
     })
     .catch((error) => {
         if (error.code) {
