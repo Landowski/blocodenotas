@@ -206,6 +206,7 @@ h3 {
 .dragAndSpan {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .dragNote {
