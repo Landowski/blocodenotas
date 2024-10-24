@@ -763,6 +763,35 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
     });
 });
 
+// Esqueci a senha
+document.getElementById('linkEsqueci').addEventListener('click', () => {
+    const emailInput = document.getElementById('login-email');
+    const email = emailInput.value.trim();
+
+    // Verifica se o campo de email está preenchido
+    if (email === '') {
+        alert('Por favor, preencha o campo de e-mail.');
+        return;
+    }
+
+    // Verifica se o formato do email é válido
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex simples para validação de email
+    if (!emailPattern.test(email)) {
+        alert('Por favor, insira um e-mail válido.');
+        return;
+    }
+
+    // Enviar email de redefinição de senha
+    firebase.auth().sendPasswordResetEmail(email)
+    .then(() => {
+        alert('Um email para redefinição de senha foi enviado para ' + email);
+    })
+    .catch((error) => {
+        console.error('Erro ao enviar email de redefinição de senha:', error);
+        alert('Ocorreu um erro ao enviar o email de redefinição de senha. Verifique se o email está correto e tente novamente.');
+    });
+});
+
 // Inicialização
 applyStoredTheme();
 initializeLocalStorage();

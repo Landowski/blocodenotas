@@ -110,9 +110,23 @@
                 </div>
             </div>
 
-            <div id="config-popup" class="popup hidden" style="cursor: pointer;">
-                <div class="popup-content">
-
+            <div id="config-popup" class="popup hidden">
+                <div class="popup-content" style="text-align: left;">
+                    <div id="close-config">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-close" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>
+                    </div>
+                    <div style="font-size: 20px; font-weight: 700; margin-bottom: 40px;">
+                        Configurações
+                    </div>
+                        <div class="login-container">
+                            <form id="nome-form">
+                            <label for="nome-input">Alterar Nome</label>
+                            <div style="width: 100%; display: flex; gap: 10px;">
+                                <input class="input-login" type="text" id="nome-input" placeholder="Nome" required>
+                                <button type="submit" id="botaoSalvarNome">Salvar</button>
+                            </div>
+                            </form>
+                        </div>
                 </div>
             </div>
     

@@ -25,11 +25,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 // Dados do usuário
                 const userData = doc.data();
-
-                // Nome do usuário
-                document.getElementById('nome').textContent = userData.nome;
                 
                 // Declarações
+                const nome = document.getElementById('nome')
                 const logo = document.querySelector(".logo");
                 const notesList = document.getElementById("notes-list");
                 const loadingMessage = document.getElementById("loading-message");
@@ -60,11 +58,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const overlaySidebar = document.getElementById("overlay-sidebar");
                 const todoInput = document.getElementById("input-to-do");
                 const todoList = document.getElementById("to-do");
+                const configBtn = document.getElementById("config");
+                const configPopup = document.getElementById("config-popup");
+                const nomeInput = document.getElementById('nome-input');
+                const closeConfig = document.getElementById('close-config')
                 let currentNoteId = null;
+
+                // Nome o usuário
+                nome.textContent = userData.nome;
 
                 // Listeners iniciais
                 menu.addEventListener('click', toggleSidebar);
                 overlaySidebar.addEventListener('click', toggleSidebar);
+                configBtn.addEventListener('click', openConfig);
+                closeConfig.addEventListener('click', closeConfigPop);
 
                 todoInput.addEventListener("keypress", function(event) {
                     if (event.key === "Enter") {
@@ -639,7 +646,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     overlaySidebar.classList.toggle('active');
                 }
 
-                
                 // Dark mode
                 function applyDarkMode() {
                     const items = document.querySelectorAll('#sidebar ul li');
@@ -728,6 +734,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         item.classList.add('light-mode');
                     });
                 }
+
+                // Popup Config
+                function openConfig(){
+                    userDocRef.get().then((doc) => {
+                        if (doc.exists) {
+                            const userData = doc.data();
+                            nomeInput.value = userData.nome;
+                        }
+                    });
+                    configPopup.classList.remove("hidden");
+                }
+
+                function closeConfigPop(){
+                    configPopup.classList.add("hidden");
+                }
+
+                // Evento de submissão do formulário
+                document.getElementById('nome-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const novoNome = nomeInput.value.trim();
+                    userDocRef.update({
+                            nome: novoNome
+                        }).then(() => {
+                            document.getElementById('config-popup').classList.add('hidden');
+                            userDocRef.get().then((doc) => {
+                                if (doc.exists) {
+                                    const userData = doc.data();
+                                    nome.textContent = userData.nome;
+                                    alert('Nome salvo com sucesso.')
+                                }
+                            });
+                        })
+                });
 
                 // Inicialização
                 applyStoredTheme();
