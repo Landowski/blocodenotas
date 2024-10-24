@@ -810,7 +810,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             });
 
         } else {
-            window.location.href = 'index';
+            window.location.href = '/';
         }
     });
 });
