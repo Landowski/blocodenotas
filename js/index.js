@@ -736,6 +736,7 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
 
         const userData = {
             assinante: false,
+            admin: false,
             email: user.email,
             id_unico: user.uid,
             registro: firebase.firestore.FieldValue.serverTimestamp(),

@@ -914,6 +914,32 @@ input[type="password"]::-ms-reveal {
     margin-bottom: 30px;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 6px;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #111;
+    color: white;
+}
+
+.green {
+    color: var(--green);
+}
+
+.red {
+    color: var(--red);
+}
+
 @media screen and (max-width: 1280px) {
     .insertToDo {
         margin-top: 30px;

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Administração - Bloco de Notas</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body style="height: auto; margin: 30px; background-color: #f5f5f5; font-family: 'Roboto', sans-serif;">
+
+    <div id="barreira"></div>
+
+    <div style="width: 900px; margin: 0 auto;">
+        <select id="filterDropdown" onchange="applyFilter()" style="height: 43px; font-family: 'Roboto', sans-serif; border-radius: 6px; padding: 0 5px; margin-bottom: 20px;">
+            <option value="registro">Data de registro</option>
+            <option value="assinante">Assinante</option>
+            <option value="ultimo_login">Último login</option>
+        </select>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Assinante</th>
+                    <th>Data de Registro</th>
+                    <th>Último Login</th>
+                    <th>Tarefas</th>
+                    <th>Blocos</th>
+                </tr>
+            </thead>
+            <tbody id="userList">
+                <!-- Linhas de usuários serão inseridas aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Configurações do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBO_nBQg70L-WOby_UDOJc6bt3Yg3I7-Qk",
+            authDomain: "bloco-de-notas-b94c4.firebaseapp.com",
+            projectId: "bloco-de-notas-b94c4",
+            storageBucket: "bloco-de-notas-b94c4.appspot.com",
+            messagingSenderId: "515098342854",
+            appId: "1:515098342854:web:4b91c903046400c7f96ec7"
+        };
+
+        // Inicializa o Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Verifica se o usuário é admin
+        firebase.auth().onAuthStateChanged(async (user) => {
+            if (user) {
+                const userRef = firebase.firestore().collection('usuario').doc(user.uid);
+                const userDoc = await userRef.get();
+                if (userDoc.exists && userDoc.data().admin) {
+                    // Carregar dados se for admin
+                    loadAdminPage();
+                    // remove a barreira
+                    document.getElementById('barreira').style.display = 'none';
+                } else {
+                    // Redirecionar se não for admin
+                    window.location.href = 'index.html';
+                }
+            } else {
+                // Redirecionar para login
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Carregar dados da coleção 'usuario'
+        async function loadAdminPage() {
+            const usuariosRef = firebase.firestore().collection('usuario').orderBy('registro', 'desc');
+            const snapshot = await usuariosRef.get();
+            const usuarios = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderUsuarios(usuarios);
+        }
+
+        // Renderiza a tabela de usuários
+        async function renderUsuarios(usuarios) {
+            const userList = document.getElementById('userList');
+            userList.innerHTML = '';
+
+            for (const usuario of usuarios) {
+                const { nome, email, assinante, registro, ultimo_login } = usuario;
+
+                // Formatar datas
+                const registroFormatted = formatDate(registro.toDate());
+                const ultimoLoginFormatted = formatDate(ultimo_login.toDate());
+
+                // Formatar assinante
+                const assinanteText = assinante ? 
+                    '<span class="green">Assinante</span>' : 
+                    '<span class="red">Não assinante</span>';
+
+                // Verificar se último login é maior que 30 dias /////////////////// TESTAR COM 1 DIA E VOLTAR PARA 30
+                const loginStyle = (new Date() - ultimo_login.toDate()) > 1 * 24 * 60 * 60 * 1000 ? 
+                    'class="red"' : '';
+
+                // Contar tarefas e blocos
+                const tarefaCount = await firebase.firestore().collection('tarefa').where('usuario', '==', usuario.id).get();
+                const blocoCount = await firebase.firestore().collection('bloco').where('usuario', '==', usuario.id).get();
+
+                // Adicionar a linha à tabela
+                const userRow = `
+                    <tr>
+                        <td>${nome}</td>
+                        <td>${email}</td>
+                        <td>${assinanteText}</td>
+                        <td>${registroFormatted}</td>
+                        <td ${loginStyle}>${ultimoLoginFormatted}</td>
+                        <td>${tarefaCount.size}</td>
+                        <td>${blocoCount.size}</td>
+                    </tr>
+                `;
+
+                userList.innerHTML += userRow;
+            }
+        }
+
+        // Formatar data
+        function formatDate(date) {
+            const options = { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' };
+            return date.toLocaleDateString('pt-BR', options).replace(', ', ' ');
+        }
+
+        // Aplicar filtro no dropdown
+        function applyFilter() {
+            const filter = document.getElementById('filterDropdown').value;
+
+            let usuariosRef = firebase.firestore().collection('usuario');
+
+            if (filter === 'assinante') {
+                usuariosRef = usuariosRef.orderBy('assinante', 'desc');
+            } else if (filter === 'ultimo_login') {
+                usuariosRef = usuariosRef.orderBy('ultimo_login', 'desc');
+            } else {
+                usuariosRef = usuariosRef.orderBy('registro', 'desc');
+            }
+
+            usuariosRef.get().then(snapshot => {
+                const usuarios = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderUsuarios(usuarios);
+            });
+        }
+    </script>
+</body>
+</html>
