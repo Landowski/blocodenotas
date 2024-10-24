@@ -61,11 +61,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const configBtn = document.getElementById("config");
                 const configPopup = document.getElementById("config-popup");
                 const nomeInput = document.getElementById('nome-input');
-                const closeConfig = document.getElementById('close-config')
+                const emailInput = document.getElementById('email-input');
+                const closeConfig = document.getElementById('close-config');
+                const email = document.getElementById('email');
                 let currentNoteId = null;
 
-                // Nome o usuário
+                // Nome e e-mail do usuário
                 nome.textContent = userData.nome;
+                email.textContent = user.email;
 
                 // Listeners iniciais
                 menu.addEventListener('click', toggleSidebar);
@@ -750,7 +753,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     configPopup.classList.add("hidden");
                 }
 
-                // Evento de submissão do formulário
+                // Evento de submissão do formulário de nome
                 document.getElementById('nome-form').addEventListener('submit', (e) => {
                     e.preventDefault();
                     const novoNome = nomeInput.value.trim();
@@ -766,6 +769,30 @@ document.addEventListener('DOMContentLoaded', (event) => {
                                 }
                             });
                         })
+                });
+
+                // Evento de submissão do formulário de e-mail
+                document.getElementById('email-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const newEmail = emailInput.value.trim();
+                    user.verifyBeforeUpdateEmail(newEmail)
+                .then(() => {
+                    alert('Email de verificação enviado para ' + newEmail);
+                })
+                .catch((error) => {
+                    alert('Saia e refaça o login para poder trocar o e-mail.');
+                });
+                });
+
+                // Evento de envio de redefinição de senha
+                document.getElementById('botaoTrocarSenha').addEventListener('click', () => {
+                    firebase.auth().sendPasswordResetEmail(user.email)
+                    .then(() => {
+                        alert('Um email para redefinição de senha foi enviado para ' + user.email);
+                    })
+                    .catch((error) => {
+                        alert('Ocorreu um erro ao enviar o email de redefinição de senha. Verifique se o e-mail está correto e tente novamente.');
+                    });
                 });
 
                 // Inicialização

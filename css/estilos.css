@@ -907,6 +907,13 @@ input[type="password"]::-ms-reveal {
     cursor: pointer;
 }
 
+.config-divs {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
 @media screen and (max-width: 1280px) {
     .insertToDo {
         margin-top: 30px;

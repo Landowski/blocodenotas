@@ -787,8 +787,7 @@ document.getElementById('linkEsqueci').addEventListener('click', () => {
         alert('Um email para redefinição de senha foi enviado para ' + email);
     })
     .catch((error) => {
-        console.error('Erro ao enviar email de redefinição de senha:', error);
-        alert('Ocorreu um erro ao enviar o email de redefinição de senha. Verifique se o email está correto e tente novamente.');
+        alert('Ocorreu um erro ao enviar o email de redefinição de senha. Verifique se o e-mail está correto e tente novamente.');
     });
 });
 
