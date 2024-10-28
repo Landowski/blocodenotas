@@ -20,7 +20,6 @@
     <div style="max-width: 900px; margin: 0 auto; font-size: 13px;">
         <select id="filterDropdown" onchange="applyFilter()" style="font-family: 'Roboto', sans-serif; border-radius: 6px; padding: 5px 8px; margin-bottom: 20px;">
             <option value="registro">Data de registro</option>
-            <option value="assinante">Assinante</option>
             <option value="ultimo_login">Último login</option>
         </select>
 
@@ -29,7 +28,6 @@
                 <tr>
                     <th>Nome</th>
                     <th>Email</th>
-                    <th>Assinante</th>
                     <th>Data de Registro</th>
                     <th>Último Login</th>
                     <th>Tarefas</th>
@@ -90,16 +88,11 @@
             userList.innerHTML = '';
 
             for (const usuario of usuarios) {
-                const { nome, email, assinante, registro, ultimo_login } = usuario;
+                const { nome, email, registro, ultimo_login } = usuario;
 
                 // Formatar datas
                 const registroFormatted = formatDate(registro.toDate());
                 const ultimoLoginFormatted = formatDate(ultimo_login.toDate());
-
-                // Formatar assinante
-                const assinanteText = assinante ? 
-                    '<span class="green">✅</span>' : 
-                    '<span class="red">❌</span>';
 
                 // Verificar se último login é maior que 30 dias /////////////////// TESTAR COM 1 DIA E VOLTAR PARA 30
                 const loginStyle = (new Date() - ultimo_login.toDate()) > 10 * 24 * 60 * 60 * 1000 ? 
@@ -114,7 +107,6 @@
                     <tr>
                         <td>${nome}</td>
                         <td>${email}</td>
-                        <td>${assinanteText}</td>
                         <td>${registroFormatted}</td>
                         <td ${loginStyle}>${ultimoLoginFormatted}</td>
                         <td>${tarefaCount.size}</td>
@@ -138,9 +130,7 @@
 
             let usuariosRef = firebase.firestore().collection('usuario');
 
-            if (filter === 'assinante') {
-                usuariosRef = usuariosRef.orderBy('assinante', 'desc');
-            } else if (filter === 'ultimo_login') {
+            if (filter === 'ultimo_login') {
                 usuariosRef = usuariosRef.orderBy('ultimo_login', 'desc');
             } else {
                 usuariosRef = usuariosRef.orderBy('registro', 'desc');
