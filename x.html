@@ -98,8 +98,8 @@
 
                 // Formatar assinante
                 const assinanteText = assinante ? 
-                    '<span class="green">Assinante</span>' : 
-                    '<span class="red">Não assinante</span>';
+                    '<span class="green">✅</span>' : 
+                    '<span class="red">❌</span>';
 
                 // Verificar se último login é maior que 30 dias /////////////////// TESTAR COM 1 DIA E VOLTAR PARA 30
                 const loginStyle = (new Date() - ultimo_login.toDate()) > 10 * 24 * 60 * 60 * 1000 ? 
