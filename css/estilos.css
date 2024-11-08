@@ -375,17 +375,7 @@ h3 {
     font-size: 15px;
     outline: 0;
     line-height: 1.5;
-    border-radius: 6px;
-    padding: 15px;
     min-height: 500px;
-}
-
-#note-body.light-mode {
-    border: 1px solid #d5d5d5;
-}
-
-#note-body.dark-mode {
-    border: 1px solid #404040;
 }
 
 #note-body p {
