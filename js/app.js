@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const userData = doc.data();
                 
                 // Declarações
-                const nome = document.getElementById('nome')
+                const noteBody = document.getElementById('note-body')    
+                const nome = document.getElementById('nome');
                 const logo = document.querySelector(".logo");
                 const notesList = document.getElementById("notes-list");
                 const loadingMessage = document.getElementById("loading-message");
