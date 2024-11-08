@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const addNoteButton = document.getElementById("add");
                 const noteDetails = document.getElementById("note-details");
                 const noteTitle = document.getElementById("note-title");
-                const noteBody = document.getElementById("note-body");
                 const formatacao = document.getElementById('formatacao');
                 const boldBtn = document.getElementById('boldBtn');
                 const italicBtn = document.getElementById('italicBtn');
@@ -659,13 +658,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     const h32 = document.getElementById('h3-2');
                     const sidebar = document.getElementById('sidebar');
                     const insertToDo = document.querySelector(".insertToDo");
-                    const notebody = document.getElementById('note-body');
                     const textEditor = document.getElementById('text-editor');
                     
                     document.body.classList.remove('light-mode');
                     document.body.classList.add('dark-mode');
-                    notebody.classList.remove('light-mode');
-                    notebody.classList.add('dark-mode');
                     insertToDo.classList.remove('light-mode');
                     insertToDo.classList.add('dark-mode');
                     textEditor.classList.remove('light-mode');
@@ -703,13 +699,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     const h32 = document.getElementById('h3-2');
                     const sidebar = document.getElementById('sidebar');
                     const insertToDo = document.querySelector(".insertToDo");
-                    const notebody = document.getElementById('note-body');
                     const textEditor = document.getElementById('text-editor');
                     
                     document.body.classList.remove('dark-mode');
                     document.body.classList.add('light-mode');
-                    notebody.classList.remove('dark-mode');
-                    notebody.classList.add('light-mode');
                     insertToDo.classList.remove('dark-mode');
                     insertToDo.classList.add('light-mode');
                     textEditor.classList.remove('dark-mode');
