@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Bloco de Notas PRO</title>
+    <link rel="icon" href="imagens/favicon.svg" sizes="any" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <style>
+        html, body {
+            font-family: "Roboto", sans-serif;
+            color: #111;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+        h2 {
+            margin: 0;
+            margin-bottom: 5px;
+        }
+        p {
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+        .container {
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+        }
+        #logout {
+            display: flex;
+            align-self: flex-end;
+            color: #2D6AFF;
+            margin-bottom: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            text-decoration: underline;
+        }
+        button {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            outline: none;
+            border: none;
+            background-color: #2D6AFF;
+            border-bottom: 3px solid #0032b1;
+            color: white;
+        }
+        button:hover {
+            background-color: #1557ff;
+        }
+        #barreira {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="barreira"></div>
+    <div class="container">
+        <span id="logout" href="/">Voltar ao início</span>
+
+        <h2>Bloco de Notas PRO - Suas ideias seguras em qualquer lugar</h2>
+        <p>📝 Suas notas. Sua vida. Em todos os lugares.
+        <br/>
+        Por apenas R$ 19,90/ano (isso mesmo, menos de R$ 0,06 por dia!)
+        </p>
+        <h2>Por que escolher o Bloco de Notas PRO?</h2>
+        <p>Em primeiro lugar, pela extrema simplicidade e ótima funcionalidade!
+        <br/>Ninguém aguenta mais apps lotados de funções que niguém usa! Menos é mais!
+        </p>
+        <p>🔒 <b>Segurança em primeiro lugar</b>
+        <br/>
+        • Proteção de nível empresarial com Google Firebase<br/>
+        • Nunca mais perca suas anotações importantes
+        </p>
+        <p>📱 <b>Acesse de qualquer lugar</b>
+        <br/>
+        • Sincronização instantânea entre dispositivos<br/>
+        • Use no computador, tablet ou celular<br/>
+        • Suas notas sempre atualizadas
+        </p>
+        <p>💰 <b>Investimento que cabe no bolso</b>
+        <br/>
+        • Menos de R$ 0,06 por dia<br/>
+        • Apenas R$ 19,90 por ano<br/>
+        • Sem surpresas ou cobranças escondidas
+        </p>
+        <h2>Comece agora!</h2>
+        <p>
+        ✨ Assine por R$ 19,90/ano<br/>
+        ✨ Acesso imediato a todas as funcionalidades<br/>
+        ✨ 100% seguro e confiável<br/>
+        ✨ Cancele quando quiser<br/>
+        </p>
+        <button id="stripe">Assinar agora via <img src="imagens/stripe.png"/></button>
+        <span style="font-size: 12px; color: #999; margin-top: 5px; line-height: 1;">Stripe é a forma de pagamento mais segura e<br/>
+        mais utilizada no mundo para compras online.</span>
+    </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+        // Configurações do app no Firebase
+        const firebaseConfig = {
+        apiKey: "AIzaSyBO_nBQg70L-WOby_UDOJc6bt3Yg3I7-Qk",
+        authDomain: "bloco-de-notas-b94c4.firebaseapp.com",
+        projectId: "bloco-de-notas-b94c4",
+        storageBucket: "bloco-de-notas-b94c4.appspot.com",
+        messagingSenderId: "515098342854",
+        appId: "1:515098342854:web:4b91c903046400c7f96ec7"
+        };
+
+        // Inicia o Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = '/';
+            } else {
+                document.getElementById("barreira").style.display = "none";
+            }
+        });
+
+        document.getElementById("logout").addEventListener("click", () => {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "/";
+            });
+        });
+
+        const stripeButton = document.getElementById('stripe');
+        stripeButton.addEventListener('click', () => {
+            redirectToStripeCheckout();
+        });
+
+        function redirectToStripeCheckout() {
+            const user = firebase.auth().currentUser;
+            const stripe = Stripe('pk_live_51H8nFSJVDeGOx1BERkH0kcptYEKgHkWiEn5RSqR3GIUabD6qWrzGEmyBX0bNUChuFvn2iBAtcqLSpc5bxx6DcOUy00aCMvsafk');
+            stripe.redirectToCheckout({
+                lineItems: [{ price: 'price_1QJMPEJVDeGOx1BE9iBBbUeO', quantity: 1 }],
+                mode: 'subscription',
+                customerEmail: user.email,
+                successUrl: 'https://blocodenotasonline.com.br/sucesso',
+                cancelUrl: 'https://blocodenotasonline.com.br/pro',
+            })
+            }
+    </script>
+
+</body>
+</html>

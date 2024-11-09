@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Bloco de Notas PRO</title>
+    <link rel="icon" href="imagens/favicon.svg" sizes="any" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <style>
+        html, body {
+            font-family: "Roboto", sans-serif;
+            color: #111;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        h2 {
+            margin: 0;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        button {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            outline: none;
+            border: none;
+            background-color: #2D6AFF;
+            border-bottom: 3px solid #0032b1;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #1557ff;
+        }
+
+        #barreira {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background-color: white;
+        }
+        #carregando {
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 20px;
+        }
+        #sucesso {
+            display: none;
+            width: fit-content;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="barreira"></div>
+    <div id="carregando">
+        Carregando...
+        <img src="imagens/carregando.svg" width="24" height="24">
+    </div>
+    <div id="sucesso">
+        <span style="font-size: 52px">🥳</span>
+        <h2>Parabéns! Você assinou o Bloco de Notas PRO!</h2>
+        <p>Por favor, siga para o app clicando no botão abaixo:</p>
+        <button id="app">IR PARA O APP AGORA</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.3/dist/confetti.browser.js"></script>
+
+    <script>
+        const firebaseConfig = {
+        apiKey: "AIzaSyBO_nBQg70L-WOby_UDOJc6bt3Yg3I7-Qk",
+        authDomain: "bloco-de-notas-b94c4.firebaseapp.com",
+        projectId: "bloco-de-notas-b94c4",
+        storageBucket: "bloco-de-notas-b94c4.appspot.com",
+        messagingSenderId: "515098342854",
+        appId: "1:515098342854:web:4b91c903046400c7f96ec7"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = '/';
+                
+            } else {
+                document.getElementById('barreira').style.display = 'none';
+                setTimeout(() => {
+                    document.getElementById("carregando").style.display = 'none';
+                    document.getElementById("sucesso").style.display = 'flex';
+                    confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    zIndex: 9999
+                })
+                }, "4500");
+            }
+        });
+
+        document.getElementById('app').addEventListener("click", () => {
+            window.location.href = 'app';
+        });
+    </script>
+
+</body>
+</html>
