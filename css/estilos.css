@@ -703,7 +703,6 @@ h3 {
     display: flex;
     width: fit-content;
     align-self: center;
-    margin-bottom: 20px;
     color: var(--blue);
 }
 
