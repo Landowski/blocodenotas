@@ -604,6 +604,7 @@ h3 {
 
 .dragIcon {
     cursor: grab;
+    color: #777;
 }
 
 .faded {
