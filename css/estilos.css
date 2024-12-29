@@ -258,7 +258,7 @@ h3 {
     justify-content: center;
     margin-top: auto;
     margin-right: 20px;
-    background-color: var(--green);
+    background-color: var(--blue);
     font-weight: 700;
     color: white;
     gap: 15px;
@@ -266,10 +266,6 @@ h3 {
     padding: 10px 0;
     overflow: hidden;
     cursor: pointer;
-}
-
-#loginBtn:hover {
-    background-color: #5ea861;
 }
 
 #loginBtn::before {
