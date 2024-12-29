@@ -205,12 +205,13 @@ h3 {
 .dragAndSpan {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 2px;
 }
 
 .dragNote {
     cursor: grab;
     margin-top: 3px;
+    color: #999;
 }
 
 .dragNote span {
