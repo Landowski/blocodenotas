@@ -595,7 +595,7 @@ h3 {
 
 .popup-content {
     position: relative;
-    width: 460px;
+    width: 360px;
     display: flex;
     flex-direction: column;
     background-color: white;
