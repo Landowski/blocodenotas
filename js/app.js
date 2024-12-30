@@ -39,10 +39,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     const boldBtn = document.getElementById('boldBtn');
                     const italicBtn = document.getElementById('italicBtn');
                     const underlineBtn = document.getElementById('underlineBtn');
-                    const leftBtn = document.getElementById('leftBtn');
-                    const centerBtn = document.getElementById('centerBtn');
-                    const rightBtn = document.getElementById('rightBtn');
-                    const justifyBtn = document.getElementById('justifyBtn');
                     const markerBtn = document.getElementById('markerBtn');
                     const listOrderBtn = document.getElementById('listOrderBtn');
                     const listBtn = document.getElementById('listBtn');
@@ -398,22 +394,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                     underlineBtn.addEventListener('click', function() {
                         restoreSelectionAndApplyCommand('underline');
-                    });
-
-                    leftBtn.addEventListener('click', function() {
-                        restoreSelectionAndApplyCommand('justifyLeft');
-                    });
-
-                    centerBtn.addEventListener('click', function() {
-                        restoreSelectionAndApplyCommand('justifyCenter');
-                    });
-
-                    rightBtn.addEventListener('click', function() {
-                        restoreSelectionAndApplyCommand('justifyRight');
-                    });
-
-                    justifyBtn.addEventListener('click', function() {
-                        restoreSelectionAndApplyCommand('justifyFull');
                     });
 
                     listOrderBtn.addEventListener('click', function() {
