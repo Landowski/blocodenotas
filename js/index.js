@@ -6,10 +6,17 @@ const firebaseConfig = {
     storageBucket: "bloco-de-notas-b94c4.appspot.com",
     messagingSenderId: "515098342854",
     appId: "1:515098342854:web:4b91c903046400c7f96ec7"
-  };
+};
 
 // Inicia o Firebase
 firebase.initializeApp(firebaseConfig);
+
+//  User logado
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+    window.location.href = 'app';
+    }
+});
 
 // Declarações
 const logo = document.querySelector(".logo");
