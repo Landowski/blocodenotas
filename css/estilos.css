@@ -611,46 +611,6 @@ h3 {
     opacity: 0.5;
 }
 
-.toDoButtons {
-    display: flex;
-    gap: 5px;
-    color: #999 !important;
-}
-
-.deleteToDo, .checkToDo {
-    cursor: pointer;
-}
-
-.deleteToDo:hover {
-    color: var(--red);
-}
-
-.checkToDo:hover {
-    color: var(--green) !important;
-}
-
-.notChecked {
-    color: inherit !important;
-}
-
-.checked {
-    color: var(--green) !important;
-}
-
-#apagar-todos {
-    display: none;
-    width: fit-content;
-    font-size: 13px;
-    margin-bottom: 10px;
-    color: var(--red);
-    align-self: flex-end;
-    cursor: pointer;
-}
-
-#apagar-todos.dark-mode {
-    filter: brightness(0.8);
-}
-
 #text-editor {
     width: 100%;
     font-family: var(--font);
@@ -805,7 +765,7 @@ h3 {
     font-family: var(--font);
     font-size: 17px;
     cursor: pointer;
-    background-color: var(--black);
+    background-color: var(--blue);
     border: none;
     padding: 10px 15px;
     border-radius: 6px;
@@ -833,6 +793,7 @@ h3 {
     font-weight: 400;
     font-style: normal;
     font-size: 15px;
+    background-color: #fff;
 }
 
 .input-login:hover, .input-login:focus {
