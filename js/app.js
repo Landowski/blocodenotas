@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     menu.addEventListener('click', toggleSidebar);
                     overlaySidebar.addEventListener('click', toggleSidebar);
                     configBtn.addEventListener('click', openConfig);
+                    configPopup.addEventListener('click', closeConfigPop);
                     closeConfig.addEventListener('click', closeConfigPop);
 
                     toggleDark.addEventListener("click", () => {
