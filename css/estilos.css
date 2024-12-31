@@ -565,11 +565,11 @@ h3 {
 }
     
 #sobre.light-mode {
-    color: var(--black);
+    color: #444;
 }
 
 #sobre.dark-mode {
-    color: #DBDBDB;
+    color: #c5c5c5;
 }
 
 #sobre a {
