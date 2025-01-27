@@ -181,7 +181,7 @@ h3 {
 }
 
 #sidebar.dark-mode ul::-webkit-scrollbar-thumb {
-    background: #444 !important;
+    background: #222 !important;
     border-radius: 360px;
 }
 
@@ -564,7 +564,7 @@ h3 {
 }
     
 #sobre.light-mode {
-    color: #444;
+    color: #222;
 }
 
 #sobre.dark-mode {
