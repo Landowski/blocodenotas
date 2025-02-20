@@ -584,7 +584,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     document.getElementById('sair').addEventListener('click', function() {
                         firebase.auth().signOut();
                     });
-            });
+            };
 
         } else {
             window.location.href = '/';
