@@ -596,10 +596,18 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
             nome: document.getElementById('signup-name').value
         };
 
-        return db.collection('usuario').doc(user.uid).set(userData);
-    })
-    .then(() => {
-        window.location.href = 'app';
+        // Adiciona o usuário ao Firestore
+        return db.collection('usuario').doc(user.uid).set(userData)
+            .then(() => {
+                // Redireciona apenas após a criação bem-sucedida no Firestore
+                window.location.href = 'app';
+            })
+            .catch((error) => {
+                console.error("Erro ao criar usuário no Firestore:", error);
+                alert("Erro ao criar usuário no Firestore. Tente novamente.");
+                // Desfaz a criação do usuário no Auth se o Firestore falhar
+                return user.delete();
+            });
     })
     .catch((error) => {
         if (error.code) {
@@ -613,7 +621,6 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
             }
         }
     });
-});
 
 // Esqueci a senha
 document.getElementById('linkEsqueci').addEventListener('click', () => {
