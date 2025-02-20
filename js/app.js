@@ -570,13 +570,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         });
                     });
 
-                    // Evento de abertura do portal de assinaturas do cliente
-                    document.getElementById('gerenciarAssinatura').addEventListener('click', () => {
-                        const userEmail = user.email;
-                        const stripeUrl = `https://billing.stripe.com/p/login/dR63egdBu2qnfwkbII?prefilled_email=${encodeURIComponent(userEmail)}`;
-                        window.open(stripeUrl, "_blank");
-                    });
-
                     // Inicialização
                 applyStoredTheme();
                 loadNotes();
