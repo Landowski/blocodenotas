@@ -50,7 +50,6 @@
                     <th>Nome</th>
                     <th>Registro</th>
                     <th>Último Login</th>
-                    <th>Tarefas</th>
                     <th>Blocos</th>
                     <th>Excluir tudo</th>
                 </tr>
@@ -102,14 +101,6 @@
                     const db = firebase.firestore();
                     const batch = db.batch();
 
-                    // Deletar tarefas
-                    const tarefasSnapshot = await db.collection('tarefa')
-                        .where('usuario', '==', userId)
-                        .get();
-                    tarefasSnapshot.forEach(doc => {
-                        batch.delete(doc.ref);
-                    });
-
                     // Deletar blocos
                     const blocosSnapshot = await db.collection('bloco')
                         .where('usuario', '==', userId)
@@ -157,8 +148,7 @@
                 const loginStyle = (new Date() - ultimo_login.toDate()) > 10 * 24 * 60 * 60 * 1000 ? 
                     'class="red"' : '';
 
-                // Contar tarefas e blocos
-                const tarefaCount = await firebase.firestore().collection('tarefa').where('usuario', '==', usuario.id).get();
+                // Contar blocos
                 const blocoCount = await firebase.firestore().collection('bloco').where('usuario', '==', usuario.id).get();
 
                 // Adicionar a linha à tabela
@@ -169,7 +159,6 @@
                         <td>${nome}</td>
                         <td>${registroFormatted}</td>
                         <td ${loginStyle}>${ultimoLoginFormatted}</td>
-                        <td>${tarefaCount.size}</td>
                         <td>${blocoCount.size}</td>
                         <td>
                             <button class="delete-btn" onclick="deleteUserData('${id}', '${nome}')">
