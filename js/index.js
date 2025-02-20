@@ -570,25 +570,6 @@ document.getElementById('login-form-sign-up').addEventListener('submit', async f
     const confirmPassword = document.getElementById('signup-password-verify').value;
     const nome = document.getElementById('signup-name').value;
     
-    // Função para verificar se o documento existe
-    const checkUserDocument = async (userId, maxAttempts = 10) => {
-        const db = firebase.firestore();
-        let attempts = 0;
-        
-        while (attempts < maxAttempts) {
-            const doc = await db.collection('usuario').doc(userId).get();
-            if (doc.exists) {
-                return true;
-            }
-            
-            // Espera 1 segundo antes da próxima tentativa
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            attempts++;
-        }
-        
-        return false;
-    };
-    
     try {
         // Validações iniciais
         if (password !== confirmPassword) {
@@ -602,36 +583,57 @@ document.getElementById('login-form-sign-up').addEventListener('submit', async f
         // Desabilita o botão
         botaoCadastro.disabled = true;
         botaoCadastro.style.opacity = '0.5';
-        
-        // 1. Criar usuário no Authentication
+
+        // Criar usuário no Authentication
         const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        const user = userCredential.user;
         
-        // 2. Preparar e criar dados do usuário no Firestore
-        const userData = {
-            admin: false,
-            email: user.email,
-            id_unico: user.uid,
-            registro: firebase.firestore.FieldValue.serverTimestamp(),
-            ultimo_login: firebase.firestore.FieldValue.serverTimestamp(),
-            modo_escuro: false,
-            nome: nome
-        };
-        
-        const db = firebase.firestore();
-        await db.collection('usuario').doc(user.uid).set(userData);
-        
-        // 3. Verificar repetidamente se o documento foi criado
-        const documentExists = await checkUserDocument(user.uid);
-        
-        if (!documentExists) {
-            // Se após todas as tentativas o documento ainda não existe
-            await user.delete();
-            throw new Error('Não foi possível criar a conta. Por favor, tente novamente.');
-        }
-        
-        // 4. Sucesso - redirecionar para o app
-        window.location.href = 'app';
+        // Aguardar o estado de autenticação ser confirmado
+        await new Promise((resolve, reject) => {
+            const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+                if (user) {
+                    try {
+                        // Preparar dados do usuário
+                        const userData = {
+                            admin: false,
+                            email: user.email,
+                            id_unico: user.uid,
+                            registro: firebase.firestore.FieldValue.serverTimestamp(),
+                            ultimo_login: firebase.firestore.FieldValue.serverTimestamp(),
+                            modo_escuro: false,
+                            nome: nome
+                        };
+
+                        // Criar documento no Firestore
+                        const db = firebase.firestore();
+                        await db.collection('usuario').doc(user.uid).set(userData);
+                        
+                        // Verificar se o documento foi criado
+                        const docRef = await db.collection('usuario').doc(user.uid).get();
+                        
+                        if (docRef.exists) {
+                            unsubscribe(); // Remover o listener
+                            resolve(); // Resolver a Promise
+                            window.location.href = 'app';
+                        } else {
+                            unsubscribe();
+                            reject(new Error('Falha ao criar o documento do usuário'));
+                        }
+                    } catch (error) {
+                        unsubscribe();
+                        reject(error);
+                    }
+                }
+            }, (error) => {
+                unsubscribe();
+                reject(error);
+            });
+
+            // Timeout de 10 segundos
+            setTimeout(() => {
+                unsubscribe();
+                reject(new Error('Tempo limite excedido ao criar a conta'));
+            }, 10000);
+        });
         
     } catch (error) {
         // Reabilita o botão
@@ -657,6 +659,16 @@ document.getElementById('login-form-sign-up').addEventListener('submit', async f
             }
         } else {
             alert(error.message);
+        }
+        
+        // Se houver erro, tentar deletar o usuário do Auth
+        try {
+            const user = firebase.auth().currentUser;
+            if (user) {
+                await user.delete();
+            }
+        } catch (deleteError) {
+            console.error('Erro ao deletar usuário:', deleteError);
         }
         
         console.error('Erro completo:', error);
