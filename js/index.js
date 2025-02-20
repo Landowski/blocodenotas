@@ -561,26 +561,26 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     });
 });
 
-document.getElementById('login-form-sign-up').addEventListener('submit', function(event) {
-event.preventDefault();
-var email = document.getElementById('signup-email').value;
-var password = document.getElementById('signup-password').value;
-var confirmPassword = document.getElementById('signup-password-verify').value;
+document.getElementById('login-form-sign-up').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    var email = document.getElementById('signup-email').value;
+    var password = document.getElementById('signup-password').value;
+    var confirmPassword = document.getElementById('signup-password-verify').value;
 
-if (password !== confirmPassword) {
-    alert('As senhas não são iguais.');
-    return;
-}
+    if (password !== confirmPassword) {
+        alert('As senhas não são iguais.');
+        return;
+    }
 
-if (password.length < 8) {
-    alert('A senha precisa ter 8 caracteres no mínimo.');
-    return;
-}
+    if (password.length < 8) {
+        alert('A senha precisa ter 8 caracteres no mínimo.');
+        return;
+    }
 
-const db = firebase.firestore();
+    const db = firebase.firestore();
 
-firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
+    try {
+        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
         const botaoCadastro = document.getElementById('botaoCadastro');
         botaoCadastro.disabled = 'true';
         botaoCadastro.style.opacity = '0.5';
@@ -596,12 +596,10 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
             nome: document.getElementById('signup-name').value
         };
 
-        return db.collection('usuario').doc(user.uid).set(userData);
-    })
-    .then(() => {
+        await db.collection('usuario').doc(user.uid).set(userData);
+
         window.location.href = 'app';
-    })
-    .catch((error) => {
+    } catch (error) {
         if (error.code) {
             console.error("Auth error:", error);
             switch (error.code) {
@@ -612,7 +610,7 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
                     alert("Erro de registro: " + error.message);
             }
         }
-    });
+    }
 });
 
 // Esqueci a senha
