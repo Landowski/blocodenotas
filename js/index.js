@@ -587,7 +587,6 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
         const user = userCredential.user;
 
         const userData = {
-            assinante: false,
             admin: false,
             email: user.email,
             id_unico: user.uid,
