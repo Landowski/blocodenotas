@@ -914,4 +914,11 @@ th {
     #home p {
         font-size: 13px;
     }
+
+    .cookie-consent {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        max-width: 380px;
+    }
 }
