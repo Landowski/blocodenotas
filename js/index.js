@@ -644,9 +644,45 @@ document.getElementById('linkEsqueci').addEventListener('click', () => {
     });
 });
 
+// Cookies
+function createCookieConsent() {
+    // Verifica se o usuário já aceitou os cookies
+    if (localStorage.getItem('cookieConsent')) {
+        return;
+    }
+
+    // Cria o elemento do aviso
+    const cookieConsent = document.createElement('div');
+    cookieConsent.className = 'cookie-consent';
+
+    // Adiciona o conteúdo
+    cookieConsent.innerHTML = `
+        <div class="cookie-header"><img src="imagens/cookies.png" width="50" height="44"><strong>Aviso sobre cookies</strong></div>
+        <p style="font-size: 13px; color: #555;">Utilizamos cookies apenas para manter sua sessão de login ativa e garantir uma experiência contínua. 
+           Não coletamos dados pessoais, não usamos cookies de terceiros, redes sociais ou publicidade, 
+           nem rastreamos sua atividade no site.</p>
+        <button onclick="acceptCookies()">Entendi</button>
+    `;
+
+    // Adiciona ao body
+    document.body.appendChild(cookieConsent);
+    }
+
+function acceptCookies() {
+    // Salva a preferência do usuário
+    localStorage.setItem('cookieConsent', 'true');
+    
+    // Remove o aviso
+    const cookieConsent = document.querySelector('.cookie-consent');
+    if (cookieConsent) {
+        cookieConsent.remove();
+        }
+    }
+
 // Inicialização
 applyStoredTheme();
 initializeLocalStorage();
 renderNotesList();
 initializeSidebarSortable();
+createCookieConsent();
 loadingMessage.style.display = "none";
