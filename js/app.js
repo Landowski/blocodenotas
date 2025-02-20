@@ -6,7 +6,7 @@ const firebaseConfig = {
     storageBucket: "bloco-de-notas-b94c4.appspot.com",
     messagingSenderId: "515098342854",
     appId: "1:515098342854:web:4b91c903046400c7f96ec7"
-  };
+};
 
 // Inicia o Firebase
 firebase.initializeApp(firebaseConfig);
@@ -14,15 +14,14 @@ firebase.initializeApp(firebaseConfig);
 document.addEventListener('DOMContentLoaded', (event) => {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
+            // Remove a barreira se o usuário estiver logado
+            document.getElementById('barreira').style.display = 'none';
+
             const db = firebase.firestore();
             const userDocRef = db.collection('usuario').doc(user.uid);
                         
             userDocRef.get().then((doc) => {
                 if (doc.exists) {
-                
-                    // remove a barreira
-                    document.getElementById('barreira').style.display = 'none';
-
                     // Dados do usuário
                     const userData = doc.data();
                     
@@ -585,7 +584,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         firebase.auth().signOut();
                     });
 
+                }
+            });
+
         } else {
+            // Se o usuário não estiver logado, redireciona para a página raiz
             window.location.href = '/';
         }
     });
