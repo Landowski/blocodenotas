@@ -570,6 +570,25 @@ document.getElementById('login-form-sign-up').addEventListener('submit', async f
     const confirmPassword = document.getElementById('signup-password-verify').value;
     const nome = document.getElementById('signup-name').value;
     
+    // Função para verificar se o documento existe
+    const checkUserDocument = async (userId, maxAttempts = 10) => {
+        const db = firebase.firestore();
+        let attempts = 0;
+        
+        while (attempts < maxAttempts) {
+            const doc = await db.collection('usuario').doc(userId).get();
+            if (doc.exists) {
+                return true;
+            }
+            
+            // Espera 1 segundo antes da próxima tentativa
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            attempts++;
+        }
+        
+        return false;
+    };
+    
     try {
         // Validações iniciais
         if (password !== confirmPassword) {
@@ -580,7 +599,7 @@ document.getElementById('login-form-sign-up').addEventListener('submit', async f
             throw new Error('A senha precisa ter 8 caracteres no mínimo.');
         }
         
-        // Desabilita o botão para prevenir múltiplos envios
+        // Desabilita o botão
         botaoCadastro.disabled = true;
         botaoCadastro.style.opacity = '0.5';
         
@@ -588,7 +607,7 @@ document.getElementById('login-form-sign-up').addEventListener('submit', async f
         const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
         
-        // 2. Preparar dados do usuário
+        // 2. Preparar e criar dados do usuário no Firestore
         const userData = {
             admin: false,
             email: user.email,
@@ -599,28 +618,26 @@ document.getElementById('login-form-sign-up').addEventListener('submit', async f
             nome: nome
         };
         
-        // 3. Criar documento no Firestore
         const db = firebase.firestore();
         await db.collection('usuario').doc(user.uid).set(userData);
         
-        // 4. Verificar se o documento foi criado corretamente
-        const userDoc = await db.collection('usuario').doc(user.uid).get();
+        // 3. Verificar repetidamente se o documento foi criado
+        const documentExists = await checkUserDocument(user.uid);
         
-        if (!userDoc.exists) {
-            // Se o documento não existe, deletar o usuário do Auth e lançar erro
+        if (!documentExists) {
+            // Se após todas as tentativas o documento ainda não existe
             await user.delete();
-            throw new Error('Falha ao criar perfil do usuário.');
+            throw new Error('Não foi possível criar a conta. Por favor, tente novamente.');
         }
         
-        // 5. Tudo OK - redirecionar para o app
+        // 4. Sucesso - redirecionar para o app
         window.location.href = 'app';
         
     } catch (error) {
-        // Reabilita o botão em caso de erro
+        // Reabilita o botão
         botaoCadastro.disabled = false;
         botaoCadastro.style.opacity = '1';
         
-        // Tratamento específico de erros
         if (error.code) {
             switch (error.code) {
                 case 'auth/email-already-in-use':
