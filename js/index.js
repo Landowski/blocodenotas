@@ -563,29 +563,32 @@ document.getElementById('login-form').addEventListener('submit', function(event)
 
 document.getElementById('login-form-sign-up').addEventListener('submit', async function(event) {
     event.preventDefault();
-    var email = document.getElementById('signup-email').value;
-    var password = document.getElementById('signup-password').value;
-    var confirmPassword = document.getElementById('signup-password-verify').value;
-
-    if (password !== confirmPassword) {
-        alert('As senhas não são iguais.');
-        return;
-    }
-
-    if (password.length < 8) {
-        alert('A senha precisa ter 8 caracteres no mínimo.');
-        return;
-    }
-
-    const db = firebase.firestore();
-
+    
+    const botaoCadastro = document.getElementById('botaoCadastro');
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    const confirmPassword = document.getElementById('signup-password-verify').value;
+    const nome = document.getElementById('signup-name').value;
+    
     try {
-        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        const botaoCadastro = document.getElementById('botaoCadastro');
-        botaoCadastro.disabled = 'true';
+        // Validações iniciais
+        if (password !== confirmPassword) {
+            throw new Error('As senhas não são iguais.');
+        }
+        
+        if (password.length < 8) {
+            throw new Error('A senha precisa ter 8 caracteres no mínimo.');
+        }
+        
+        // Desabilita o botão para prevenir múltiplos envios
+        botaoCadastro.disabled = true;
         botaoCadastro.style.opacity = '0.5';
+        
+        // 1. Criar usuário no Authentication
+        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
-
+        
+        // 2. Preparar dados do usuário
         const userData = {
             admin: false,
             email: user.email,
@@ -593,31 +596,53 @@ document.getElementById('login-form-sign-up').addEventListener('submit', async f
             registro: firebase.firestore.FieldValue.serverTimestamp(),
             ultimo_login: firebase.firestore.FieldValue.serverTimestamp(),
             modo_escuro: false,
-            nome: document.getElementById('signup-name').value
+            nome: nome
         };
-
+        
+        // 3. Criar documento no Firestore
+        const db = firebase.firestore();
         await db.collection('usuario').doc(user.uid).set(userData);
-
-        // Verifica se o documento foi criado
-        const doc = await db.collection('usuario').doc(user.uid).get();
-        if (doc.exists) {
-            window.location.href = 'app';
-        } else {
-            throw new Error("Documento não foi criado no Firestore.");
+        
+        // 4. Verificar se o documento foi criado corretamente
+        const userDoc = await db.collection('usuario').doc(user.uid).get();
+        
+        if (!userDoc.exists) {
+            // Se o documento não existe, deletar o usuário do Auth e lançar erro
+            await user.delete();
+            throw new Error('Falha ao criar perfil do usuário.');
         }
+        
+        // 5. Tudo OK - redirecionar para o app
+        window.location.href = 'app';
+        
     } catch (error) {
+        // Reabilita o botão em caso de erro
+        botaoCadastro.disabled = false;
+        botaoCadastro.style.opacity = '1';
+        
+        // Tratamento específico de erros
         if (error.code) {
-            console.error("Auth error:", error);
             switch (error.code) {
-                case "auth/email-already-in-use":
-                    alert("Este e-mail já está registrado.");
+                case 'auth/email-already-in-use':
+                    alert('Este e-mail já está registrado.');
+                    break;
+                case 'auth/invalid-email':
+                    alert('E-mail inválido.');
+                    break;
+                case 'auth/operation-not-allowed':
+                    alert('Operação não permitida.');
+                    break;
+                case 'auth/weak-password':
+                    alert('Senha muito fraca.');
                     break;
                 default:
-                    alert("Erro de registro: " + error.message);
+                    alert(`Erro no registro: ${error.message}`);
             }
         } else {
-            alert("Erro ao criar usuário: " + error.message);
+            alert(error.message);
         }
+        
+        console.error('Erro completo:', error);
     }
 });
 
