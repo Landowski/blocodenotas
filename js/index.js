@@ -598,7 +598,13 @@ document.getElementById('login-form-sign-up').addEventListener('submit', async f
 
         await db.collection('usuario').doc(user.uid).set(userData);
 
-        window.location.href = 'app';
+        // Verifica se o documento foi criado
+        const doc = await db.collection('usuario').doc(user.uid).get();
+        if (doc.exists) {
+            window.location.href = 'app';
+        } else {
+            throw new Error("Documento não foi criado no Firestore.");
+        }
     } catch (error) {
         if (error.code) {
             console.error("Auth error:", error);
@@ -609,6 +615,8 @@ document.getElementById('login-form-sign-up').addEventListener('submit', async f
                 default:
                     alert("Erro de registro: " + error.message);
             }
+        } else {
+            alert("Erro ao criar usuário: " + error.message);
         }
     }
 });
