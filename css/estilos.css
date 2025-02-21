@@ -578,6 +578,11 @@ h3 {
     color: var(--blue);
 }
 
+#sobre ul {
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
 .popup {
     position: fixed;
     top: 0;
