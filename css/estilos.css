@@ -846,12 +846,12 @@ th {
             background: #0056b3;
         }
 
-.cookie-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
+        .cookie-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
 
 @media screen and (max-width: 1280px) {
     .insertToDo {
@@ -923,7 +923,7 @@ th {
         width: 100%;
     }
 
-    .cookie-consent png {
-        width: 75px;
-        height: 66px;
+    .cookie-header png {
+        width: 75px !important;
+        height: 66px !important;
 }
