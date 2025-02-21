@@ -725,7 +725,7 @@ function createCookieConsent() {
 
     // Adiciona o conteúdo
     cookieConsent.innerHTML = `
-        <div class="cookie-header"><img src="imagens/cookies.png" width="50" height="44" alt="Figura desenhada de biscoitos"><strong>Aviso sobre cookies</strong></div>
+        <div class="cookie-header"><img src="imagens/cookies.png" alt="Figura desenhada de biscoitos"><strong>Aviso sobre cookies</strong></div>
         <p style="font-size: 13px; color: #555;">Utilizamos cookies apenas para manter sua sessão de login ativa e garantir uma experiência contínua. 
            Não coletamos dados pessoais, não usamos cookies de terceiros, redes sociais ou publicidade, 
            nem rastreamos sua atividade no site.</p>
