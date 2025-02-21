@@ -97,20 +97,6 @@
             }
         });
 
-      // Updated renderUsuarios function
-        async function renderUsuarios(usuarios) {
-            const userList = document.getElementById('userList');
-            const userCount = document.getElementById('userCount');
-            userList.innerHTML = '';
-            
-            // Update user count
-            userCount.textContent = usuarios.length;
-
-            for (const usuario of usuarios) {
-                // Rest of the rendering logic remains the same
-            }
-        }
-
         // Função para deletar usuário e seus dados
         async function deleteUserData(userId, userName) {
             if (confirm(`Deseja realmente excluir o usuário ${userName} e todos os seus blocos?`)) {
@@ -152,7 +138,9 @@
         // Renderiza a tabela de usuários
         async function renderUsuarios(usuarios) {
             const userList = document.getElementById('userList');
+            const userCount = document.getElementById('userCount');
             userList.innerHTML = '';
+            userCount.textContent = usuarios.length;
 
             for (const usuario of usuarios) {
                 const { id, nome, email, registro, ultimo_login } = usuario;
