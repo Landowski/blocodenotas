@@ -137,52 +137,44 @@
             }
         });
 
-        // Função para deletar usuário e seus dados
-        async function deleteUserData(userId, userName) {
-            if (confirm(`Deseja realmente excluir o usuário ${userName} e todos os seus blocos?`)) {
-                try {
-                    const db = firebase.firestore();
-                    const batch = db.batch();
-
-                    // Deletar blocos
-                    const blocosSnapshot = await db.collection('bloco')
-                        .where('usuario', '==', userId)
-                        .get();
-                    blocosSnapshot.forEach(doc => {
-                        batch.delete(doc.ref);
-                    });
-
-                    // Deletar usuário
-                    batch.delete(db.collection('usuario').doc(userId));
-
-                    // Executar todas as operações
-                    await batch.commit();
-
-                    alert('Usuário e seus dados foram excluídos com sucesso!');
-                    loadAdminPage(); // Recarregar a lista
-                } catch (error) {
-                    console.error("Erro ao excluir dados:", error);
-                    alert('Erro ao excluir os dados. Por favor, tente novamente.');
-                }
-            }
-        }
+        // Adicionar variáveis de controle da paginação
+        let currentPage = 1;
+        let totalPages = 1;
+        const itemsPerPage = 10;
+        let allUsers = [];
 
         // Carregar dados da coleção 'usuario'
         async function loadAdminPage() {
             const usuariosRef = firebase.firestore().collection('usuario').orderBy('registro', 'desc');
             const snapshot = await usuariosRef.get();
-            const usuarios = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            renderUsuarios(usuarios);
+            allUsers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            
+            // Calcular total de páginas
+            totalPages = Math.ceil(allUsers.length / itemsPerPage);
+            document.getElementById('totalPages').textContent = totalPages;
+            
+            // Renderizar primeira página
+            renderPage(1);
         }
 
-        // Renderiza a tabela de usuários
-        async function renderUsuarios(usuarios) {
-            const userList = document.getElementById('userList');
-            const userCount = document.getElementById('userCount');
-            userList.innerHTML = '';
-            userCount.textContent = usuarios.length;
+        // Função para renderizar uma página específica
+        async function renderPage(page) {
+            currentPage = page;
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageUsers = allUsers.slice(start, end);
 
-            for (const usuario of usuarios) {
+            // Atualizar navegação
+            document.getElementById('currentPage').textContent = page;
+            document.getElementById('prevButton').disabled = page === 1;
+            document.getElementById('nextButton').disabled = page === totalPages;
+            document.getElementById('userCount').textContent = allUsers.length;
+
+            // Renderizar usuários
+            const userList = document.getElementById('userList');
+            userList.innerHTML = '';
+
+            for (const usuario of pageUsers) {
                 const { id, nome, email, registro, ultimo_login } = usuario;
 
                 // Formatar datas
@@ -194,9 +186,9 @@
                     'class="red"' : '';
 
                 // Contar blocos
-                const blocoCount = await firebase.firestore().collection('bloco').where('usuario', '==', usuario.id).get();
+                const blocoCount = await firebase.firestore().collection('bloco')
+                    .where('usuario', '==', usuario.id).get();
 
-                // Adicionar a linha à tabela
                 const userRow = `
                     <tr>
                         <td class="user-id">${id}</td>
@@ -217,13 +209,20 @@
             }
         }
 
-        // Formatar data
-        function formatDate(date) {
-            const options = { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' };
-            return date.toLocaleDateString('pt-BR', options).replace(', ', ' ');
+        // Funções de navegação
+        function nextPage() {
+            if (currentPage < totalPages) {
+                renderPage(currentPage + 1);
+            }
         }
 
-        // Aplicar filtro no dropdown
+        function previousPage() {
+            if (currentPage > 1) {
+                renderPage(currentPage - 1);
+            }
+        }
+
+        // Atualizar função de filtro
         function applyFilter() {
             const filter = document.getElementById('filterDropdown').value;
 
@@ -236,9 +235,37 @@
             }
 
             usuariosRef.get().then(snapshot => {
-                const usuarios = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                renderUsuarios(usuarios);
+                allUsers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                totalPages = Math.ceil(allUsers.length / itemsPerPage);
+                document.getElementById('totalPages').textContent = totalPages;
+                renderPage(1);
             });
+        }
+
+        // Atualizar função de deletar
+        async function deleteUserData(userId, userName) {
+            if (confirm(`Deseja realmente excluir o usuário ${userName} e todos os seus blocos?`)) {
+                try {
+                    const db = firebase.firestore();
+                    const batch = db.batch();
+
+                    const blocosSnapshot = await db.collection('bloco')
+                        .where('usuario', '==', userId)
+                        .get();
+                    blocosSnapshot.forEach(doc => {
+                        batch.delete(doc.ref);
+                    });
+
+                    batch.delete(db.collection('usuario').doc(userId));
+                    await batch.commit();
+
+                    alert('Usuário e seus dados foram excluídos com sucesso!');
+                    loadAdminPage(); // Recarregar toda a lista
+                } catch (error) {
+                    console.error("Erro ao excluir dados:", error);
+                    alert('Erro ao excluir os dados. Por favor, tente novamente.');
+                }
+            }
         }
     </script>
 </body>
