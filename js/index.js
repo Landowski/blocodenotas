@@ -11,22 +11,6 @@ const firebaseConfig = {
 // Inicia o Firebase
 firebase.initializeApp(firebaseConfig);
 
-// User logado
-firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-        // Verifica se está na página de registro
-        if (!window.location.pathname.includes('app')) {
-            // Verifica se o documento do usuário existe no Firestore
-            firebase.firestore().collection('usuario').doc(user.uid).get()
-                .then((doc) => {
-                    if (doc.exists) {
-                        window.location.href = 'app';
-                    }
-                });
-        }
-    }
-});
-
 // Declarações
 const logo = document.querySelector(".logo");
 const notesList = document.getElementById("notes-list");
