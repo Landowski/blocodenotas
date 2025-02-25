@@ -149,23 +149,25 @@ const firebaseConfig = {
 // Inicia o Firebase
 firebase.initializeApp(firebaseConfig);
 
-    // Referência para o Realtime Database
-    const database = firebase.database();
+    const db = firebase.firestore();
 
-    // 2. Função para salvar os dados na tabela "contatos"
-    function salvarContato(nome, email, ) {
-      // Cria uma referência para a tabela 'contatos' e adiciona um novo registro
-      const contatosRef = database.ref('contatos');
-      const novoContatoRef = contatosRef.push();
-      novoContatoRef.set({
+    // Função para salvar os dados na coleção "contatos"
+    function salvarContato(nome, email, mensagem) {
+      db.collection("contatos").add({
         nome: nome,
         email: email,
         mensagem: mensagem,
         data: new Date()
+      })
+      .then(() => {
+        console.log("Contato salvo com sucesso!");
+      })
+      .catch((error) => {
+        console.error("Erro ao salvar contato:", error);
       });
     }
 
-    // 3. Captura o envio do formulário
+    // Captura o envio do formulário
     document.getElementById('contactForm').addEventListener('submit', function(event) {
       event.preventDefault();
 
@@ -174,7 +176,7 @@ firebase.initializeApp(firebaseConfig);
       const email = document.getElementById('email').value;
       const mensagem = document.getElementById('mensagem').value;
 
-      // Salva os dados no Firebase
+      // Salva os dados no Firestore
       salvarContato(nome, email, mensagem);
 
       // Exibe a mensagem de sucesso para o usuário
