@@ -45,24 +45,6 @@
       display: block;
       margin-top: 15px;
     }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px;
-      width: 100%;
-      border: none;
-      background: #4CAF50;
-      color: #fff;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
     #msg {
       text-align: center;
       margin-top: 20px;
@@ -82,13 +64,13 @@
 
 <form id="contactForm">
     <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome" required>
+    <input class="input-login" type="text" id="nome" name="nome" required>
 
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+    <input class="input-login" type="email" id="email" name="email" required>
 
     <label for="mensagem">Mensagem:</label>
-    <textarea id="mensagem" name="mensagem" required></textarea>
+    <textarea id="text-editor" name="mensagem" required></textarea>
 
     <button type="submit">Enviar</button>
   </form>
@@ -115,7 +97,7 @@ firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
     // 2. Função para salvar os dados na tabela "contatos"
-    function salvarContato(nome, email, mensagem) {
+    function salvarContato(nome, email, ) {
       // Cria uma referência para a tabela 'contatos' e adiciona um novo registro
       const contatosRef = database.ref('contatos');
       const novoContatoRef = contatosRef.push();
@@ -123,18 +105,18 @@ firebase.initializeApp(firebaseConfig);
         nome: nome,
         email: email,
         mensagem: mensagem,
-        data: new Date().toISOString() // opcional: data/hora do envio
+        data: new Date()
       });
     }
 
     // 3. Captura o envio do formulário
     document.getElementById('contactForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // evita o recarregamento da página
+      event.preventDefault();
 
       // Pega os valores dos inputs
       const nome = document.getElementById('nome').value;
       const email = document.getElementById('email').value;
-      const mensagem = document.getElementById('mensagem').value;
+      const mensagem = document.getElementById('text-editor').value;
 
       // Salva os dados no Firebase
       salvarContato(nome, email, mensagem);
