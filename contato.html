@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Entre em contato com o site Bloco de Notas Online.">
+    <title>Contato - Bloco de Notas Online</title>
+    <link rel="canonical" href="https://blocodenotasonline.com.br/contato" />
+    <link rel="icon" href="imagens/favicon.svg" sizes="any" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js" defer></script>
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        h2 {
+            margin: 0;
+            font-size: 20px;
+            margin-bottom: 7px;
+        }
+        .container {
+            width: 800px;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            text-align: justify;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.5;
+        }
+        .container p {
+            margin: 0;
+            margin-bottom: 15px;
+        }
+    	form {
+	    max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+      	    padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      background: #4CAF50;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #msg {
+      text-align: center;
+      margin-top: 20px;
+      color: green;
+      font-weight: bold;
+    }
+    </style>
+</head>
+<body style="margin: 40px 0;">
+    <div class="container">
+
+        <h1>Contato</h1>
+
+<p>Entre em contato conosco preenchendo o formulário abaixo. Iremos entrar em contato com você pelo seu e-mail o mais breve possível.</p>
+
+<form id="contactForm">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="mensagem">Mensagem:</label>
+    <textarea id="mensagem" name="mensagem" required></textarea>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <div id="msg"></div>
+                
+    </div>
+
+<script>
+    // Configurações do app no Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyBO_nBQg70L-WOby_UDOJc6bt3Yg3I7-Qk",
+    authDomain: "bloco-de-notas-b94c4.firebaseapp.com",
+    projectId: "bloco-de-notas-b94c4",
+    storageBucket: "bloco-de-notas-b94c4.appspot.com",
+    messagingSenderId: "515098342854",
+    appId: "1:515098342854:web:4b91c903046400c7f96ec7"
+};
+
+// Inicia o Firebase
+firebase.initializeApp(firebaseConfig);
+
+    // Referência para o Realtime Database
+    const database = firebase.database();
+
+    // 2. Função para salvar os dados na tabela "contatos"
+    function salvarContato(nome, email, mensagem) {
+      // Cria uma referência para a tabela 'contatos' e adiciona um novo registro
+      const contatosRef = database.ref('contatos');
+      const novoContatoRef = contatosRef.push();
+      novoContatoRef.set({
+        nome: nome,
+        email: email,
+        mensagem: mensagem,
+        data: new Date().toISOString() // opcional: data/hora do envio
+      });
+    }
+
+    // 3. Captura o envio do formulário
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // evita o recarregamento da página
+
+      // Pega os valores dos inputs
+      const nome = document.getElementById('nome').value;
+      const email = document.getElementById('email').value;
+      const mensagem = document.getElementById('mensagem').value;
+
+      // Salva os dados no Firebase
+      salvarContato(nome, email, mensagem);
+
+      // Exibe a mensagem de sucesso para o usuário
+      document.getElementById('msg').innerText = "Mensagem enviada, por favor aguarde que entraremos em contato assim que possível.";
+
+      // Reseta o formulário
+      document.getElementById('contactForm').reset();
+    });
+  </script>
+
+</body>
+</html>
