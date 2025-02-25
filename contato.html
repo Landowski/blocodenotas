@@ -159,12 +159,6 @@ firebase.initializeApp(firebaseConfig);
         mensagem: mensagem,
         data: new Date()
       })
-      .then(() => {
-        console.log("Contato salvo com sucesso!");
-      })
-      .catch((error) => {
-        console.error("Erro ao salvar contato:", error);
-      });
     }
 
     // Captura o envio do formulário
