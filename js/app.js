@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     }
 
                     // Event listeners
-                    noteTitle.addEventListener("input", debounce(saveNote, 1000));
+                    noteTitle.addEventListener("input", debounce(saveNote, 500));
                     noteBody.addEventListener("blur", saveNote);
                     noteBody.addEventListener('paste', function(e) {
                         e.preventDefault();
