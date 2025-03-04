@@ -424,7 +424,7 @@ listBtn.addEventListener('click', function() {
 
 linkBtn.addEventListener('click', function() {
     const range = saveSelection();
-    const url = prompt('Insira o link', 'https://');
+    const url = prompt('Insert link', 'https://');
     if (url) {
         noteBody.focus();
         restoreSelection(range);
