@@ -387,16 +387,6 @@ h3 {
     color: transparent;
 }
 
-#note-body.light-mode {
-    border: 1px solid #d5d5d5;
-    background-color: #fff;
-}
-
-#note-body.dark-mode {
-    border: 1px solid #404040;
-    background-color: transparent;
-}
-
 #note-body p {
     margin: 0 !important;
 }
