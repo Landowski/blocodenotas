@@ -499,7 +499,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         document.body.classList.add('light-mode');
                         textEditor.classList.remove('dark-mode');
                         textEditor.classList.add('light-mode');
-                        noteBody.classList.remove('darkt-mode');
+                        noteBody.classList.remove('dark-mode');
                         noteBody.classList.add('light-mode');
                         sidebar.classList.remove('dark-mode');
                         sidebar.classList.add('light-mode');
