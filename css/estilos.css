@@ -379,14 +379,6 @@ h3 {
     background-color: #fff;
 }
 
-#note-body::placeholder {
-    color: #C0C0C0;
-}
-
-#note-body:focus::placeholder {
-    color: transparent;
-}
-
 #note-body p {
     margin: 0 !important;
 }
