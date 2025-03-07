@@ -466,6 +466,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         document.body.classList.add('dark-mode');
                         textEditor.classList.remove('light-mode');
                         textEditor.classList.add('dark-mode');
+                        noteBody.classList.remove('light-mode');
+                        noteBody.classList.add('dark-mode');
                         sidebar.classList.remove('light-mode');
                         sidebar.classList.add('dark-mode');
                         noteDetails.classList.remove('light-mode');
@@ -497,6 +499,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         document.body.classList.add('light-mode');
                         textEditor.classList.remove('dark-mode');
                         textEditor.classList.add('light-mode');
+                        noteBody.classList.remove('dark-mode');
+                        noteBody.classList.add('light-mode');
                         sidebar.classList.remove('dark-mode');
                         sidebar.classList.add('light-mode');
                         noteDetails.classList.remove('dark-mode');
@@ -515,7 +519,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             item.classList.add('light-mode');
                         });
                     }
-
+                    
                     // Popup Config
                     function openConfig(){
                         userDocRef.get().then((doc) => {
