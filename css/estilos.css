@@ -344,23 +344,23 @@ h3 {
     width: 100%;
     font-size: 26px;
     font-weight: bold;
-    border: 0;
     outline: 0;
     padding: 15px;
     background-color: #fff;
-    border-bottom: 0;
 }
 
 #note-details.light-mode input {
     color: var(--black);
     background-color: #fff;
     border: 1px solid #d5d5d5;
+    border-bottom: 0;
 }
 
 #note-details.dark-mode input {
     color: #DBDBDB;
     border: 1px solid #404040;
     background-color: transparent;
+    border-bottom: 0;
 }
 
 .title {
