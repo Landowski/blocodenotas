@@ -346,12 +346,11 @@ h3 {
     font-weight: bold;
     outline: 0;
     padding: 15px;
-    background-color: #fff;
 }
 
 #note-details.light-mode input {
     color: var(--black);
-    background-color: #fff;
+    background-color: #f9f9f9;
     border: 1px solid #d5d5d5;
     border-bottom: 0;
 }
@@ -359,7 +358,7 @@ h3 {
 #note-details.dark-mode input {
     color: #DBDBDB;
     border: 1px solid #404040;
-    background-color: transparent;
+    background-color: #696969;
     border-bottom: 0;
 }
 
